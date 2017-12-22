@@ -1,0 +1,9 @@
+.page_login {
+  background: #f4f6f8;
+}
+.grid-login {
+  height: 100%;
+}
+.grid-login > .column {
+  max-width: 450px;
+}

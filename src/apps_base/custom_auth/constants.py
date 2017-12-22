@@ -1,0 +1,6 @@
+ADMIN = 'ADMIN'
+
+TYPE_USER = (
+    ("ADMIN", "ADMIN"),
+    ("ECOMMERCE", "ECOMMERCE")
+)
