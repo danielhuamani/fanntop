@@ -178,3 +178,7 @@ LOCALE_PATHS = (
 JWT_AUTH = {
    'JWT_RESPONSE_PAYLOAD_HANDLER': 'apps_base.security.utils.jwt_response_payload_handler'
 }
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
