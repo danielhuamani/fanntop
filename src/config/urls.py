@@ -28,10 +28,8 @@ urlpatterns = [
     static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
 
 urlpatterns += [
-    url(r'^',
-        include('administrador.urls', namespace='administrador')),
     url(r'^api-v1/', include([
-        url(r'^',
-            include('apps_base.customers.urls', namespace='customers'))
+        url(r'security/',
+            include('apps_base.security.urls', namespace='security'))
     ])),
 ]
