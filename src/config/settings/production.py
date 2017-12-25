@@ -12,6 +12,6 @@ INSTALLED_APPS += [
 
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'MEDIA_ROOT')
+MEDIA_ROOT = ENV.get('MEDIA_ROOT')
 
-MEDIA_URL = os.path.join(BASE_DIR, 'MEDIA_URL')
+MEDIA_URL = ENV.get('MEDIA_URL')
