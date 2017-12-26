@@ -2,7 +2,7 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ENV.get('CORS', [])
+ALLOWED_HOSTS = ENV.get('ALLOWED_HOSTS', [])
 
 STATIC_ROOT = ENV.get('STATIC_ROOT')
 
