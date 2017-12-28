@@ -47,7 +47,8 @@ THIRD_PARTY_APPS = [
 BASE_APPS = [
     'apps_base.custom_auth',
     'apps_base.customers',
-    'apps_base.security'
+    'apps_base.security',
+    'apps_base.influencer'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BASE_APPS
@@ -125,6 +126,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
 
     ),

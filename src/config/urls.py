@@ -13,7 +13,9 @@ urlpatterns = [
 urlpatterns += [
     url(r'^api-v1/', include([
         url(r'security/',
-            include('apps_base.security.urls', namespace='security'))
+            include('apps_base.security.urls', namespace='security')),
+        url(r'influencer/',
+            include('apps_base.influencer.urls', namespace='influencer'))
     ])),
     url(r'^', include('apps_web.web_system.urls', namespace='web_system'))
 ]
