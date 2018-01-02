@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 from config.utils import get_env
 from django.utils.translation import ugettext_lazy as _
 import os
-
+import datetime
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -122,15 +122,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-
-    ),
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
 }
 CORS_ORIGIN_WHITELIST = tuple(ENV.get('CORS'))
 CSRF_TRUSTED_ORIGINS = tuple(ENV.get('CORS'))
@@ -179,7 +175,9 @@ LOCALE_PATHS = (
 
 
 JWT_AUTH = {
-   'JWT_RESPONSE_PAYLOAD_HANDLER': 'apps_base.security.utils.jwt_response_payload_handler'
+   'JWT_RESPONSE_PAYLOAD_HANDLER': 'apps_base.security.utils.jwt_response_payload_handler',
+   'JWT_ALLOW_REFRESH': True,
+   'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300*12*24*7),
 }
 
 STATICFILES_DIRS = (

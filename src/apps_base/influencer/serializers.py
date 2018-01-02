@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Influencer, InfluencerSeo
+from .models import Influencer
 
 
 class InfluencerSerializer(serializers.ModelSerializer):
@@ -8,12 +8,6 @@ class InfluencerSerializer(serializers.ModelSerializer):
         model = Influencer
         fields = [
             'id', 'name', 'description', 'image', 'position',
-            'is_active', 'title', 'description', 'url'
+            'is_active', 'title', 'description', 'slug'
         ]
 
-
-class InfluencerSeoSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = InfluencerSeo
-        fields = ['id', 'title', 'description', 'url']

@@ -32,15 +32,15 @@ class CorePositionModel(models.Model):
         ordering = ['position']
 
 
-class CoreSeoUrllModel(models.Model):
-    url = models.CharField(max_length=120)
+class CoreSeoSlugModel(models.Model):
+    slug = models.CharField(max_length=120)
 
     class Meta:
-        verbose_name = "CoreSeoUrllModel"
-        verbose_name_plural = "CoreSeoUrllModel"
+        verbose_name = "CoreSeoSlugModel"
+        verbose_name_plural = "CoreSeoSlugModel"
         abstract = True
 
     def save(self, *args, **kwargs):
-        if self.url:
-            self.url = uuslug(self.url, instance=self, slug_field='url', filter_dict=None)
-        super(CoreSeoUrllModel, self).save(*args, **kwargs)
+        if self.slug:
+            self.slug = uuslug(self.slug, instance=self, slug_field='slug', filter_dict=None)
+        super(CoreSeoSlugModel, self).save(*args, **kwargs)
