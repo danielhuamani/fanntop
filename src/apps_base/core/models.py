@@ -34,7 +34,9 @@ class CorePositionModel(models.Model):
 
 class CoreSeoSlugModel(models.Model):
     slug = models.CharField(max_length=120)
-
+    title = models.CharField(_("title"), max_length=120)
+    meta_description = models.CharField(_('description'), max_length=255,
+                                        blank=True)
     class Meta:
         verbose_name = "CoreSeoSlugModel"
         verbose_name_plural = "CoreSeoSlugModel"

@@ -15,7 +15,9 @@ urlpatterns += [
         url(r'security/',
             include('apps_base.security.urls', namespace='security')),
         url(r'influencer/',
-            include('apps_base.influencer.urls', namespace='influencer'))
+            include('apps_base.influencer.urls', namespace='influencer')),
+        url(r'category/',
+            include('apps_base.category.urls', namespace='category'))
     ])),
     url(r'^', include('apps_web.web_system.urls', namespace='web_system'))
 ]

@@ -8,9 +8,7 @@ class Influencer(CoreTimeModel, CoreActiveModel, CorePositionModel, CoreSeoSlugM
     description = models.TextField(_("Description"), blank=True)
     image = models.ImageField(_('Photo'), upload_to='influencer/%Y/%m/%d')
 
-    title = models.CharField(_("title"), max_length=120)
-    meta_description = models.CharField(_('description'), max_length=255,
-                                        blank=True)
+
     class Meta:
         verbose_name = "Influencer"
         verbose_name_plural = "Influencers"

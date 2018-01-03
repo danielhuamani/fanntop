@@ -48,7 +48,8 @@ BASE_APPS = [
     'apps_base.custom_auth',
     'apps_base.customers',
     'apps_base.security',
-    'apps_base.influencer'
+    'apps_base.influencer',
+    'apps_base.category'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BASE_APPS
