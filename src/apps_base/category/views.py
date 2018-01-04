@@ -20,6 +20,13 @@ class CategoryViewSet(BaseAuthenticated, viewsets.ModelViewSet):
         queryset = super().get_queryset()
         field = self.request.query_params.get('field', None)
         order_by = self.request.query_params.get('orderBy', None)
+        category = self.request.query_params.get('category', False)
+        is_category_parent = self.request.query_params.get('is_category_parent', False)
+        category = self.request.GET.get("category", False)
+        if category:
+            queryset = queryset.get(id=int(category)).category_categories.all()
+        else:
+            queryset = self.queryset.filter(category__isnull=True)
         if field:
             if order_by == 'asc':
                 queryset = queryset.order_by(field)
