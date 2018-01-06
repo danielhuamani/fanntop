@@ -6,7 +6,6 @@ router = routers.SimpleRouter()
 router.register(r'customers', CustomerViewSet)
 
 urlpatterns = [
-
 ]
 
 urlpatterns += router.urls
