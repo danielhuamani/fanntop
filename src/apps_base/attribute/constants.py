@@ -1,0 +1,17 @@
+INPUT = 'INPUT'
+TEXTAREA = 'TEXTAREA'
+FECHA = 'FECHA'
+BOOLEAN = 'BOOLEAN'
+SELECT_SINGLE = 'SELECT_SINGLE'
+SELECT_MULTIPLE = 'SELECT_MULTIPLE'
+COLOUR = 'COLOUR'
+
+TYPE_ATRIBUTE = (
+    (INPUT, "Input"),
+    (TEXTAREA, "Textarea"),
+    #(FECHA, "Fecha"),
+    (BOOLEAN, "SI / NO"),
+    (SELECT_SINGLE, "Selección"),
+    (COLOUR, 'Color'),
+    (SELECT_MULTIPLE, "Selección Multiple")
+)

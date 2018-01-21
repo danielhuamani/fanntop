@@ -1,8 +1,9 @@
 from rest_framework import serializers
+from drf_queryfields import QueryFieldsMixin
 from .models import Influencer
 
 
-class InfluencerSerializer(serializers.ModelSerializer):
+class InfluencerSerializer(QueryFieldsMixin, serializers.ModelSerializer):
 
     class Meta:
         model = Influencer

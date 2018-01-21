@@ -20,6 +20,8 @@ class CategoryViewSet(BaseAuthenticated, viewsets.ModelViewSet):
         order_by = self.request.query_params.get('orderBy', None)
         category = self.request.query_params.get('category', False)
         is_category_parent = self.request.query_params.get('is_category_parent', False)
+        if category:
+            queryset = queryset.filter(category__isnull=True)
         if field:
             if order_by == 'asc':
                 queryset = queryset.order_by(field)
