@@ -20,10 +20,10 @@ urlpatterns += [
             include('apps_base.category.urls', namespace='category')),
         url(r'product/',
             include('apps_base.product.urls', namespace='product')),
+        url(r'family/',
+                include('apps_base.family.urls', namespace='family')),
         url(r'attribute/',
             include('apps_base.attribute.urls', namespace='attribute')),
-        url(r'family/',
-            include('apps_base.family.urls', namespace='family'))
     ])),
     url(r'^', include('apps_web.web_system.urls', namespace='web_system'))
 ]

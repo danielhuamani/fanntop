@@ -44,8 +44,4 @@ class FamilyGroupAttribute(CoreTimeModel, CoreActiveModel, CorePositionModel):
         verbose_name_plural = "Family Group Atribute"
 
     def __str__(self):
-        return self.name if self.name else '-'
-
-
-
-
+        return self.atribute.name

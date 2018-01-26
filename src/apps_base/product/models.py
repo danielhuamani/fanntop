@@ -7,6 +7,7 @@ class ProductClass(CoreSeoSlugModel):
     influencer = models.ForeignKey(
         "influencer.Influencer", related_name='influencer_product_class')
     category = models.ManyToManyField('category.Category', related_name='category_product_class')
+    family = models.ManyToManyField('family.Family', related_name='family_product_class')
     name = models.CharField(_('title'), max_length=255)
     description = models.TextField(_('description'), blank=True)
     is_variation = models.BooleanField(default=False)
@@ -32,4 +33,3 @@ class Product(CoreActiveModel, CoreTimeModel):
 
     def __str__(self):
         pass
-

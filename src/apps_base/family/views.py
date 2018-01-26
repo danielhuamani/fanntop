@@ -33,8 +33,17 @@ class FamilyGroupAttributeViewSet(BaseAuthenticated, viewsets.ModelViewSet):
     queryset = FamilyGroupAttribute.objects.filter(is_trash=False)
 
 
+
 class AttributeListAPI(BaseAuthenticated, ListCreateAPIView):
 
     serializer_class = AttributeSerializer
     queryset = Attribute.objects.filter(is_trash=False)
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        family_group = self.request.query_params.get('family_group', False)
+        if family_group:
+            family_id = FamilyGroup.objects.get(id=int(family_group)).family_id
+            family_group_attr = FamilyGroupAttribute.objects.filter(family_group__family__id=int(family_id)).values_list('atribute_id', flat=True)
+            queryset = queryset.exclude(id__in=list(family_group_attr))
+        return queryset
