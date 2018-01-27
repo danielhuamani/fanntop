@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from uuslug import uuslug
+from .managers import CoreActiveModelManager
 
 
 class CoreTimeModel(models.Model):
@@ -16,7 +17,8 @@ class CoreActiveModel(models.Model):
     """Modelo Activo"""
     is_active = models.BooleanField(_('is active'), default=True)
     is_trash = models.BooleanField(_('is trash'), default=False)
-
+    objects = CoreActiveModelManager.as_manager()
+    
     class Meta:
         abstract = True
 

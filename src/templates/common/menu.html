@@ -1,0 +1,24 @@
+<div id="nav" class="full-width">
+  <div class="container">
+    <nav>
+      <ul>
+        {% for category in categories_processors %}
+        <li><a href="#"> {{category.name}}</a>
+          <div class="submenu">
+            <div class="container">
+              <h3 class="title">Todos los Productos</h3>
+              <ul>
+                {% for category_child in category.category_categories.all %}
+                  <li><a href="">{{category_child.name}}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+
+
+      </ul>
+    </nav>
+  </div>
+</div>

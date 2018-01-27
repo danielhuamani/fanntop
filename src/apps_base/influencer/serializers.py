@@ -9,6 +9,5 @@ class InfluencerSerializer(QueryFieldsMixin, serializers.ModelSerializer):
         model = Influencer
         fields = [
             'id', 'name', 'description', 'image', 'position',
-            'is_active', 'title', 'description', 'slug'
+            'is_active', 'title', 'description', 'slug', 'banner'
         ]
-

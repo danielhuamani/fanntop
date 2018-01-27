@@ -4,6 +4,7 @@ from django.db import transaction
 from .models import Attribute, AttributeOption
 from .constants import COLOUR, SELECT_MULTIPLE, SELECT_SINGLE
 
+
 class AttributeOptionSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     class Meta:
         model = AttributeOption

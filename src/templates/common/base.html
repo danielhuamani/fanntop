@@ -1,18 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}?v=0.0.4"/>
+    <link rel="stylesheet" href="{% static 'css/slick.css' %}?v=0.0.4"/>
+    <link rel="stylesheet" href="{% static 'css/slick-theme.css' %}?v=0.0.4"/>
+    <link rel="shortcut icon" href="/favicon.ico"/>
     {% block css %}
 
     {% endblock css %}
 </head>
 <body>
+  <main data-section="tab2" class="wrapper">
     {% include "./header.html" %}
+    {% include "./menu.html" %}
     {% block content %}
 
     {% endblock content %}
     {% include "./footer.html" %}
+  </main>
+
 
     {% block js %}
 

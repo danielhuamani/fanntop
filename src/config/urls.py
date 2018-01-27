@@ -24,6 +24,9 @@ urlpatterns += [
                 include('apps_base.family.urls', namespace='family')),
         url(r'attribute/',
             include('apps_base.attribute.urls', namespace='attribute')),
+        url(r'pages/',
+            include('apps_base.pages.urls', namespace='pages')),
     ])),
-    url(r'^', include('apps_web.web_system.urls', namespace='web_system'))
+    url(r'^', include('apps_web.web_system.urls', namespace='web_system')),
+    url(r'^', include('apps_web.web_product.urls', namespace='web_product'))
 ]

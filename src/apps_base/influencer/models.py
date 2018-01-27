@@ -7,7 +7,7 @@ class Influencer(CoreTimeModel, CoreActiveModel, CorePositionModel, CoreSeoSlugM
     name = models.CharField(_("Name"), max_length=255)
     description = models.TextField(_("Description"), blank=True)
     image = models.ImageField(_('Photo'), upload_to='influencer/%Y/%m/%d')
-
+    banner = models.ImageField(_('Banner'), upload_to='influencer_banner/%Y/%m/%d')
 
     class Meta:
         verbose_name = "Influencer"

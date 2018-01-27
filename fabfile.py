@@ -13,11 +13,15 @@ def run_local(ip=''):
 
 @task
 def migrations(config):
+    if not config:
+        config = 'local'
     run = ('./src/manage.py makemigrations --settings=config.settings.{0}').format(config)
     local(run)
 
 @task
 def migrate(config):
+    if not config:
+        config = 'local'
     run = ('./src/manage.py migrate --settings=config.settings.{0}').format(config)
     local(run)
 

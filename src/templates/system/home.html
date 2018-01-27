@@ -1,13 +1,43 @@
 {% extends "common/base.html" %}
-
-{% block js %}
-
-{% endblock js %}
-{% block content %}
-    <div class="">
-        hello world
-    </div>
-{% endblock content %}
+{% load static %}
 {% block css %}
 
 {% endblock css %}
+{% block content %}
+
+<section class="featured">
+  <div class="media-content">
+    <slider class="slider-slick">
+
+      {% for home_banner in home_banners %}
+        <div class="slider-item"><img src="{{home_banner.image.url}}"/></div>
+      {% endfor %}
+
+
+
+    </slider>
+  </div>
+</section>
+<section class="main">
+  <div class="container">
+    <div class="row">
+      {% for influencer in influencers %}
+        <div class="col-md-3">
+          <a href="{% url 'web_product:influencer_products' influencer.pk %}" class="box item-influencer">
+            <div class="image"> <img src="{{influencer.image.url}}"/></div>
+            <div class="detail">
+              <h3 class="title">{{influencer.name}}</h3>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock content %}
+{% block js %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+  <script src="{% static 'js/slick.min.js' %}"></script>
+  <script src="{% static 'js/functions.js' %}?v=0.0.2"></script>
+{% endblock js %}

@@ -11,7 +11,8 @@ class ProductClass(CoreSeoSlugModel):
     name = models.CharField(_('title'), max_length=255)
     description = models.TextField(_('description'), blank=True)
     is_variation = models.BooleanField(default=False)
-
+    attribute = models.ManyToManyField('attribute.Attribute', related_name='attribute_product_class')
+    
     class Meta:
         verbose_name = "Product"
         verbose_name_plural = "Products"
@@ -33,3 +34,32 @@ class Product(CoreActiveModel, CoreTimeModel):
 
     def __str__(self):
         pass
+
+
+class ProductAttributeValue(models.Model):
+
+    attribute = models.ForeignKey(
+        'attribute.Attribute',
+        on_delete=models.CASCADE,
+        related_name="attribute_product_attr_value",
+        verbose_name=_("Attribute"))
+    product = models.ForeignKey(
+        'ProductClass',
+        on_delete=models.CASCADE,
+        related_name='product_class_product_attr_value',
+        verbose_name=_("Product"))
+
+    value_text = models.TextField(_('Text'), blank=True, null=True)
+    value_boolean = models.NullBooleanField(_('Boolean'), blank=True)
+    value_input = models.CharField(_('Input'), blank=True, max_length=255)
+    value_multi_option = models.ManyToManyField(
+        'attribute.AttributeOption', blank=True,
+        related_name='attr_option_product_attr_multi_value',
+        verbose_name=_("Value multi option"))
+    value_option = models.ForeignKey(
+        'attribute.AttributeOption',
+        blank=True,
+        null=True,
+        related_name="attr_option_product_attr_value",
+        on_delete=models.CASCADE,
+        verbose_name=_("Value option"))

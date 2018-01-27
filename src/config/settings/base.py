@@ -41,7 +41,8 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
-    'widget_tweaks'
+    'widget_tweaks',
+    'sorl.thumbnail'
 ]
 
 BASE_APPS = [
@@ -52,7 +53,8 @@ BASE_APPS = [
     'apps_base.category',
     'apps_base.product',
     'apps_base.attribute',
-    'apps_base.family'
+    'apps_base.family',
+    'apps_base.pages'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BASE_APPS
@@ -85,6 +87,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps_web.web_system.context_processors.category_processors'
             ],
         },
     },
