@@ -3,17 +3,19 @@
     <nav>
       <ul>
         {% for category in categories_processors %}
-        <li><a href="#"> {{category.name}}</a>
+        <li><a {% if not category.category_categories.all %}href="{% url 'web_product:category_products' category.slug %}"{% endif %}> {{category.name}}</a>
+          {% if category.category_categories.all %}
           <div class="submenu">
             <div class="container">
               <h3 class="title">Todos los Productos</h3>
               <ul>
                 {% for category_child in category.category_categories.all %}
-                  <li><a href="">{{category_child.name}}</a></li>
+                  <li><a href="{% url 'web_product:category_child_products' category.slug category_child.slug %}">{{category_child.name}}</a></li>
                 {% endfor %}
               </ul>
             </div>
           </div>
+          {% endif %}
         </li>
         {% endfor %}
 

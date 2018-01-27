@@ -23,7 +23,7 @@
     <div class="row">
       {% for influencer in influencers %}
         <div class="col-md-3">
-          <a href="{% url 'web_product:influencer_products' influencer.pk %}" class="box item-influencer">
+          <a href="{% url 'web_product:influencer_products' influencer.slug %}" class="box item-influencer">
             <div class="image"> <img src="{{influencer.image.url}}"/></div>
             <div class="detail">
               <h3 class="title">{{influencer.name}}</h3>
