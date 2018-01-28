@@ -42,7 +42,6 @@ class CategoryListAPI(BaseAuthenticated, ListCreateAPIView):
         queryset = super().get_queryset()
         category = self.request.query_params.get('category', False)
         if category:
-            queryset = queryset.get(id=int(category)).category_categories.all()
-        else:
-            queryset = self.queryset.filter(category__isnull=True)
+            queryset = queryset.exclude(id=int(category))
+
         return queryset
