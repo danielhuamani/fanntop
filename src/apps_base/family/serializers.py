@@ -24,14 +24,22 @@ class AttributeSerializer(QueryFieldsMixin, serializers.ModelSerializer):
 
 class FamilyGroupAttributeSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     name_attr = serializers.SerializerMethodField()
+    type_name = serializers.SerializerMethodField()
+    is_variation = serializers.SerializerMethodField()
     class Meta:
         model = FamilyGroupAttribute
         fields = [
-            'id', 'family_group', 'atribute', 'is_required', 'position', 'name_attr'
+            'id', 'family_group', 'atribute', 'is_required', 'position', 'name_attr', 'type_name', 'is_variation'
         ]
 
     def get_name_attr(self, obj):
         return obj.atribute.name
+
+    def get_type_name(self, obj):
+        return obj.atribute.type_name
+
+    def get_is_variation(self, obj):
+        return obj.atribute.is_variation
 
 
 class FamilyGroupSerializer(QueryFieldsMixin, serializers.ModelSerializer):
