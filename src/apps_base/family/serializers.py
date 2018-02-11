@@ -26,10 +26,12 @@ class FamilyGroupAttributeSerializer(QueryFieldsMixin, serializers.ModelSerializ
     name_attr = serializers.SerializerMethodField()
     type_name = serializers.SerializerMethodField()
     is_variation = serializers.SerializerMethodField()
+
     class Meta:
         model = FamilyGroupAttribute
         fields = [
-            'id', 'family_group', 'atribute', 'is_required', 'position', 'name_attr', 'type_name', 'is_variation'
+            'id', 'family_group', 'atribute', 'is_required', 'position', 'name_attr',
+            'type_name', 'is_variation'
         ]
 
     def get_name_attr(self, obj):

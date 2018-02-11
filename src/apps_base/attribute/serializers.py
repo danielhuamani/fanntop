@@ -6,12 +6,16 @@ from .constants import COLOUR, SELECT_MULTIPLE, SELECT_SINGLE
 
 
 class AttributeOptionSerializer(QueryFieldsMixin, serializers.ModelSerializer):
+    name_attr = serializers.SerializerMethodField()
+
     class Meta:
         model = AttributeOption
         fields = [
-            'id', 'attr', 'option'
+            'id', 'attr', 'option', 'name_attr'
         ]
 
+    def get_name_attr(self, obj):
+        return obj.attribute.name
 
 class AttributeSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     attribute_options = AttributeOptionSerializer(many=True)
