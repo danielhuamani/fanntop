@@ -11,6 +11,7 @@ class ProductClass(CoreSeoSlugModel, CoreActiveModel):
     family = models.ForeignKey('family.Family', related_name='family_fk_product_class')
     name = models.CharField(_('title'), max_length=255)
     description = models.TextField(_('description'), blank=True)
+    characteristics = models.TextField(_('characteristics'))
     is_variation = models.BooleanField(default=False)
     attribute = models.ManyToManyField('attribute.Attribute', related_name='attribute_product_class', blank=True)
     is_published = models.BooleanField(default=False)

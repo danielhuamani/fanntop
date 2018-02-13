@@ -7,6 +7,7 @@ from .constants import COLOUR, SELECT_MULTIPLE, SELECT_SINGLE
 
 class AttributeOptionSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     name_attr = serializers.SerializerMethodField()
+    id = serializers.ModelField(model_field=AttributeOption()._meta.get_field('id'), required=False)
 
     class Meta:
         model = AttributeOption
@@ -27,12 +28,20 @@ class AttributeSerializer(QueryFieldsMixin, serializers.ModelSerializer):
             'is_filter', 'is_variation', 'attribute_options'
         ]
 
+    def validate(self, data):
+        type_name = data.get('type_name')
+        is_variation = data.get('is_variation')
+        attribute_options = data.get('attribute_options')
+        if not(type_name in [COLOUR, SELECT_SINGLE] and attribute_options):
+            raise serializers.ValidationError('Debe agregar valor al atributo elegido')
+        return data
+
     @transaction.atomic
     def create(self, validated_data):
         attribute_options = validated_data.pop('attribute_options')
         type_name = validated_data.get('type_name')
         attribute = Attribute.objects.create(**validated_data)
-        if type_name in [COLOUR, SELECT_MULTIPLE, SELECT_SINGLE]:
+        if type_name in [COLOUR, SELECT_SINGLE]:
             for attr in attribute_options:
                 AttributeOption.objects.create(attribute=attribute, **attr)
         return attribute
@@ -47,15 +56,21 @@ class AttributeSerializer(QueryFieldsMixin, serializers.ModelSerializer):
         instance.is_variation = validated_data.get('is_variation', instance.is_variation)
         instance.save()
         attribute_options = validated_data.pop('attribute_options')
-
-        if attribute_options and instance.type_name in [COLOUR, SELECT_MULTIPLE, SELECT_SINGLE]:
+        ids_option = []
+        if attribute_options and instance.type_name in [COLOUR, SELECT_SINGLE]:
             for attr in attribute_options:
                 item_id = attr.get('id', None)
-                if item_id:
-                    attribute_option = AttributeOption.objects.get(id=item_id, attribute=instance)
-                    attribute_option.attr = attr.get('attr', attribute_option.attr)
-                    attribute_option.option = attr.get('attr', attribute_option.option)
-                    attribute_option.save()
-                else:
+                # if item_id:
+                #     ids_option.append(item_id)
+                #     attribute_option = AttributeOption.objects.get(id=item_id, attribute=instance)
+                #     attribute_option.attr = attr.get('attr', attribute_option.attr)
+                #     attribute_option.option = attr.get('attr', attribute_option.option)
+                #     attribute_option.save()
+                # else:
+                #     AttributeOption.objects.create(attribute=instance, **attr)
+                if not item_id:
                     AttributeOption.objects.create(attribute=instance, **attr)
+        # update o delete
+        # AttributeOption.objects.filter(attribute=instance).exclude(
+        #     id__in=ids_option).update(is_trash=True)
         return instance

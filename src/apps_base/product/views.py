@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.generics import ListAPIView
-from .models import ProductClass, Product, ProductGaleryImage
+from .models import ProductClass, Product, ProductGaleryImage, ProductImage
 from apps_base.core.mixins import BaseAuthenticated
-from .serializers import ProductClassSerializer, ProductSerializer, ProductGaleryImageSerializer
+from .serializers import ProductClassSerializer, ProductSerializer, ProductGaleryImageSerializer, ProductImageSerializer
 from apps_base.attribute.serializers import AttributeSerializer
 from apps_base.attribute.models import Attribute
 from apps_base.family.serializers import FamilyGroupSerializer
 from apps_base.family.models import Family, FamilyGroup, FamilyGroupAttribute
 from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
+
 
 class ProductClassViewSet(BaseAuthenticated, viewsets.ModelViewSet):
     """
@@ -16,6 +17,23 @@ class ProductClassViewSet(BaseAuthenticated, viewsets.ModelViewSet):
     """
     queryset = ProductClass.objects.all()
     serializer_class = ProductClassSerializer
+
+
+class ProductImageViewSet(BaseAuthenticated, viewsets.ModelViewSet):
+    """
+    A simple ViewSet for viewing and editing accounts.
+    """
+    queryset = ProductImage.objects.all()
+    serializer_class = ProductImageSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        product_id = self.request.query_params.get('product_id', None)
+        if product_id:
+            queryset = queryset.filter(product_id=product_id)
+        else:
+            queryset = queryset.none()
+        return queryset
 
 
 class ProductViewSet(BaseAuthenticated, viewsets.ModelViewSet):

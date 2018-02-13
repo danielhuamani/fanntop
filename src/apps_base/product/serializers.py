@@ -2,7 +2,8 @@ from rest_framework import serializers
 from drf_queryfields import QueryFieldsMixin
 from django.db import transaction
 from apps_base.attribute.serializers import AttributeOptionSerializer
-from .models import ProductClass, Product, ProductAttributeValue, ProductGaleryImage
+from sorl.thumbnail import get_thumbnail
+from .models import ProductClass, Product, ProductAttributeValue, ProductGaleryImage, ProductImage
 from .utils import generate_sku
 
 
@@ -23,10 +24,36 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class ProductGaleryImageSerializer(serializers.ModelSerializer):
+    # product = serializers.IntegerField()
+    product = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = ProductGaleryImage
-        fields = ['image', 'product_class']
+        fields = ['image', 'product_class', 'product']
+
+    @transaction.atomic
+    def create(self, validated_data):
+        product = validated_data.pop('product', None)
+        product_galery_image = super(ProductGaleryImageSerializer, self).create(validated_data)
+        is_featured = False
+        if ProductImage.objects.filter(product_id=product).exists():
+            is_featured = True
+        ProductImage.objects.create(
+            product_image=product_galery_image, product_id=product, is_featured=is_featured)
+        return product_galery_image
+
+
+class ProductImageSerializer(serializers.ModelSerializer):
+    image_crop = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProductImage
+        fields = ['is_featured', 'product_image', 'product', 'image_crop']
+
+
+    def get_image_crop(self, obj):
+        crop = get_thumbnail(obj.product_image.image, '180x180', crop='center', quality=99)
+        return self.context['request'].build_absolute_uri(crop.url)
 
 
 class ProductAttributeValueSerializer(serializers.ModelSerializer):

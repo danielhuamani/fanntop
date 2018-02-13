@@ -6,10 +6,17 @@ from rest_framework.generics import ListAPIView
 from .serializers import AttributeSerializer, AttributeOptionSerializer
 from .models import Attribute, AttributeOption
 
+
 class AttributeViewSet(BaseAuthenticated, viewsets.ModelViewSet):
 
     serializer_class = AttributeSerializer
     queryset = Attribute.objects.filter(is_trash=False)
+
+
+class AttributeOptionViewSet(BaseAuthenticated, viewsets.ModelViewSet):
+
+    serializer_class = AttributeOptionSerializer
+    queryset = AttributeOption.objects.filter(is_trash=False)
 
 
 class AttributeOptionListAPI(BaseAuthenticated, ListAPIView):
