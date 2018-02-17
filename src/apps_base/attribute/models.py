@@ -8,7 +8,7 @@ from uuslug import uuslug
 class Attribute(CoreTimeModel, CoreActiveModel):
     name = models.CharField(_('Name'), max_length=255)
     name_store = models.CharField(
-        _('Name Store'), max_length=255)
+        _('Name Store'), max_length=255, blank=True)
     is_use_search = models.BooleanField(
         _('Use in search'), default=False)
     type_name = models.CharField(_('Type of attribute'),
@@ -34,6 +34,7 @@ class AttributeOption(CoreTimeModel, CoreActiveModel, CorePositionModel):
     class Meta:
         verbose_name = "Atributo"
         verbose_name_plural = "Atributos"
+        ordering = ['position']
 
     def __str__(self):
         return self.option

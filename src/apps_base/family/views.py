@@ -4,9 +4,9 @@ from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
 from apps_base.core.mixins import BaseAuthenticated
 from rest_framework.generics import ListCreateAPIView
 from .serializers import (FamilySerializer, AttributeSerializer,
-    FamilyGroupAttributeSerializer, FamilyGroupSerializer)
+    FamilyAttributeSerializer, FamilyGroupSerializer)
 from apps_base.attribute.models import Attribute
-from .models import Family, FamilyGroup, FamilyGroupAttribute
+from .models import Family, FamilyGroup, FamilyAttribute
 
 
 class FamilyViewSet(BaseAuthenticated, viewsets.ModelViewSet):
@@ -28,11 +28,17 @@ class FamilyGroupViewSet(BaseAuthenticated, viewsets.ModelViewSet):
             queryset = queryset.filter(family_id=int(family))
         return queryset
 
-class FamilyGroupAttributeViewSet(BaseAuthenticated, viewsets.ModelViewSet):
+class FamilyAttributeViewSet(BaseAuthenticated, viewsets.ModelViewSet):
 
-    serializer_class = FamilyGroupAttributeSerializer
-    queryset = FamilyGroupAttribute.objects.filter(is_trash=False)
+    serializer_class = FamilyAttributeSerializer
+    queryset = FamilyAttribute.objects.filter(is_trash=False)
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        family_id = self.request.query_params.get('family_id', False)
+        if family_id:
+            queryset = queryset.filter(family_id=int(family_id))
+        return queryset
 
 
 class AttributeListAPI(BaseAuthenticated, ListCreateAPIView):
@@ -42,9 +48,12 @@ class AttributeListAPI(BaseAuthenticated, ListCreateAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        family_group = self.request.query_params.get('family_group', False)
-        if family_group:
-            family_id = FamilyGroup.objects.get(id=int(family_group)).family_id
-            family_group_attr = FamilyGroupAttribute.objects.filter(family_group__family__id=int(family_id)).values_list('atribute_id', flat=True)
-            queryset = queryset.exclude(id__in=list(family_group_attr))
+        family_id = self.request.query_params.get('family_id', False)
+        attr_id = self.request.query_params.get('attr_id', False)
+        if family_id:
+            family_attribute = FamilyAttribute.objects.filter(family_id=int(family_id))
+            if attr_id:
+                family_attribute = family_attribute.exclude(attribute_id=int(attr_id))
+            family_attribute = family_attribute.values_list('attribute_id', flat=True)
+            queryset = queryset.exclude(id__in=list(family_attribute))
         return queryset

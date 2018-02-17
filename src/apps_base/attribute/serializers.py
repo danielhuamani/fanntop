@@ -12,7 +12,7 @@ class AttributeOptionSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     class Meta:
         model = AttributeOption
         fields = [
-            'id', 'attr', 'option', 'name_attr'
+            'id', 'attr', 'option', 'name_attr', 'position'
         ]
 
     def get_name_attr(self, obj):
@@ -32,8 +32,9 @@ class AttributeSerializer(QueryFieldsMixin, serializers.ModelSerializer):
         type_name = data.get('type_name')
         is_variation = data.get('is_variation')
         attribute_options = data.get('attribute_options')
-        if not(type_name in [COLOUR, SELECT_SINGLE] and attribute_options):
-            raise serializers.ValidationError('Debe agregar valor al atributo elegido')
+        if type_name in [COLOUR, SELECT_SINGLE]:
+            if not attribute_options:
+                raise serializers.ValidationError('Debe agregar valor al atributo elegido')
         return data
 
     @transaction.atomic

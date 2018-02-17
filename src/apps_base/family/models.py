@@ -29,13 +29,15 @@ class FamilyGroup(CorePositionModel):
         return self.name
 
 
-class FamilyGroupAttribute(CoreTimeModel, CoreActiveModel, CorePositionModel):
-    family_group = models.ForeignKey(
-        "FamilyGroup", related_name='familygroup_familygroupatribute',
-        null=True, blank=True)
-    atribute = models.ForeignKey(
-        "attribute.Attribute", related_name='attribute_familygroupatribute',
-        null=True, blank=True)
+class FamilyAttribute(CoreTimeModel, CoreActiveModel, CorePositionModel):
+    # family_group = models.ForeignKey(
+    #     "FamilyGroup", related_name='familygroup_familygroupatribute',
+    #     null=True, blank=True)
+    family = models.ForeignKey(
+            'Family', related_name='family_familygroupatribute'
+        )
+    attribute = models.ForeignKey(
+        "attribute.Attribute", related_name='attribute_familygroupatribute')
     is_required = models.BooleanField(
         'Obligatorio', default=False)
 
@@ -44,4 +46,4 @@ class FamilyGroupAttribute(CoreTimeModel, CoreActiveModel, CorePositionModel):
         verbose_name_plural = "Family Group Atribute"
 
     def __str__(self):
-        return self.atribute.name
+        return self.attribute.name

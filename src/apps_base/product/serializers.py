@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from drf_queryfields import QueryFieldsMixin
 from django.db import transaction
-from apps_base.attribute.serializers import AttributeOptionSerializer
+from apps_base.attribute.serializers import AttributeOptionSerializer, AttributeSerializer
 from sorl.thumbnail import get_thumbnail
 from .models import ProductClass, Product, ProductAttributeValue, ProductGaleryImage, ProductImage
 from .utils import generate_sku
@@ -9,7 +9,7 @@ from .utils import generate_sku
 
 class ProductSerializer(serializers.ModelSerializer):
     sku = serializers.CharField(required=False, max_length=100, allow_blank=True)
-    attribute_option = AttributeOptionSerializer(many=True, read_only=True)
+    attribute_option = AttributeOptionSerializer(many=True)
 
     class Meta:
         model = Product
@@ -57,25 +57,30 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 
 class ProductAttributeValueSerializer(serializers.ModelSerializer):
+    id = serializers.ModelField(model_field=ProductAttributeValue()._meta.get_field('id'), required=False)
 
     class Meta:
         model = ProductAttributeValue
         fields = [
             'attribute', 'value_text','value_boolean',
-            'value_input','value_multi_option','value_option'
+            'value_input','value_multi_option','value_option', 'id'
         ]
 
 
 class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     product_class_products = ProductSerializer(many=True)
     product_class_product_attr_value = ProductAttributeValueSerializer(many=True)
+    family_name = serializers.SerializerMethodField()
 
     class Meta:
         model = ProductClass
         fields = ['id', 'influencer', 'category', 'name',  'description', 'is_variation',
              'title', 'slug', 'meta_description', 'product_class_product_attr_value',
-             'product_class_products', 'family', 'attribute']
+             'product_class_products', 'family', 'attribute', 'characteristics', 'family_name']
 
+
+    def get_family_name(self, obj):
+        return obj.family.name
 
     @transaction.atomic
     def create(self, validated_data):
@@ -92,6 +97,7 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
                     is_featured=product.get('is_featured'),
                     is_variation=True
                 )
+                print(product.get('attribute_option'), '----', product)
                 product_create.attribute_option.add(*product.get('attribute_option'))
         else:
              Product.objects.create(
@@ -102,6 +108,31 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
                 is_featured=True,
                 is_variation=False
             )
+
         for product_class_attr_value in product_class_product_attr_value:
             ProductAttributeValue.objects.create(product_class=product_class, **product_class_attr_value)
         return product_class
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        product_class_product_attr_value = []
+        if validated_data.get('product_class_product_attr_value'):
+            product_class_product_attr_value = validated_data.pop('product_class_product_attr_value')
+        instance = super(ProductClassSerializer, self).update(instance, validated_data)
+        for attr_value in product_class_product_attr_value:
+            id = ''
+            if attr_value.get('id', None) or attr_value.get('id', None) == 0:
+                id = attr_value.pop('id')
+            if id:
+                ProductAttributeValue.objects.filter(id=int(id)).update(**attr_value)
+            else:
+                ProductAttributeValue.objects.create(product_class=instance, **attr_value)
+        return instance
+
+
+class ProductClassAttributeSerializer(QueryFieldsMixin, serializers.ModelSerializer):
+    attribute = AttributeSerializer(many=True)
+
+    class Meta:
+        model = ProductClass
+        fields = ['is_variation', 'attribute']

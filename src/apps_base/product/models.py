@@ -36,6 +36,7 @@ class Product(CoreActiveModel, CoreTimeModel):
     class Meta:
         verbose_name = "Product"
         verbose_name_plural = "Products"
+        # unique_together = ('attribute_option', 'product_class')
 
     def __str__(self):
         return self.sku
@@ -90,6 +91,7 @@ class ProductAttributeValue(models.Model):
     class Meta:
         verbose_name = "ProductAttributeValue"
         verbose_name_plural = "ProductAttributeValues"
+        unique_together = ('attribute', 'product_class')
 
     def __str__(self):
         return 'Product Atribute'

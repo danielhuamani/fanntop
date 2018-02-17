@@ -35,7 +35,7 @@ class CategoryListAPI(BaseAuthenticated, ListCreateAPIView):
     A viewset for viewing and editing user instances.
     """
     serializer_class = CategorySerializer
-    queryset = Category.objects.filter(is_trash=False)
+    queryset = Category.objects.filter(is_trash=False, category__isnull=True)
     parser_classes = (MultiPartParser, FormParser, FileUploadParser)
 
     def get_queryset(self):
