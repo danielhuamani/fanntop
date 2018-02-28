@@ -18,7 +18,20 @@
           {% endif %}
         </li>
         {% endfor %}
-
+        <li><a > Influenciadores</a>
+          {% if influencers_processors %}
+          <div class="submenu">
+            <div class="container">
+              <h3 class="title">Todos los Influenciadores</h3>
+              <ul>
+                {% for influencer in influencers_processors %}
+                  <li><a href="{% url 'web_product:influencer_products' influencer.slug %}">{{influencer.name}}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          {% endif %}
+        </li>
 
       </ul>
     </nav>

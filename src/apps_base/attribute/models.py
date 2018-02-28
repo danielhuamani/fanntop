@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from apps_base.core.models import (CoreTimeModel, CoreActiveModel, CorePositionModel)
-from .constants import TYPE_ATRIBUTE
+from .constants import TYPE_ATRIBUTE, INPUT, SELECT_SINGLE, SELECT_MULTIPLE
 from uuslug import uuslug
 
 
@@ -15,6 +15,11 @@ class Attribute(CoreTimeModel, CoreActiveModel):
         max_length=120, choices=TYPE_ATRIBUTE)
     is_filter = models.BooleanField(_('Filtered'), default=False)
     is_variation = models.BooleanField(_('Variation'), default=False)
+    slug = models.CharField(max_length=120, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = uuslug(self.name, instance=self, slug_field='slug', filter_dict=None)
+        super(Attribute, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Atributo"
@@ -23,6 +28,9 @@ class Attribute(CoreTimeModel, CoreActiveModel):
 
     def __str__(self):
         return self.name
+
+    # def get_type_name_value(self):
+    #     self.type_name
 
 
 class AttributeOption(CoreTimeModel, CoreActiveModel, CorePositionModel):

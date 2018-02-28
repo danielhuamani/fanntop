@@ -9,11 +9,12 @@ from .utils import generate_sku
 
 class ProductSerializer(serializers.ModelSerializer):
     sku = serializers.CharField(required=False, max_length=100, allow_blank=True)
-    attribute_option = AttributeOptionSerializer(many=True)
+    product_attribute_option = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ['is_featured', 'id', 'attribute_option', 'sku', 'stock', 'price', 'is_active']
+        fields = ['is_featured', 'id', 'attribute_option', 'sku', 'stock',
+             'price', 'is_active', 'product_attribute_option']
 
 
     def validate(self, data):
@@ -21,6 +22,9 @@ class ProductSerializer(serializers.ModelSerializer):
         if not data.get('sku', None): #this conditon will be true only when age = serializer.IntergerField(required=False)
             data['sku'] = generate_sku()
         return data
+
+    def get_product_attribute_option(self, obj):
+        return AttributeOptionSerializer(obj.attribute_option, many=True).data
 
 
 class ProductGaleryImageSerializer(serializers.ModelSerializer):
@@ -76,7 +80,8 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
         model = ProductClass
         fields = ['id', 'influencer', 'category', 'name',  'description', 'is_variation',
              'title', 'slug', 'meta_description', 'product_class_product_attr_value',
-             'product_class_products', 'family', 'attribute', 'characteristics', 'family_name']
+             'product_class_products', 'family', 'attribute', 'characteristics', 'family_name',
+             'is_published']
 
 
     def get_family_name(self, obj):
@@ -95,9 +100,9 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
                     stock=product.get('stock'),
                     price=product.get('price'),
                     is_featured=product.get('is_featured'),
-                    is_variation=True
+                    is_variation=True,
+                    is_active=False
                 )
-                print(product.get('attribute_option'), '----', product)
                 product_create.attribute_option.add(*product.get('attribute_option'))
         else:
              Product.objects.create(
@@ -106,20 +111,29 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
                 stock=0,
                 price=0,
                 is_featured=True,
-                is_variation=False
+                is_variation=False,
+                is_active=False
             )
-
+        update_json_data_sheet = False
         for product_class_attr_value in product_class_product_attr_value:
+            update_json_data_sheet = True
+            if product_class_attr_value.get('id') or product_class_attr_value.get('id') == 0:
+                product_class_attr_value.pop('id')
             ProductAttributeValue.objects.create(product_class=product_class, **product_class_attr_value)
+        if update_json_data_sheet:
+            product_class.attribute.all()
         return product_class
 
     @transaction.atomic
     def update(self, instance, validated_data):
         product_class_product_attr_value = []
-        if validated_data.get('product_class_product_attr_value'):
-            product_class_product_attr_value = validated_data.pop('product_class_product_attr_value')
+        # if validated_data.get('product_class_product_attr_value'):
+        product_class_product_attr_value = validated_data.pop('product_class_product_attr_value')
+        print(validated_data, '-validated_data')
         instance = super(ProductClassSerializer, self).update(instance, validated_data)
+        update_json_data_sheet = False
         for attr_value in product_class_product_attr_value:
+            update_json_data_sheet = True
             id = ''
             if attr_value.get('id', None) or attr_value.get('id', None) == 0:
                 id = attr_value.pop('id')
@@ -127,6 +141,21 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
                 ProductAttributeValue.objects.filter(id=int(id)).update(**attr_value)
             else:
                 ProductAttributeValue.objects.create(product_class=instance, **attr_value)
+        if update_json_data_sheet:
+            data = {
+                'ficha': []
+            }
+            print(instance.id, '-')
+            for attr in instance.family.family_familygroupatribute.filter(
+                attribute__is_variation=False).prefetch_related('attribute'):
+                print(attr, attr.attribute_id)
+                data['ficha'].append({
+                    'name': attr.attribute.name_store,
+                    'value': instance.product_class_product_attr_value.all().get(
+                        attribute_id=attr.attribute_id).get_value()
+                })
+            instance.data_sheet = data
+            instance.save()
         return instance
 
 

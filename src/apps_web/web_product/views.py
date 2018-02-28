@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from apps_base.influencer.models import Influencer
 from apps_base.category.models import Category
+from apps_base.product.models import Product, ProductClass
+
 
 def influencer_products(request, slug):
     influencer = get_object_or_404(Influencer, slug=slug)
@@ -23,3 +25,11 @@ def category_child_products(request, slug, slug_child):
         'category': category
     }
     return render(request, 'product/category_list_products.html', ctx)
+
+
+def product(request, slug):
+    product = get_object_or_404(ProductClass, slug=slug)
+    ctx = {
+        'product': product
+    }
+    return render(request, 'product/product.html', ctx)

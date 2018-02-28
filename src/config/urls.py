@@ -28,5 +28,12 @@ urlpatterns += [
             include('apps_base.pages.urls', namespace='pages')),
     ])),
     url(r'^', include('apps_web.web_system.urls', namespace='web_system')),
-    url(r'^', include('apps_web.web_product.urls', namespace='web_product'))
+    url(r'^', include('apps_web.web_product.urls', namespace='web_product')),
+    url(r'^', include('apps_web.web_cart.urls', namespace='web_cart'))
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

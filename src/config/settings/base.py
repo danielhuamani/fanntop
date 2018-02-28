@@ -26,8 +26,8 @@ SECRET_KEY = ENV.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*', 'localhost']
+INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 # Application definition
 DJANGO_APPS = [
@@ -54,10 +54,15 @@ BASE_APPS = [
     'apps_base.product',
     'apps_base.attribute',
     'apps_base.family',
-    'apps_base.pages'
+    'apps_base.pages',
+    'apps_base.cart'
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BASE_APPS
+WEB_APPS = [
+    'apps_web.web_cart'
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BASE_APPS + WEB_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,7 +137,7 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.AllowAny',
     ]
 }
 CORS_ORIGIN_WHITELIST = tuple(ENV.get('CORS'))
@@ -190,3 +195,19 @@ JWT_AUTH = {
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
+    }
+}
+
+THUMBNAIL_DEBUG = True
+THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
+THUMBNAIL_REDIS_HOST = 'localhost'
+THUMBNAIL_REDIS_PORT = 6379
+THUMBNAIL_DUMMY = True

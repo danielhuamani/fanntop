@@ -1,0 +1,95 @@
+{% extends "common/base.html" %}
+{% load static %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main">
+        <div class="container">
+            <router-view ></router-view>
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="wrap-desc-info boxw">
+                    <ul role="tablist" class="tab nav-tabs">
+                      <li role="caracteristicas" class="active"><a href="#caracteristicas" aria-controls="caracteristicas" role="tab" data-toggle="tab">Caracteristicas</a></li>
+                      <li role="ficha"><a href="#ficha" aria-controls="ficha" role="tab" data-toggle="tab">Ficha Tecnica</a></li>
+                    </ul>
+                    <div class="tab-content">
+                      <div id="caracteristicas" role="tabpanel" class="fade in tab-pane active">
+                        {{product.characteristics|safe}}
+                      </div>
+                      <div id="ficha" role="tabpanel" class="fade tab-pane">
+                        <table border="1" cellpadding="0" cellspacing="0" style="width: 100%;" class="tbl tbl-striped">
+                          <tbody>
+                            {% for ficha in product.data_sheet.ficha %}
+                                <tr>
+                                  <td valign="top" width="50%">
+                                    <p><strong><span>{{ficha.name}}</span></strong></p>
+                                  </td>
+                                  <td valign="top" width="50%">
+                                    <p><span>{{ficha.value}}</span></p>
+                                  </td>
+                                </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="product-related">
+                <div class="title">
+                  <h3>Productos Relacionados</h3>
+                </div>
+                <div class="w-body">
+                  <div class="row">
+                    <div class="col-md-3"><a href="#" class="box item-result">
+                        <div class="image"> <img src="img/influencer.jpg"/></div>
+                        <div class="detail">
+                          <h3 class="title">Faithfull</h3>
+                          <h4 class="subtitle">subtitle</h4>
+                          <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
+                        </div>
+                        <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
+                    <div class="col-md-3"><a href="#" class="box item-result">
+                        <div class="image"> <img src="img/influencer.jpg"/></div>
+                        <div class="detail">
+                          <h3 class="title">Faithfull</h3>
+                          <h4 class="subtitle">subtitle</h4>
+                          <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
+                        </div>
+                        <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
+                    <div class="col-md-3"><a href="#" class="box item-result">
+                        <div class="image"> <img src="img/influencer.jpg"/></div>
+                        <div class="detail">
+                          <h3 class="title">Faithfull</h3>
+                          <h4 class="subtitle">subtitle</h4>
+                          <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
+                        </div>
+                        <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
+                    <div class="col-md-3"><a href="#" class="box item-result">
+                        <div class="image"> <img src="img/influencer.jpg"/></div>
+                        <div class="detail">
+                          <h3 class="title">Faithfull</h3>
+                          <h4 class="subtitle">subtitle</h4>
+                          <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
+                        </div>
+                        <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock content %}
+{% block js %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  <script src="{% static 'js/slick.min.js' %}"></script>
+  <script src="{% static 'js/functions.js' %}?v=0.0.2"></script>
+{% endblock js %}

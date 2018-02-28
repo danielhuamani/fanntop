@@ -9,9 +9,12 @@ STATIC_ROOT = ''
 STATIC_URL = '/static/'
 
 INSTALLED_APPS += [
-
+    'debug_toolbar',
 ]
 
+MIDDLEWARE += [
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
+]
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),

@@ -15,18 +15,27 @@
     {% endblock css %}
 </head>
 <body>
-  <main data-section="tab2" class="wrapper">
+  <main data-section="tab2" class="wrapper" id="app">
+
     {% include "./header.html" %}
     {% include "./menu.html" %}
     {% block content %}
 
     {% endblock content %}
+    <cart-view ></cart-view>
     {% include "./footer.html" %}
+
   </main>
 
+    {% if debug %}
+        <script src='http://localhost:8080/static/app/app.js'></script>
+    {% else %}
+        <script src='{% static "app/app.js" %}'></script>
 
+    {% endif %}
     {% block js %}
 
     {% endblock js %}
+
 </body>
 </html>
