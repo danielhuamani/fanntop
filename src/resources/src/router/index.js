@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import categoryList from '@/pages/categoryList'
 import productDetail from '@/pages/productDetail'
+import cart from '@/pages/cart'
 // import cartView from '@/common/cartView'
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ export default new Router({
       path: '/producto/:slug/',
       name: 'product_detail',
       component: productDetail
+    },
+    {
+      path: '/carro-compras/',
+      name: 'cart',
+      component: cart
     }
   ]
 })

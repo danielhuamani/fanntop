@@ -34,7 +34,7 @@
           <div class="subtotal">
             <div class="title-s">Subtotal: </div><strong>S/. {{getCart.total}}</strong>
           </div>
-          <div class="w-btn"><a class="btn btn-primary">Ver Carrito</a></div>
+          <div class="w-btn"><a href="/carro-compras/" class="btn btn-primary">Ver Carrito</a></div>
         </div>
       </div>
     </div>

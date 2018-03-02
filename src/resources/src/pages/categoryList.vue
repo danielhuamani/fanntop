@@ -5,6 +5,69 @@
         <div class="row">
           <productFilter :query='query' @queryInfluencer='queryInfluencer' @queryAttribute='queryAttribute'
           :productsFilters='productsFilters' v-if='Object.keys(productsFilters).length > 0'></productFilter>
+          <div v-else>
+              <div class="col-md-3" v-cloak>
+                <div class="sidebar sidebar-filter box">
+                  <div class="w-filter">
+                    <h3>Influencer</h3>
+                    <ul>
+                      <li>
+                        <label for="influencer_all">
+                          <input type="checkbox" value="todos" id="influencer_all"/><span class="filtros-check"> <i class="fa fa-check">  </i></span>Todos
+                        </label>
+                      </li>
+                      <li>
+                        <label for="influencer_all">
+                          <input type="checkbox" value="todos" id="influencer_all"/><span class="filtros-check"> <i class="fa fa-check">  </i></span>Todos
+                        </label>
+                      </li>
+                      <li>
+                        <label for="influencer_all">
+                          <input type="checkbox" value="todos" id="influencer_all"/><span class="filtros-check"> <i class="fa fa-check">  </i></span>Todos
+                        </label>
+                      </li>
+                      <li>
+                        <label for="influencer_all">
+                          <input type="checkbox" value="todos" id="influencer_all"/><span class="filtros-check"> <i class="fa fa-check">  </i></span>Todos
+                        </label>
+                      </li>
+                      <li>
+                        <label for="influencer_all">
+                          <input type="checkbox" value="todos" id="influencer_all"/><span class="filtros-check"> <i class="fa fa-check">  </i></span>Todos
+                        </label>
+                      </li>
+                      <li>
+                        <label for="influencer_all">
+                          <input type="checkbox" value="todos" id="influencer_all"/><span class="filtros-check"> <i class="fa fa-check">  </i></span>Todos
+                        </label>
+                      </li>
+                      <li>
+                        <label for="influencer_all">
+                          <input type="checkbox" value="todos" id="influencer_all"/><span class="filtros-check"> <i class="fa fa-check">  </i></span>Todos
+                        </label>
+                      </li>
+                      <li>
+                        <label for="influencer_all">
+                          <input type="checkbox" value="todos" id="influencer_all"/><span class="filtros-check"> <i class="fa fa-check">  </i></span>Todos
+                        </label>
+                      </li>
+                      <li>
+                        <label for="influencer_all">
+                          <input type="checkbox" value="todos" id="influencer_all"/><span class="filtros-check"> <i class="fa fa-check">  </i></span>Todos
+                        </label>
+                      </li>
+                      <li>
+                        <label for="influencer_all">
+                          <input type="checkbox" value="todos" id="influencer_all"/><span class="filtros-check"> <i class="fa fa-check">  </i></span>Todos
+                        </label>
+                      </li>
+
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+          </div>
           <productList :products='products'></productList>
         </div>
       </div>
@@ -130,4 +193,5 @@
       }
     }
   }
+  // v-if='Object.keys(productsFilters).length > 0'
 </script>

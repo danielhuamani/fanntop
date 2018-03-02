@@ -45,9 +45,12 @@ const moduleCartView = {
         url: '/api/cart/',
         data: product
       }).then(response => {
-        commit('changeStatusCartView', true)
+        console.log(product.notMenu, 'product.notMenu')
+        if (!product.notMenu) {
+          commit('changeStatusCartView', true)
+          commit('setIsMenu', true)
+        }
         commit('setCart', response.data)
-        commit('setIsMenu', true)
       }).catch(error => {
         commit('setError', error.response.data.error)
         setTimeout(()=> {
@@ -62,9 +65,11 @@ const moduleCartView = {
         url: '/api/cart/',
         data: product
       }).then(response => {
-        commit('changeStatusCartView', true)
+        if (!product.notMenu) {
+          commit('changeStatusCartView', true)
+          commit('setIsMenu', true)
+        }
         commit('setCart', response.data)
-        commit('setIsMenu', true)
       }).catch(error => {
         commit('setError', error.response.data.error)
         setTimeout(()=> {
@@ -100,6 +105,15 @@ const moduleCartView = {
       } else {
         commit('changeStatusCartView', status)
       }
+    },
+    getCartView ({commit}) {
+      Vue.axios.get('/api/cart/', {
+      }).then(response => {
+        commit('setCart', response.data)
+        commit('setIsMenu', true)
+      }).catch(e => {
+        // commit('changeStatusCartView', status)
+      })
     }
   }
 }

@@ -1,0 +1,13 @@
+{% extends "common/base.html" %}
+{% load static thumbnail %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<transition name="fade" mode="out-in"  appear>
+  <router-view ></router-view>
+</transition>
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}

@@ -1,5 +1,5 @@
 {% extends "common/base.html" %}
-{% load static %}
+{% load static thumbnail %}
 {% block css %}
 
 {% endblock css %}
@@ -10,7 +10,11 @@
     <div class="slider-slick">
 
       {% for home_banner in home_banners %}
-        <div class="slider-item"><img src="{{home_banner.image.url}}"/></div>
+        <div class="slider-item">
+          {% thumbnail home_banner.image "1350x380" crop="center" as im %}
+              <img src="{{ im.url }}"  height="{{ im.height }}">
+          {% endthumbnail %}
+        </div>
       {% endfor %}
 
 
