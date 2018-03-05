@@ -147,3 +147,72 @@ class ProductClassDetailAPI(APIView):
     #     snippets = Snippet.objects.all()
     #     serializer = ProductClassSerializer(snippets, many=True)
     #     return Response(serializer.data)
+
+
+class ProductClassInfluencerListAPI(ListAPIView):
+    queryset = ProductClass.objects.active().filter(is_published=True).select_related('influencer').prefetch_related(
+        'product_class_products', 'category')
+    serializer_class = ProductClassSerializer
+    pagination_class = ProductPagination
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        slug = self.kwargs.get('slug')
+        influencer = Influencer.objects.get(slug=slug)
+        # category = get_object_or_404(Category, category__slug=slug, slug=slug_child)
+        queryset = queryset.filter(influencer=influencer)
+        # filter_influencer = self.request.query_params.getlist('influencer[]', None)
+        filter_attribute = self.request.query_params.getlist('attr[]', None)
+        attr_list = []
+        print(filter_attribute, 'filter_attribute')
+        for attr in filter_attribute:
+            str_attr = '{0}{1}'.format(attr, '[]')
+            attr_slug = self.request.query_params.getlist(str_attr, None)
+            attr_list += attr_slug
+        if attr_list:
+            queryset = queryset.filter(product_class_products__attribute_option__slug__in=attr_list).distinct('id')
+        print(attr_list, 'attr_list,attr_list')
+        return queryset
+
+    def get_serializer_context(self):
+        filter_attribute = self.request.query_params.getlist('attr[]', None)
+        attr_list = []
+        for attr in filter_attribute:
+            str_attr = '{0}{1}'.format(attr, '[]')
+            attr_slug = self.request.query_params.getlist(str_attr, None)
+            attr_list += attr_slug
+        context = super().get_serializer_context()
+        context['attr_list'] = attr_list
+        return context
+
+
+class InfluencerFilterAPI(APIView):
+    queryset = ProductClass.objects.active().filter(is_published=True).select_related('influencer')
+
+    def get(self, *args, **kwargs):
+        slug = self.kwargs.get('slug')
+        influencer = get_object_or_404(Influencer, slug=slug)
+        product_class = ProductClass.objects.active().filter(is_published=True, influencer=influencer)
+        product_class_ids = product_class.values_list('id', flat=True)
+        product_class_influencer_ids = product_class.values_list('influencer_id', flat=True)
+        filter_influencer = self.request.query_params.getlist('influencer[]', None)
+        if filter_influencer:
+            queryset = product_class.filter(influencer__slug__in=filter_influencer)
+
+        product_ids = Product.objects.filter(
+            product_class_id__in=product_class_ids, attribute_option__id__isnull=False)
+
+        products_attribute_option_ids = product_ids.filter(
+            attribute_option__attribute__is_variation=True).distinct(
+            'attribute_option__id').values_list('attribute_option__id', flat=True)
+        products_attribute_ids = product_ids.distinct(
+            'attribute_option__attribute__id').values_list('attribute_option__attribute__id', flat=True)
+        attributes = Attribute.objects.filter(is_variation=True, id__in=products_attribute_ids)
+        serializer_attribute = AttributeFilterSerializer(attributes, many=True, context={
+            'attribute_option_ids': products_attribute_option_ids}).data
+        influencers = Influencer.objects.filter(id__in=list(product_class_influencer_ids))
+        serializer_influencer = InfluencerFilterSerializer(influencers, many=True).data
+        data = {
+            'attributes': serializer_attribute
+        }
+        return Response(data)

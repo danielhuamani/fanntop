@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-3" v-cloak>
     <div class="sidebar sidebar-filter box">
-      <div class="w-filter">
+      <div class="w-filter" v-if="productsFilters.influencers">
         <h3>Influencer</h3>
         <ul>
           <li>

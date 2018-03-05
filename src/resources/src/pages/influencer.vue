@@ -206,7 +206,7 @@
         const self = this
         this.axios({
           method: 'get',
-          url: '/api/product-category/' + this.$route.params.slug_parent_category + '/' + this.$route.params.slug_category + '/',
+          url: '/api/product-influencer/' + this.$route.params.slug + '/',
           params: params
         }).then(response => {
           self.products = response.data
@@ -218,7 +218,7 @@
         const self = this
         this.axios({
           method: 'get',
-          url: '/api/category-filter/' + this.$route.params.slug_parent_category + '/' + this.$route.params.slug_category + '/',
+          url: '/api/influencer-filter/' + this.$route.params.slug + '/',
           params: params
         }).then(response => {
           self.productsFilters = response.data
