@@ -4,7 +4,7 @@
 
         <div class="row">
           <productFilter :query='query' @queryInfluencer='queryInfluencer' @queryAttribute='queryAttribute'
-          :productsFilters='productsFilters' v-if='Object.keys(productsFilters).length > 0'></productFilter>
+          :productsFilters='productsFilters' v-if='load_product_filter'></productFilter>
           <div class="col-md-3" v-else>
             <div class="sidebar sidebar-filter box">
               <div class="w-filter">
@@ -86,7 +86,7 @@
 
             </div>
           </div>
-          <productList v-if="products.results.length > 0" :products='products'></productList>
+          <productList v-if="load_products" :products='products'></productList>
           <!--<productList v-if="products.results.length > 0" :products='products'></productList>-->
           <div  v-else  class="col-md-9 product-list-mask">
             <div class="content">
@@ -157,7 +157,9 @@
         },
         productsFilters: {},
         query: {},
-        productsMask: [1,2,3]
+        productsMask: [1,2,3],
+        load_products: false,
+        load_product_filter: false
       }
     },
     components: {
@@ -210,6 +212,7 @@
           params: params
         }).then(response => {
           self.products = response.data
+          self.load_products = true
         }).catch(error => {
 
         })
@@ -222,6 +225,7 @@
           params: params
         }).then(response => {
           self.productsFilters = response.data
+          self.load_product_filter = true
         }).catch(error => {
 
         })
