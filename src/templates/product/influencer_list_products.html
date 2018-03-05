@@ -1,199 +1,235 @@
 {% extends "common/base.html" %}
 {% load static %}
 {% block css %}
+<style>
+    [v-cloak] > * { display:none }
 
+    .main-cloak{display: none}
+    [v-cloak] .main-cloak{
+      display: block !important;
+    }
+    p.mask{
+
+    }
+</style>
 {% endblock css %}
 {% block content %}
 <section class="featured">
   <div class="media-content">
-    <slider class="slider-slick">
+    <div class="slider-slick">
       <div class="slider-item"><img src="{{influencer.banner.url}}"/></div>
-    </slider>
+    </div>
   </div>
 </section>
-<section class="main">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3">
-        <div class="sidebar sidebar-filter box">
-          <div class="w-filter">
-            <h3>Influencer</h3>
-            <ul>
-              <li>
-                <label for="todos">
-                  <input type="checkbox" value="todos" id="todos"/><span class="filtros-check"> <i class="fa fa-check">                       </i></span>Todos
-                </label>
-              </li>
-              <li>
-                <label for="influencer1">
-                  <input type="checkbox" value="influencer1" id="influencer1"/><span class="filtros-check"><i class="fa fa-check"> </i></span>Influencer 1
-                </label>
-              </li>
-              <li>
-                <label for="influencer2">
-                  <input type="checkbox" value="influencer2" id="influencer2"/><span class="filtros-check"><i class="fa fa-check"> </i></span>Influencer 2
-                </label>
-              </li>
-              <li>
-                <label for="influencer3">
-                  <input type="checkbox" value="influencer3" id="influencer3"/><span class="filtros-check"><i class="fa fa-check"> </i></span>Influencer 3
-                </label>
-              </li>
-              <li>
-                <label for="influencer4">
-                  <input type="checkbox" value="influencer4" id="influencer4"/><span class="filtros-check"><i class="fa fa-check"> </i></span>Influencer 4
-                </label>
-              </li>
-            </ul>
-          </div>
-          <div class="w-filter">
-            <h3>Color</h3>
-            <ul class="colors">
-              <li><a href="#" class="red"> <span></span></a></li>
-              <li><a href="#" class="azul"> <span></span></a></li>
-              <li><a href="#" class="rosado"> <span></span></a></li>
-              <li><a href="#" class="verde"> <span></span></a></li>
-              <li><a href="#" class="amarillo"> <span></span></a></li>
-            </ul>
-          </div>
-          <div class="w-filter">
-            <h3>Ropa</h3>
-            <ul>
-              <li>
-                <label for="todosropa">
-                  <input type="checkbox" value="todos" id="todosropa"/><span class="filtros-check"><i class="fa fa-check"> </i></span>Todos
-                </label>
-              </li>
-              <li>
-                <label for="casacas">
-                  <input type="checkbox" value="casacas" id="casacas"/><span class="filtros-check"><i class="fa fa-check"> </i></span>Casacas
-                </label>
-              </li>
-              <li>
-                <label for="poleras">
-                  <input type="checkbox" value="todos" id="poleras"/><span class="filtros-check"><i class="fa fa-check"> </i></span>Poleras
-                </label>
-              </li>
-              <li>
-                <label for="polos">
-                  <input type="checkbox" value="todos" id="polos"/><span class="filtros-check"><i class="fa fa-check"> </i></span>Polos
-                </label>
-              </li>
-              <li>
-                <label for="pantalones">
-                  <input type="checkbox" value="todos" id="pantalones"/><span class="filtros-check"><i class="fa fa-check"> </i></span>Pantalones
-                </label>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-9">
-        <div class="content">
-          <div class="content-filter-top"></div>
-          <div class="result">
-            <div class="row">
-              <div class="result-paginator result-paginator-top">
-                <div class="order">
-                  <div class="text">Orden</div>
-                  <select>
-                    <option>todos</option>
-                    <option>Ascendente</option>
-                    <option>Descendente</option>
-                  </select>
+<div v-cloak>
+  <section class="main main-cloak">
+    <div class="container">
+      <div class="row">
+        <div >
+            <div class="col-md-3" >
+              <div class="sidebar sidebar-filter box">
+                <div class="w-filter">
+                  <h3></h3>
+                  <ul>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class='mask'></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+
+                  </ul>
                 </div>
-                <div class="paginator"><span class="item disabled"><i class="fa fa-angle-double-left"></i></span><span class="item disabled"><i class="fa fa-angle-left"></i></span>
-                  <div class="text">1 De 8</div><a href="#" class="item"><i class="fa fa-angle-right"></i></a><a href="#" class="item"><i class="fa fa-angle-double-right"></i></a>
+                <div class="w-filter">
+                  <h3></h3>
+                  <ul>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class='mask'></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+
+                  </ul>
                 </div>
+
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-4"><a href="#" class="box item-result">
-                  <div class="image"> <img src="img/influencer.jpg"/></div>
-                  <div class="detail">
-                    <h3 class="title">Faithfull</h3>
-                    <h4 class="subtitle">subtitle</h4>
-                    <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
+            <div class="col-md-9 product-list-mask">
+            <div class="content">
+              <div class="content-filter-top"></div>
+              <div class="result">
+                <div class="row">
+                  <div class="result-paginator result-paginator-top">
+                    <div class="order">
+                      <div class="text">Orden</div>
+                      <select>
+                        <option>todos</option>
+                        <option>Ascendente</option>
+                        <option>Descendente</option>
+                      </select>
+                    </div>
+                    <div class="paginator">
+                      <span class="item disabled">
+                        <i class="fa fa-angle-double-left"></i>
+                      </span>
+                      <span class="item disabled">
+                        <i class="fa fa-angle-left"></i>
+                      </span>
+                      <div class="text"></div>
+                      <a href="#" class="item">
+                        <i class="fa fa-angle-right"></i>
+                      </a>
+                      <a href="#" class="item">
+                        <i class="fa fa-angle-double-right"></i>
+                      </a>
+                    </div>
                   </div>
-                  <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
-              <div class="col-md-4"><a href="#" class="box item-result">
-                  <div class="image"> <img src="img/influencer.jpg"/></div>
-                  <div class="detail">
-                    <h3 class="title">Faithfull</h3>
-                    <h4 class="subtitle">subtitle</h4>
-                    <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
-                  </div>
-                  <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
-              <div class="col-md-4"><a href="#" class="box item-result">
-                  <div class="image"> <img src="img/influencer.jpg"/></div>
-                  <div class="detail">
-                    <h3 class="title">Faithfull</h3>
-                    <h4 class="subtitle">subtitle</h4>
-                    <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
-                  </div>
-                  <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
-              <div class="col-md-4"><a href="#" class="box item-result">
-                  <div class="image"> <img src="img/influencer.jpg"/></div>
-                  <div class="detail">
-                    <h3 class="title">Faithfull</h3>
-                    <h4 class="subtitle">subtitle</h4>
-                    <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
-                  </div>
-                  <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
-              <div class="col-md-4"><a href="#" class="box item-result">
-                  <div class="image"> <img src="img/influencer.jpg"/></div>
-                  <div class="detail">
-                    <h3 class="title">Faithfull</h3>
-                    <h4 class="subtitle">subtitle</h4>
-                    <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
-                  </div>
-                  <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
-              <div class="col-md-4"><a href="#" class="box item-result">
-                  <div class="image"> <img src="img/influencer.jpg"/></div>
-                  <div class="detail">
-                    <h3 class="title">Faithfull</h3>
-                    <h4 class="subtitle">subtitle</h4>
-                    <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
-                  </div>
-                  <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
-              <div class="col-md-4"><a href="#" class="box item-result">
-                  <div class="image"> <img src="img/influencer.jpg"/></div>
-                  <div class="detail">
-                    <h3 class="title">Faithfull</h3>
-                    <h4 class="subtitle">subtitle</h4>
-                    <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
-                  </div>
-                  <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
-              <div class="col-md-4"><a href="#" class="box item-result">
-                  <div class="image"> <img src="img/influencer.jpg"/></div>
-                  <div class="detail">
-                    <h3 class="title">Faithfull</h3>
-                    <h4 class="subtitle">subtitle</h4>
-                    <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
-                  </div>
-                  <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
-              <div class="col-md-4"><a href="#" class="box item-result">
-                  <div class="image"> <img src="img/influencer.jpg"/></div>
-                  <div class="detail">
-                    <h3 class="title">Faithfull</h3>
-                    <h4 class="subtitle">subtitle</h4>
-                    <div class="price"><span class="offer">S/. 40.09 PEN</span><span class="normal tachado">S/. 80.15 PEN</span></div>
-                  </div>
-                  <div class="fav"><span href="http://www.google.com.pe"><i class="fa fa-heart"></i></span></div></a></div>
-            </div>
-            <div class="row">
-              <div class="result-paginator result-paginator-top">
-                <div class="paginator"><span class="item disabled"><i class="fa fa-angle-double-left"></i></span><span class="item disabled"><i class="fa fa-angle-left"></i></span>
-                  <div class="text">1 De 8</div><a href="#" class="item"><i class="fa fa-angle-right"></i></a><a href="#" class="item"><i class="fa fa-angle-double-right"></i></a>
                 </div>
+                <div class="row">
+                  <div class="col-md-4"  >
+                    <a href='' class="box item-result">
+                      <div class="image"> <img src=""/></div>
+                      <div class="detail">
+                        <h3 class="title"></h3>
+                        <!-- <h4 class="subtitle">subtitle</h4> -->
+                        <div class="price">
+                          <span class="offer"></span>
+                          <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
+                        </div>
+                      </div>
+                      <div class="fav"><span ><i class="fa fa-heart"></i></span></div>
+                    </a>
+                  </div>
+                  <div class="col-md-4"  >
+                    <a href='' class="box item-result">
+                      <div class="image"> <img src=""/></div>
+                      <div class="detail">
+                        <h3 class="title"></h3>
+                        <!-- <h4 class="subtitle">subtitle</h4> -->
+                        <div class="price">
+                          <span class="offer"></span>
+                          <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
+                        </div>
+                      </div>
+                      <div class="fav"><span ><i class="fa fa-heart"></i></span></div>
+                    </a>
+                  </div>
+                  <div class="col-md-4"  >
+                    <a href='' class="box item-result">
+                      <div class="image"> <img src=""/></div>
+                      <div class="detail">
+                        <h3 class="title"></h3>
+                        <!-- <h4 class="subtitle">subtitle</h4> -->
+                        <div class="price">
+                          <span class="offer"></span>
+                          <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
+                        </div>
+                      </div>
+                      <div class="fav"><span ><i class="fa fa-heart"></i></span></div>
+                    </a>
+                  </div>
+
+                </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+  <router-view ></router-view>
+</div>
+ <!--name="fade" mode="out-in"  appear-->
 {% endblock content %}
 {% block js %}
 

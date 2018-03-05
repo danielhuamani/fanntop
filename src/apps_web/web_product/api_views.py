@@ -26,13 +26,46 @@ class ProductClassCategoryListAPI(ListAPIView):
         queryset = queryset.filter(category=category)
         filter_influencer = self.request.query_params.getlist('influencer[]', None)
         filter_attribute = self.request.query_params.getlist('attr[]', None)
+        attr_list = []
+        print(filter_attribute, 'filter_attribute')
         if filter_influencer:
             queryset = queryset.filter(influencer__slug__in=filter_influencer)
         for attr in filter_attribute:
             str_attr = '{0}{1}'.format(attr, '[]')
             attr_slug = self.request.query_params.getlist(str_attr, None)
-            queryset = queryset.filter(product_class_products__attribute_option__slug__in=attr_slug).distinct('id')
+            attr_list += attr_slug
+        if attr_list:
+            queryset = queryset.filter(product_class_products__attribute_option__slug__in=attr_list).distinct('id')
+        print(attr_list, 'attr_list,attr_list')
         return queryset
+
+    def get_serializer_context(self):
+        filter_attribute = self.request.query_params.getlist('attr[]', None)
+        attr_list = []
+        for attr in filter_attribute:
+            str_attr = '{0}{1}'.format(attr, '[]')
+            attr_slug = self.request.query_params.getlist(str_attr, None)
+            attr_list += attr_slug
+        context = super().get_serializer_context()
+        context['attr_list'] = attr_list
+        return context
+
+    # def list(self, request, *args, **kwargs):
+    #     filter_attribute = self.request.query_params.getlist('attr[]', None)
+    #     attr_list = []
+    #     for attr in filter_attribute:
+    #         str_attr = '{0}{1}'.format(attr, '[]')
+    #         attr_slug = self.request.query_params.getlist(str_attr, None)
+    #         attr_list += attr_slug
+    #     queryset = self.filter_queryset(self.get_queryset())
+    #     page = self.paginate_queryset(queryset)
+    #     if page is not None:
+    #         print('page', attr_list)
+    #         serializer = self.get_serializer(page, many=True, context={'attr_list': attr_list})
+    #         return self.get_paginated_response(serializer.data)
+
+    #     serializer = self.get_serializer(queryset, many=True)
+    #     return Response(serializer.data)
 
 
 class CategoryFilterAPI(APIView):

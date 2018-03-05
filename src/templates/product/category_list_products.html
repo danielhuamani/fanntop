@@ -1,7 +1,17 @@
 {% extends "common/base.html" %}
 {% load static %}
 {% block css %}
+<style>
+    [v-cloak] > * { display:none }
 
+    .main-cloak{display: none}
+    [v-cloak] .main-cloak{
+      display: block !important;
+    }
+    p.mask{
+
+    }
+</style>
 {% endblock css %}
 {% block content %}
 <section class="featured">
@@ -11,10 +21,215 @@
     </div>
   </div>
 </section>
-<transition name="fade" mode="out-in"  appear>
-  <router-view ></router-view>
-</transition>
+<div v-cloak>
+  <section class="main main-cloak">
+    <div class="container">
+      <div class="row">
+        <div >
+            <div class="col-md-3" >
+              <div class="sidebar sidebar-filter box">
+                <div class="w-filter">
+                  <h3></h3>
+                  <ul>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class='mask'></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
 
+                  </ul>
+                </div>
+                <div class="w-filter">
+                  <h3></h3>
+                  <ul>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class='mask'></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+                    <li>
+                      <label for="influencer_all">
+                        <p class="mask"></p>
+                      </label>
+                    </li>
+
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-9 product-list-mask">
+            <div class="content">
+              <div class="content-filter-top"></div>
+              <div class="result">
+                <div class="row">
+                  <div class="result-paginator result-paginator-top">
+                    <div class="order">
+                      <div class="text">Orden</div>
+                      <select>
+                        <option>todos</option>
+                        <option>Ascendente</option>
+                        <option>Descendente</option>
+                      </select>
+                    </div>
+                    <div class="paginator">
+                      <span class="item disabled">
+                        <i class="fa fa-angle-double-left"></i>
+                      </span>
+                      <span class="item disabled">
+                        <i class="fa fa-angle-left"></i>
+                      </span>
+                      <div class="text"></div>
+                      <a href="#" class="item">
+                        <i class="fa fa-angle-right"></i>
+                      </a>
+                      <a href="#" class="item">
+                        <i class="fa fa-angle-double-right"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4"  >
+                    <a href='' class="box item-result">
+                      <div class="image"> <img src=""/></div>
+                      <div class="detail">
+                        <h3 class="title"></h3>
+                        <!-- <h4 class="subtitle">subtitle</h4> -->
+                        <div class="price">
+                          <span class="offer"></span>
+                          <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
+                        </div>
+                      </div>
+                      <div class="fav"><span ><i class="fa fa-heart"></i></span></div>
+                    </a>
+                  </div>
+                  <div class="col-md-4"  >
+                    <a href='' class="box item-result">
+                      <div class="image"> <img src=""/></div>
+                      <div class="detail">
+                        <h3 class="title"></h3>
+                        <!-- <h4 class="subtitle">subtitle</h4> -->
+                        <div class="price">
+                          <span class="offer"></span>
+                          <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
+                        </div>
+                      </div>
+                      <div class="fav"><span ><i class="fa fa-heart"></i></span></div>
+                    </a>
+                  </div>
+                  <div class="col-md-4"  >
+                    <a href='' class="box item-result">
+                      <div class="image"> <img src=""/></div>
+                      <div class="detail">
+                        <h3 class="title"></h3>
+                        <!-- <h4 class="subtitle">subtitle</h4> -->
+                        <div class="price">
+                          <span class="offer"></span>
+                          <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
+                        </div>
+                      </div>
+                      <div class="fav"><span ><i class="fa fa-heart"></i></span></div>
+                    </a>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <router-view ></router-view>
+</div>
+ <!--name="fade" mode="out-in"  appear-->
 {% endblock content %}
 {% block js %}
 

@@ -1,0 +1,87 @@
+{% extends "common/base.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="boxw">
+                <div class="title-page">
+                  <h2>Ingresar</h2>
+                </div>
+                <div class="w-body">
+                  <form action="" method='POST'>
+                    {% csrf_token %}
+                    <div class="form-group">
+                      {{form_login.username.label_tag}}
+                      {{form_login.username|add_class:"form-control"}}
+                      <div class="form-group__errors">
+                          {{form_login.username.errors.as_text}}
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      {{form_login.password.label_tag}}
+                      {{form_login.password|add_class:"form-control"}}
+                      <div class="form-group__errors">
+                          {{form_login.password.errors.as_text}}
+                      </div>
+
+
+                    </div>
+                    <div class="form-group form-group--errors">
+                        {{form_login.non_field_errors.as_text}}
+                    </div>
+                    <button type="submit" name="type_submit" value="{{LOGIN}}" class="btn btn-primary">Entrar</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="boxw">
+                <div class="title-page">
+                  <h2>Crear una nueva cuenta</h2>
+                </div>
+                <div class="w-body">
+                  <form action="" method='POST'>
+                    {% csrf_token %}
+                    <div class="form-group">
+                      {{form_register.first_name.label_tag}}
+                      {{form_register.first_name|add_class:"form-control"}}
+                    </div>
+                    <div class="form-group">
+                      {{form_register.last_name.label_tag}}
+                      {{form_register.last_name|add_class:"form-control"}}
+                    </div>
+                    <div class="form-group">
+                      {{form_register.email.label_tag}}
+                      {{form_register.email|add_class:"form-control"}}
+                    </div>
+                    <div class="form-group">
+                      {{form_register.password1.label_tag}}
+                      {{form_register.password1|add_class:"form-control"}}
+                      <div class="">
+                          {{form_register.password1.help_text|safe}}
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      {{form_register.password2.label_tag}}
+                      {{form_register.password2|add_class:"form-control"}}
+                      <div class="">
+                          {{form_register.password2.help_text|safe}}
+                      </div>
+                    </div>
+                    <button type="submit" name="type_submit" value="{{REGISTER}}" class="btn btn-primary">Entrar</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}

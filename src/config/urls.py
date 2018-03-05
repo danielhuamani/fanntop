@@ -29,7 +29,8 @@ urlpatterns += [
     ])),
     url(r'^', include('apps_web.web_system.urls', namespace='web_system')),
     url(r'^', include('apps_web.web_product.urls', namespace='web_product')),
-    url(r'^', include('apps_web.web_cart.urls', namespace='web_cart'))
+    url(r'^', include('apps_web.web_cart.urls', namespace='web_cart')),
+    url(r'^', include('apps_web.web_order.urls', namespace='web_order'))
 ]
 
 if settings.DEBUG:

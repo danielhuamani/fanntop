@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import categoryList from '@/pages/categoryList'
+import influencer from '@/pages/influencer'
 import productDetail from '@/pages/productDetail'
 import cart from '@/pages/cart'
 // import cartView from '@/common/cartView'
@@ -18,6 +19,11 @@ export default new Router({
       path: '/producto/:slug/',
       name: 'product_detail',
       component: productDetail
+    },
+    {
+      path: '/influenciador/:slug/',
+      name: 'influencer',
+      component: influencer
     },
     {
       path: '/carro-compras/',

@@ -68,7 +68,13 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
 
 
     def get_product_variant(self, obj):
-        product_variant = obj.product_class_products.filter(is_active=True).order_by('-is_featured')
+        print(self.context, 'context')
+        attr_list = self.context.get('attr_list')
+        if attr_list:
+            product_variant = obj.product_class_products.filter(
+                attribute_option__slug__in=attr_list).order_by('-is_featured')
+        else:
+            product_variant = obj.product_class_products.filter(is_active=True).order_by('-is_featured')
         # product_variant_featured = product_variant.filter(is_featured=True)
         # if product_variant_featured.exists():
         #     product_variant_featured = product_variant_featured.first()
