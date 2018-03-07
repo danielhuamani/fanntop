@@ -1,5 +1,4 @@
-from django.contrib.gis.db import models
-
+from django.db import models
 
 class Departamento(models.Model):
     cod_dep = models.CharField('Código', max_length=2, blank=True, null=True, db_index=True)
