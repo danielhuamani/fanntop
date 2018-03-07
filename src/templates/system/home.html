@@ -28,7 +28,11 @@
       {% for influencer in influencers %}
         <div class="col-md-3">
           <a href="{% url 'web_product:influencer_products' influencer.slug %}" class="box item-influencer">
-            <div class="image"> <img src="{{influencer.image.url}}"/></div>
+            <div class="image">
+              {% thumbnail influencer.image "265x265" crop="center" as im %}
+                <img src="{{ im.url }}"  height="{{ im.height }}">
+              {% endthumbnail %}
+            </div>
             <div class="detail">
               <h3 class="title">{{influencer.name}}</h3>
             </div>

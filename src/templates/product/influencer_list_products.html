@@ -1,5 +1,5 @@
 {% extends "common/base.html" %}
-{% load static %}
+{% load static thumbnail %}
 {% block css %}
 <style>
     [v-cloak] > * { display:none }
@@ -17,7 +17,12 @@
 <section class="featured">
   <div class="media-content">
     <div class="slider-slick">
-      <div class="slider-item"><img src="{{influencer.banner.url}}"/></div>
+      <div class="slider-item">
+
+        {% thumbnail influencer.banner "x350" crop="center" as im %}
+                <img src="{{ im.url }}"  height="{{ im.height }}">
+              {% endthumbnail %}
+      </div>
     </div>
   </div>
 </section>

@@ -55,7 +55,9 @@ BASE_APPS = [
     'apps_base.attribute',
     'apps_base.family',
     'apps_base.pages',
-    'apps_base.cart'
+    'apps_base.cart',
+    'apps_base.order',
+    'apps_base.ubigeo'
 ]
 
 WEB_APPS = [

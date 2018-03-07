@@ -1,0 +1,119 @@
+{% extends "common/base_order.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="boxw">
+                <div class="w-body">
+                  <form class="form-horizontal form-checkout form-checkout-1">
+                    <div class="form-group">
+                      <div class="col-xs-12">
+                        <label for="email">Información del contacto</label>
+                        <input id="email" type="email" placeholder="Email" name="email" class="form-control"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-xs-12">
+                        <label for="email">Dirección de Envío</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-xs-6">
+                        <input type="text" placeholder="Nombres" class="form-control"/>
+                      </div>
+                      <div class="col-xs-6">
+                        <input type="text" placeholder="Apellidos" class="form-control"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-xs-6">
+                        <input type="text" placeholder="Dirección 1" class="form-control"/>
+                      </div>
+                      <div class="col-xs-6">
+                        <input type="text" placeholder="Dirección 2" class="form-control"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-xs-12">
+                        <input type="text" placeholder="Ciudad" class="form-control"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-xs-6">
+                        <select id="pais" name="pais" class="form-control">
+                          <option value="seleccione">- Seleccione -</option>
+                          <option value="Peru">Peru</option>
+                        </select>
+                      </div>
+                      <div class="col-xs-6">
+                        <input type="text" placeholder="Código Postal" class="form-control"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-xs-12">
+                        <input type="text" placeholder="Teléfono" class="form-control"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-xs-12">
+                        <label for="">
+                          <input type="checkbox"/>Guarde esta información para la próxima vez
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-12">
+                        <div class="w-lnk-btn"><a href="#" class="lnk"><i class="fa fa-angle-left"></i>Regresar al carrito</a>
+                          <button type="submit" class="btn btn-primary">Continuar</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-12">
+                        <p class="small">* Los pedidos realizados después de las 3:00 p.m. (hora del Reino Unido) no se enviarán hasta el día siguiente. Tenga en cuenta que no enviamos los fines de semana ni los días festivos, por ejemplo, pedidos realizados después de las 3:00 p.m. (hora del Reino Unido) de un viernes ganado. Se enviará hasta el lunes siguiente. Ofrecemos devoluciones GRATUITAS para clientes de EE. UU. Y Canadá. * </p>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="boxw">
+                <div class="box-items">
+                  <div class="item-car">
+                    <div class="item">
+                      <div class="image"><img src="img/thumb_producto.jpg" width="60"/></div>
+                    </div>
+                    <div class="detail">
+                      <h3>Silla plegable - ROYALE</h3>
+                      <div class="sizes">Medium</div>
+                    </div>
+                  </div>
+                  <div class="item-car">
+                    <div class="item">
+                      <div class="image"><img src="img/thumb_producto.jpg" width="60"/></div>
+                    </div>
+                    <div class="detail">
+                      <h3>Silla plegable - ROYALE</h3>
+                      <div class="sizes">Medium</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="totals">
+                  <div class="subtotal"> <span class="title-s">Subtotal: </span><strong>$42.80               </strong></div>
+                  <div class="total"><span class="to">Total:   </span><strong>S/. 7,494.35</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}

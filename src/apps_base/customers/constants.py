@@ -5,7 +5,7 @@ GENDER_CHOICES = (
     ("F", _("Female"))
 )
 
-TIPO_DOCUMENTO_CHOICES = (
+TYPE_DOCUMENT_CHOICES = (
     ("DNI", "DNI"),
     ("CE", "Carnet de extranjería")
 )

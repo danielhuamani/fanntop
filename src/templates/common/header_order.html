@@ -7,20 +7,15 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="wrap-search">
-          <input type="text" placeholder="¿ Que buscas ?"/>
-        </div>
+
       </div>
       <div class="col-md-5">
         <ul class="list-options">
-          <li><a href="#" class="fav"> <i class="fa fa-heart"></i>Mis Favoritos</a></li>
           {% if request.user.is_authenticated %}
             <li><a href="" class="account"> <i class="fa fa-user"></i>{{request.user.first_name}}</a></li>
           {% else %}
             <li><a href="{% url 'web_system:login_register' %}" class="account"> <i class="fa fa-user"></i>Ingresar</a></li>
-
           {% endif %}
-          <li><a href="#" @click.prevent='changeStatusCartView()' class="shop"> <i class="fa fa-shopping-bag"></i>Mis Compras</a></li>
         </ul>
       </div>
     </div>

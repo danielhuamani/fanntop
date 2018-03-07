@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from .views import checkout
+from .views import checkout_paso_1
 
 urlpatterns = [
-    url(r"^checkout/$", checkout, name="checkout")
+    url(r"^checkout/paso-1/$", checkout_paso_1, name="checkout_paso_1")
 ]
 

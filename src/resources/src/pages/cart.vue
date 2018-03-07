@@ -55,7 +55,7 @@
                       <div class="w-subtotal"><span class="st">S/. {{item.cart_item_total}}</span></div>
                     </td>
                     <td valign="center">
-                      <div class="w-delete"><a href="#" @click.prevent='deleteCartItem(item.product_sku)'><i class="fa fa-times"></i></a></div>
+                      <div class="w-delete"><a href="#" @click.prevent='deleteCartItem(item.product_sku)'><i class="fa fa-trash"></i></a></div>
                     </td>
                   </tr>
 
@@ -75,7 +75,7 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <div class="w-btn w-btn-car"><a class="btn btn-primary">Ir a Comprar</a></div>
+          <div class="w-btn w-btn-car"><a href="/checkout/paso-1/" class="btn btn-primary">Continuar</a></div>
         </div>
       </div>
     </div>
