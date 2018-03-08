@@ -31,7 +31,7 @@ def login_register(request):
             if form_register.is_valid():
                 user_register = form_register.save()
                 username = user_register.email
-                raw_password = user_register.password
+                raw_password = form_register.cleaned_data.get('password1')
                 user = authenticate(username=username, password=raw_password)
                 send_mail_customer_welcome(user_register)
                 auth_login(request, user)
