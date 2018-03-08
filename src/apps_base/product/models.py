@@ -17,7 +17,7 @@ class ProductClass(CoreSeoSlugModel, CoreActiveModel):
     is_variation = models.BooleanField(default=False)
     attribute = models.ManyToManyField('attribute.Attribute', related_name='attribute_product_class', blank=True)
     is_published = models.BooleanField(default=False)
-    data_sheet = JSONField()
+    data_sheet = JSONField(default={})
 
     class Meta:
         verbose_name = "Product"
