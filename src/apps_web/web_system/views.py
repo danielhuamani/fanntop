@@ -28,12 +28,12 @@ def login_register(request):
         if request.POST.get('type_submit') == REGISTER:
             form_register = UserRegisterForm(request.POST, prefix='register')
             if form_register.is_valid():
-                form_user = form_register.save()
+                form_register.save()
                 username = form_register.cleaned_data.get('username')
                 raw_password = form_register.cleaned_data.get('password1')
-                authenticate(username=username, password=raw_password)
-                send_mail_customer_welcome(form_user)
-                auth_login(request, form_register)
+                user = authenticate(username=username, password=raw_password)
+                send_mail_customer_welcome(form_register)
+                auth_login(request, user)
                 if request.GET.get('next'):
                     return redirect(request.GET.get('next'))
                 return redirect(reverse_lazy('web_system:account'))
