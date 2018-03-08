@@ -31,9 +31,9 @@ def login_register(request):
                 form_register.save()
                 username = form_register.cleaned_data.get('username')
                 raw_password = form_register.cleaned_data.get('password1')
-                user = authenticate(username=username, password=raw_password)
+                authenticate(username=username, password=raw_password)
                 send_mail_customer_welcome(user)
-                auth_login(request, user)
+                auth_login(request, form_register)
                 if request.GET.get('next'):
                     return redirect(request.GET.get('next'))
                 return redirect(reverse_lazy('web_system:account'))
