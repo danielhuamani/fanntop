@@ -2,15 +2,29 @@
   <div class="container">
     <nav>
       <ul>
+        <li><a > Influenciadores</a>
+          {% if influencers_processors %}
+          <div class="submenu">
+            <div class="container">
+              <h3 class="title">Todos los Influenciadores</h3>
+              <ul class='row'>
+                {% for influencer in influencers_processors %}
+                  <li class='col-md-3'><a href="{% url 'web_product:influencer_products' influencer.slug %}">{{influencer.name}}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          {% endif %}
+        </li>
         {% for category in categories_processors %}
         <li><a {% if not category.category_categories.all %}href="{% url 'web_product:category_products' category.slug %}"{% endif %}> {{category.name}}</a>
           {% if category.category_categories.all %}
           <div class="submenu">
             <div class="container">
-              <h3 class="title">Todos los Productos</h3>
-              <ul>
+              <h3 class="title">{{category.name}}</h3>
+              <ul class='row'>
                 {% for category_child in category.category_categories.all %}
-                  <li><a href="{% url 'web_product:category_child_products' category.slug category_child.slug %}">{{category_child.name}}</a></li>
+                  <li class='col-md-3'><a href="{% url 'web_product:category_child_products' category.slug category_child.slug %}">{{category_child.name}}</a></li>
                 {% endfor %}
               </ul>
             </div>
@@ -18,20 +32,7 @@
           {% endif %}
         </li>
         {% endfor %}
-        <li><a > Influenciadores</a>
-          {% if influencers_processors %}
-          <div class="submenu">
-            <div class="container">
-              <h3 class="title">Todos los Influenciadores</h3>
-              <ul>
-                {% for influencer in influencers_processors %}
-                  <li><a href="{% url 'web_product:influencer_products' influencer.slug %}">{{influencer.name}}</a></li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-          {% endif %}
-        </li>
+
 
       </ul>
     </nav>

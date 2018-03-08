@@ -51,6 +51,9 @@ class Product(CoreActiveModel, CoreTimeModel):
     def is_exhausted(self):
         return self.stock <= 0
 
+    def get_image(self):
+        return self.product_product_images.order_by('-is_featured').first().product_image.image
+
     @property
     def get_price(self):
         return self.price

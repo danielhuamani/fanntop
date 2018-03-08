@@ -1,0 +1,49 @@
+// HEADER
+
+#header
+    .list-options
+        &__menu
+            position relative
+            .triangle
+                border-left 12px solid transparent
+                border-right 12px solid transparent
+                border-bottom 12px solid white
+                position absolute
+                top -10px
+                left 40%
+            ul
+                opacity 0
+                z-index 0
+                position absolute
+                top 35px
+                left -20px
+                width 150px
+                background white
+                transition 0.3s ease all
+                border-radius 4px
+                box-shadow 0 10px 20px rgba(0,0,0,0.05)
+                li
+                    width 100%
+                    text-align left
+                    a
+                        display block
+                        padding 10px 15px
+                        width 100%
+                        color black
+            &:hover
+                ul
+                    z-index 100
+                    opacity 1
+
+nav ul li
+    ul
+        margin-top 15px
+        column-count inherit
+        li
+            margin 0px 0px 5px 0px
+    .submenu
+        box-shadow 0 5px 10px rgba(0,0,0,0.05)
+// form
+
+.form-control
+    border-radius 4px

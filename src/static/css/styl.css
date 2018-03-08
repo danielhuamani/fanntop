@@ -1,0 +1,583 @@
+.main_checkout_thanks__title {
+  margin-bottom: 10px;
+}
+#header .list-options__menu {
+  position: relative;
+}
+#header .list-options__menu .triangle {
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid #fff;
+  position: absolute;
+  top: -10px;
+  left: 40%;
+}
+#header .list-options__menu ul {
+  opacity: 0;
+  z-index: 0;
+  position: absolute;
+  top: 35px;
+  left: -20px;
+  width: 150px;
+  background: #fff;
+  transition: 0.3s ease all;
+  border-radius: 4px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+#header .list-options__menu ul li {
+  width: 100%;
+  text-align: left;
+}
+#header .list-options__menu ul li a {
+  display: block;
+  padding: 10px 15px;
+  width: 100%;
+  color: #000;
+}
+#header .list-options__menu:hover ul {
+  z-index: 100;
+  opacity: 1;
+}
+nav ul li ul {
+  margin-top: 15px;
+  column-count: inherit;
+}
+nav ul li ul li {
+  margin: 0px 0px 5px 0px;
+}
+nav ul li .submenu {
+  box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+}
+.form-control {
+  border-radius: 4px;
+}
+.checkout .boxw {
+  margin-bottom: 20px;
+}
+.checkout .boxw .w-body__title {
+  font-weight: bold;
+  color: #000;
+  font-size: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ff7e00;
+}
+.checkout .card-js {
+  margin-bottom: 10px;
+}
+html,
+body {
+  min-height: 100%;
+  height: 100%;
+}
+html.modal-active,
+body.modal-active {
+  overflow: hidden;
+}
+#modal-container {
+  position: fixed;
+  display: table;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  transform: scale(0);
+  z-index: 1;
+}
+#modal-container.six {
+  transform: scale(1);
+}
+#modal-container.six .modal-background {
+  background: rgba(0,0,0,0);
+  animation: fadeIn 0.5s cubic-bezier(0.165, 1.84, 0.44, 1) forwards;
+}
+#modal-container.six .modal-background .modal {
+  background-color: transparent;
+  animation: modalFadeIn 0.5s 0.8s cubic-bezier(0.165, 1, 0.44, 1) forwards;
+}
+#modal-container.six .modal-background .modal .logo_culqui {
+  background: #000;
+  padding: 10px;
+  margin: auto;
+}
+#modal-container.six .modal-background .modal .procesando {
+  margin-bottom: 20px;
+  max-width: 400px;
+  font-size: 16px;
+}
+#modal-container.six .modal-background .modal .loading-bar {
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  border-radius: 4px;
+  animation: loading 1s ease-in-out infinite;
+}
+#modal-container.six .modal-background .modal .loading-bar:nth-child(1) {
+  background-color: #3498db;
+  animation-delay: 0;
+}
+#modal-container.six .modal-background .modal .loading-bar:nth-child(2) {
+  background-color: #c0392b;
+  animation-delay: 0.09s;
+}
+#modal-container.six .modal-background .modal .loading-bar:nth-child(3) {
+  background-color: #f1c40f;
+  animation-delay: 0.18s;
+}
+#modal-container.six .modal-background .modal .loading-bar:nth-child(4) {
+  background-color: #27ae60;
+  animation-delay: 0.27s;
+}
+#modal-container.six .modal-background .modal h2,
+#modal-container.six .modal-background .modal p {
+  opacity: 0;
+  position: relative;
+  animation: modalContentFadeIn 0.5s 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-container.six .modal-background .modal .modal-svg rect {
+  animation: sketchIn 0.5s 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+@-moz-keyframes loading {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1, 2.2);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes loading {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1, 2.2);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+@-o-keyframes loading {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1, 2.2);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+@keyframes loading {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1, 2.2);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+#modal-container.six.out {
+  animation: quickScaleDown 0s 0.5s linear forwards;
+}
+#modal-container.six.out .modal-background {
+  animation: fadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-container.six.out .modal-background .modal {
+  animation: modalFadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-container.six.out .modal-background .modal h2,
+#modal-container.six.out .modal-background .modal p {
+  animation: modalContentFadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-container.six.out .modal-background .modal .modal-svg rect {
+  animation: sketchOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-container .modal-background {
+  display: table-cell;
+  background: rgba(0,0,0,0.8);
+  text-align: center;
+  vertical-align: middle;
+}
+#modal-container .modal-background .modal {
+  background: #fff;
+  padding: 50px;
+  display: inline-block;
+  border-radius: 3px;
+  font-weight: 300;
+  position: relative;
+}
+#modal-container .modal-background .modal h2 {
+  font-size: 25px;
+  line-height: 25px;
+  margin-bottom: 15px;
+}
+#modal-container .modal-background .modal p {
+  font-size: 18px;
+  line-height: 22px;
+}
+#modal-container .modal-background .modal .modal-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 3px;
+}
+#modal-container .modal-background .modal .modal-svg rect {
+  stroke: #fff;
+  stroke-width: 2px;
+  stroke-dasharray: 778;
+  stroke-dashoffset: 778;
+}
+@-moz-keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes sketchIn {
+  0% {
+    stroke-dashoffset: 778;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@-webkit-keyframes sketchIn {
+  0% {
+    stroke-dashoffset: 778;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@-o-keyframes sketchIn {
+  0% {
+    stroke-dashoffset: 778;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes sketchIn {
+  0% {
+    stroke-dashoffset: 778;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@-moz-keyframes fadeOut {
+  0% {
+    background: rgba(0,0,0,0.7);
+  }
+  100% {
+    background: rgba(0,0,0,0);
+  }
+}
+@-webkit-keyframes fadeOut {
+  0% {
+    background: rgba(0,0,0,0.7);
+  }
+  100% {
+    background: rgba(0,0,0,0);
+  }
+}
+@-o-keyframes fadeOut {
+  0% {
+    background: rgba(0,0,0,0.7);
+  }
+  100% {
+    background: rgba(0,0,0,0);
+  }
+}
+@keyframes fadeOut {
+  0% {
+    background: rgba(0,0,0,0.7);
+  }
+  100% {
+    background: rgba(0,0,0,0);
+  }
+}
+@-moz-keyframes fadeIn {
+  0% {
+    background: rgba(0,0,0,0);
+  }
+  100% {
+    background: rgba(0,0,0,0.7);
+  }
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    background: rgba(0,0,0,0);
+  }
+  100% {
+    background: rgba(0,0,0,0.7);
+  }
+}
+@-o-keyframes fadeIn {
+  0% {
+    background: rgba(0,0,0,0);
+  }
+  100% {
+    background: rgba(0,0,0,0.7);
+  }
+}
+@keyframes fadeIn {
+  0% {
+    background: rgba(0,0,0,0);
+  }
+  100% {
+    background: rgba(0,0,0,0.7);
+  }
+}
+@-moz-keyframes sketchOut {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 778;
+  }
+}
+@-webkit-keyframes sketchOut {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 778;
+  }
+}
+@-o-keyframes sketchOut {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 778;
+  }
+}
+@keyframes sketchOut {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 778;
+  }
+}
+@-moz-keyframes quickScaleDown {
+  0% {
+    transform: scale(1);
+  }
+  99.9% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@-webkit-keyframes quickScaleDown {
+  0% {
+    transform: scale(1);
+  }
+  99.9% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@-o-keyframes quickScaleDown {
+  0% {
+    transform: scale(1);
+  }
+  99.9% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes quickScaleDown {
+  0% {
+    transform: scale(1);
+  }
+  99.9% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@-moz-keyframes modalFadeIn {
+  0% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: #fff;
+  }
+}
+@-webkit-keyframes modalFadeIn {
+  0% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: #fff;
+  }
+}
+@-o-keyframes modalFadeIn {
+  0% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: #fff;
+  }
+}
+@keyframes modalFadeIn {
+  0% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: #fff;
+  }
+}
+@-moz-keyframes modalFadeOut {
+  0% {
+    background-color: #fff;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@-webkit-keyframes modalFadeOut {
+  0% {
+    background-color: #fff;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@-o-keyframes modalFadeOut {
+  0% {
+    background-color: #fff;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@keyframes modalFadeOut {
+  0% {
+    background-color: #fff;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@-moz-keyframes modalContentFadeIn {
+  0% {
+    opacity: 0;
+    top: -20px;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+  }
+}
+@-webkit-keyframes modalContentFadeIn {
+  0% {
+    opacity: 0;
+    top: -20px;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+  }
+}
+@-o-keyframes modalContentFadeIn {
+  0% {
+    opacity: 0;
+    top: -20px;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+  }
+}
+@keyframes modalContentFadeIn {
+  0% {
+    opacity: 0;
+    top: -20px;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+  }
+}
+@-moz-keyframes modalContentFadeOut {
+  0% {
+    opacity: 1;
+    top: 0px;
+  }
+  100% {
+    opacity: 0;
+    top: -20px;
+  }
+}
+@-webkit-keyframes modalContentFadeOut {
+  0% {
+    opacity: 1;
+    top: 0px;
+  }
+  100% {
+    opacity: 0;
+    top: -20px;
+  }
+}
+@-o-keyframes modalContentFadeOut {
+  0% {
+    opacity: 1;
+    top: 0px;
+  }
+  100% {
+    opacity: 0;
+    top: -20px;
+  }
+}
+@keyframes modalContentFadeOut {
+  0% {
+    opacity: 1;
+    top: 0px;
+  }
+  100% {
+    opacity: 0;
+    top: -20px;
+  }
+}

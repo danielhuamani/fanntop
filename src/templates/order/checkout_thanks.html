@@ -1,0 +1,27 @@
+{% extends "common/base.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main main_checkout_thanks">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="boxw box-car">
+          <div class="inner text-center">
+            <h3 class="main_checkout_thanks__title">¡Gracias por tu compra!</h3>
+            <p class="main_checkout_thanks__description">El número de su pedido es: {{order.code}}</p>
+            <p class="main_checkout_thanks__description">El número de su cargo es: {{order.extra_data.id_charge}}</p>
+            <p class="main_checkout_thanks__description"> Te enviaremos un correo confirmando tu compra.</p>
+            <a href="{% url 'web_system:home' %}" class="btn btn-primary">Volver al Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}

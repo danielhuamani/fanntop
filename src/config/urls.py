@@ -26,11 +26,14 @@ urlpatterns += [
             include('apps_base.attribute.urls', namespace='attribute')),
         url(r'pages/',
             include('apps_base.pages.urls', namespace='pages')),
+        url(r'ubigeo/', include('apps_base.ubigeo.urls', namespace='ubigeo')),
+        url(r'payment/', include('apps_base.payment.urls', namespace='payment'))
     ])),
     url(r'^', include('apps_web.web_system.urls', namespace='web_system')),
     url(r'^', include('apps_web.web_product.urls', namespace='web_product')),
     url(r'^', include('apps_web.web_cart.urls', namespace='web_cart')),
-    url(r'^', include('apps_web.web_order.urls', namespace='web_order'))
+    url(r'^', include('apps_web.web_order.urls', namespace='web_order')),
+
 ]
 
 if settings.DEBUG:

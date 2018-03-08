@@ -1,6 +1,9 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
+from django.utils.translation import ugettext_lazy as _
 from .constants import TYPE_STATUS
 from .utils import generate_code_order
+
 from apps_base.customers.constants import TYPE_DOCUMENT_CHOICES
 from apps_base.core.models import CoreTimeModel, CoreActiveModel
 
@@ -12,13 +15,13 @@ class Order(CoreTimeModel, CoreActiveModel):
     )
     code = models.CharField("code", max_length=255, unique=True)
     sub_total = models.DecimalField("sub total", decimal_places=2, max_digits=8)
-    shipping_price = models.DecimalField("Envio", decimal_places=2, max_digits=8)
+    shipping_price = models.DecimalField("Envio", decimal_places=2, max_digits=8, default=0)
     total = models.DecimalField("total", decimal_places=2, max_digits=8)
     type_status = models.CharField(
         "type_status", choices=TYPE_STATUS, max_length=255, blank=True)
     is_send_email = models.BooleanField(default=False)
     is_return_stock = models.BooleanField(default=False)
-
+    extra_data = JSONField(default={})
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Order"
@@ -26,7 +29,7 @@ class Order(CoreTimeModel, CoreActiveModel):
     def save(self, *args, **kwargs):
         if not self.code:
             self.code = generate_code_order()
-        super(Cart, self).save(*args, **kwargs)
+        super(Order, self).save(*args, **kwargs)
 
     def __str__(self):
         return '{}'.format(self.code)
@@ -55,10 +58,10 @@ class OrderCustomer(models.Model):
     order = models.OneToOneField(
         "Order", related_name="order_order_customer"
     )
-    first_name = models.CharField("Apellido Paterno", max_length=255)
-    last_name = models.CharField("Apellido Materno", max_length=255)
+    first_name = models.CharField(_('Name'), max_length=255)
+    last_name = models.CharField(_('last name'), max_length=255)
     email = models.EmailField("Email")
-    phone = models.CharField("Celular", max_length=120)
+    phone = models.CharField("Celular", max_length=120, blank=True)
     document = models.CharField("Documento", blank=True, max_length=120)
     type_document = models.CharField(
         "Tipo Documento", blank=True, choices=TYPE_DOCUMENT_CHOICES, max_length=120)
@@ -75,10 +78,10 @@ class OrderShippingAddress(models.Model):
     order = models.OneToOneField(
         "Order", related_name="order_ordershipping"
     )
-    first_name = models.CharField("Apellido Paterno", blank=True, max_length=255)
-    last_name = models.CharField("Apellido Materno", blank=True, max_length=255)
+    first_name = models.CharField(_('Name'), max_length=255)
+    last_name = models.CharField(_('last name'), max_length=255)
     address = models.CharField("Dirección", max_length=255)
-    reference = models.CharField("Referencia", max_length=255)
+    reference = models.CharField("Referencia", max_length=255, blank=True)
     ubigeo = models.ForeignKey("ubigeo.Ubigeo", related_name='ubigeo_order_shipping_address')
     document = models.CharField("Documento", blank=True, max_length=120)
     type_document = models.CharField(

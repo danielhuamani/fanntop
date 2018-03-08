@@ -4,116 +4,229 @@
 
 {% endblock css %}
 {% block content %}
-<section class="main">
+<section class="main checkout">
         <div class="container">
-          <div class="row">
+          <form class="row" action="" method='POST'>
+            {% csrf_token %}
             <div class="col-md-7">
-              <div class="boxw">
-                <div class="w-body">
-                  <form class="form-horizontal form-checkout form-checkout-1">
-                    <div class="form-group">
-                      <div class="col-xs-12">
-                        <label for="email">Información del contacto</label>
-                        <input id="email" type="email" placeholder="Email" name="email" class="form-control"/>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-xs-12">
-                        <label for="email">Dirección de Envío</label>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-xs-6">
-                        <input type="text" placeholder="Nombres" class="form-control"/>
-                      </div>
-                      <div class="col-xs-6">
-                        <input type="text" placeholder="Apellidos" class="form-control"/>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-xs-6">
-                        <input type="text" placeholder="Dirección 1" class="form-control"/>
-                      </div>
-                      <div class="col-xs-6">
-                        <input type="text" placeholder="Dirección 2" class="form-control"/>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-xs-12">
-                        <input type="text" placeholder="Ciudad" class="form-control"/>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-xs-6">
-                        <select id="pais" name="pais" class="form-control">
-                          <option value="seleccione">- Seleccione -</option>
-                          <option value="Peru">Peru</option>
-                        </select>
-                      </div>
-                      <div class="col-xs-6">
-                        <input type="text" placeholder="Código Postal" class="form-control"/>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-xs-12">
-                        <input type="text" placeholder="Teléfono" class="form-control"/>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-xs-12">
-                        <label for="">
-                          <input type="checkbox"/>Guarde esta información para la próxima vez
-                        </label>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-md-12">
-                        <div class="w-lnk-btn"><a href="#" class="lnk"><i class="fa fa-angle-left"></i>Regresar al carrito</a>
-                          <button type="submit" class="btn btn-primary">Continuar</button>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="boxw">
+                    <div class="w-body">
+                      <h3 class="w-body__title">Información del contacto</h3>
+                      <div class="form-horizontal form-checkout form-checkout-1">
+                        <div class="form-group">
+                          <div class="col-xs-6">
+                            {{form.email.label_tag}}
+                            {{form.email|add_class:'form-control'}}
+                          </div>
+                          <div class="col-xs-6">
+                            {{form.phone.label_tag}}
+                            {{form.phone|add_class:'form-control'}}
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-xs-6">
+                            {{form.first_name.label_tag}}
+                            {{form.first_name|add_class:'form-control'}}
+                          </div>
+                          <div class="col-xs-6">
+                            {{form.last_name.label_tag}}
+                            {{form.last_name|add_class:'form-control'}}
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-xs-6">
+                            {{form.type_document.label_tag}}
+                            {{form.type_document|add_class:'form-control'}}
+                          </div>
+                          <div class="col-xs-6">
+                            {{form.document.label_tag}}
+                            {{form.document|add_class:'form-control'}}
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <div class="col-md-12">
-                        <p class="small">* Los pedidos realizados después de las 3:00 p.m. (hora del Reino Unido) no se enviarán hasta el día siguiente. Tenga en cuenta que no enviamos los fines de semana ni los días festivos, por ejemplo, pedidos realizados después de las 3:00 p.m. (hora del Reino Unido) de un viernes ganado. Se enviará hasta el lunes siguiente. Ofrecemos devoluciones GRATUITAS para clientes de EE. UU. Y Canadá. * </p>
+                  </div>
+                </div>
+                <div class="col-md-12">
+
+                  <div class="boxw">
+                    <div class="w-body">
+                      <h3 class="w-body__title">Dirección de Envío</h3>
+                      <div class="form-horizontal form-checkout form-checkout-1">
+                        <div class="form-group">
+                          <div class="col-xs-12">
+                            {{form_order_shipping.direccion_save.label_tag}}
+                            {{form_order_shipping.direccion_save|add_class:'form-control'}}
+                          </div>
+
+                        </div>
+                        <div class="form-group">
+                          <div class="col-xs-6">
+                            {{form_order_shipping.first_name.label_tag}}
+                            {{form_order_shipping.first_name|add_class:'form-control'}}
+                          </div>
+                          <div class="col-xs-6">
+                            {{form_order_shipping.last_name.label_tag}}
+                            {{form_order_shipping.last_name|add_class:'form-control'}}
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-xs-6">
+                            {{form_order_shipping.type_document.label_tag}}
+                            {{form_order_shipping.type_document|add_class:'form-control'}}
+                          </div>
+                          <div class="col-xs-6">
+                            {{form_order_shipping.document.label_tag}}
+                            {{form_order_shipping.document|add_class:'form-control'}}
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-xs-6">
+                            <label for="">Departamento</label>
+                            <select class="form-control" id='id_shipping-departamento' name="departamento" >
+                              <option value="">Seleccione Departamento</option>
+                            </select>
+
+                          </div>
+                          <div class="col-xs-6">
+                            <label for="">Pronvincia</label>
+                            <select class="form-control" name="provincia" id="id_shipping-provincia">
+                              <option value="">Seleccione Provincia</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-xs-6">
+                            <label for="">Distrito</label>
+                            {{form_order_shipping.ubigeo|add_class:'form-control'}}
+                          </div>
+                          <div class="col-xs-6">
+                            {{form_order_shipping.address.label_tag}}
+                            {{form_order_shipping.address|add_class:'form-control'}}
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-xs-6">
+                            {{form_order_shipping.reference.label_tag}}
+                            {{form_order_shipping.reference|add_class:'form-control'}}
+                          </div>
+                          <div class="col-xs-6">
+                            {{form_order_shipping.phone.label_tag}}
+                            {{form_order_shipping.phone|add_class:'form-control'}}
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-xs-12">
+                            <label for="{{form_order_shipping.save_data.id_for_label}}">
+                              {{form_order_shipping.save_data}}Guarde esta información para la próxima vez
+                            </label>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-md-12">
+                            <div class="w-lnk-btn"><a href="#" class="lnk"><i class="fa fa-angle-left"></i>Regresar al carrito</a>
+                              <button type="submit" class="btn btn-primary">Continuar</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-md-12">
+                            <p class="small">* Los pedidos realizados después de las 3:00 p.m. (hora del Reino Unido) no se enviarán hasta el día siguiente. Tenga en cuenta que no enviamos los fines de semana ni los días festivos, por ejemplo, pedidos realizados después de las 3:00 p.m. (hora del Reino Unido) de un viernes ganado. Se enviará hasta el lunes siguiente. Ofrecemos devoluciones GRATUITAS para clientes de EE. UU. Y Canadá. * </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="col-md-5">
               <div class="boxw">
                 <div class="box-items">
+                {% for cart_item in cart.cart_items.all %}
+
                   <div class="item-car">
                     <div class="item">
-                      <div class="image"><img src="img/thumb_producto.jpg" width="60"/></div>
+                      <div class="image">
+                        {% thumbnail cart_item.product.get_image "60x60" crop="center" as im %}
+                          <img src="{{ im.url }}"  height="{{ im.height }}">
+                        {% endthumbnail %}
+                      </div>
                     </div>
                     <div class="detail">
-                      <h3>Silla plegable - ROYALE</h3>
+                      <h3>{{cart_item.product.product_class.name}}</h3>
                       <div class="sizes">Medium</div>
                     </div>
                   </div>
-                  <div class="item-car">
-                    <div class="item">
-                      <div class="image"><img src="img/thumb_producto.jpg" width="60"/></div>
-                    </div>
-                    <div class="detail">
-                      <h3>Silla plegable - ROYALE</h3>
-                      <div class="sizes">Medium</div>
-                    </div>
-                  </div>
+                {% endfor %}
+
                 </div>
                 <div class="totals">
-                  <div class="subtotal"> <span class="title-s">Subtotal: </span><strong>$42.80               </strong></div>
-                  <div class="total"><span class="to">Total:   </span><strong>S/. 7,494.35</strong></div>
+                  <div class="subtotal"> <span class="title-s">Subtotal: </span><strong>S/. {{cart.total}}               </strong></div>
+                  <!--<div class="total"><span class="to">Total:   </span><strong>S/. {{cart.total}}</strong></div>-->
                 </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </section>
 {% endblock content %}
 {% block js %}
+<script>
+  jQuery(document).ready(function($) {
+    var departamento_initial = $('#id_shipping-departamento')
+    departamento_initial.html('')
+    $.ajax({
+        'url': '{% url "ubigeo:api_departamentos" %}',
+        'method': 'GET',
+        'success': function (data) {
+            departamento_initial.append('<option value="" selected="selected">Seleccione Departamento</option>');
+            for (var i = 0; i < data.departamentos.length; i++) {
+                departamento_initial.append('<option value="' + data.departamentos[i].codigo + '">' + data.departamentos[i].descripcion + '</option>');
+            }
+            // provincia.change();
+        }
+    })
+    $('#id_shipping-departamento').change(function(event) {
+    /* Act on the event */
+      var departamento = $(this).val();
+      var provincia = $('#id_shipping-provincia')
+      provincia.html('');
+      $.ajax({
+            'url': '{% url "ubigeo:api_provincias" %}' + '?departamento=' + departamento,
+            'method': 'GET',
+            'success': function (data) {
+                provincia.append('<option value="" selected="selected">Seleccione Provincia</option>');
+                for (var i = 0; i < data.provincias.length; i++) {
+                    provincia.append('<option value="' + data.provincias[i].codigo + '">' + data.provincias[i].descripcion + '</option>');
+                }
+                // provincia.change();
+            }
+        })
 
+
+    });
+    $('#id_shipping-provincia').change(function(event) {
+    /* Act on the event */
+      var provincia = $(this).val();
+      var distrito = $('#id_shipping-ubigeo')
+      distrito.html('');
+      $.ajax({
+            'url': '{% url "ubigeo:api_distritos" %}' + '?provincia=' + provincia,
+            'method': 'GET',
+            'success': function (data) {
+                distrito.append('<option value="" selected="selected">Seleccione Distrito</option>');
+                for (var i = 0; i < data.distritos.length; i++) {
+                    distrito.append('<option value="' + data.distritos[i].pk + '">' + data.distritos[i].descripcion + '</option>');
+                }
+                // provincia.change();
+            }
+        })
+
+
+    });
+  });
+</script>
 {% endblock js %}

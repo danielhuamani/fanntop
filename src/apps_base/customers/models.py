@@ -16,7 +16,7 @@ class Customer(models.Model):
     gender = models.CharField(_("Gender"), max_length=120, choices=GENDER_CHOICES)
     phone = models.CharField(_("Phone"), max_length=120, blank=True)
     birth_date = models.DateField("Fecha Nacimiento", null=True)
-
+    is_send_email = models.BooleanField(default=False)
     class Meta:
         verbose_name = "Customer"
         verbose_name_plural = "Customers"
@@ -46,7 +46,8 @@ class CustomerShippingAddress(models.Model):
     reference = models.CharField("Referencia", max_length=255)
     ubigeo = models.ForeignKey(
         "ubigeo.Ubigeo", related_name="zip_code_shipping_address")
-
+    order = models.OneToOneField('order.OrderShippingAddress', blank=True, null=True,
+        related_name='order_shipping_adress_customers', on_delete=models.SET_NULL)
     class Meta:
         verbose_name = "ShippingAddress"
         verbose_name_plural = "ShippingAddress"

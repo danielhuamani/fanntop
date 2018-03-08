@@ -15,7 +15,20 @@
         <ul class="list-options">
           <li><a href="#" class="fav"> <i class="fa fa-heart"></i>Mis Favoritos</a></li>
           {% if request.user.is_authenticated %}
-            <li><a href="" class="account"> <i class="fa fa-user"></i>{{request.user.first_name}}</a></li>
+            <li class="list-options__menu">
+              <a href="" class="account"> <i class="fa fa-user"></i>{{request.user.first_name}}</a>
+              <ul class=''>
+                <span class='triangle'>
+
+                </span>
+                <li>
+                  <a href=""> <i class="fa fa-dashboard"></i> Mi Cuenta</a>
+                </li>
+                <li>
+                  <a href="{% url 'web_system:logout_view' %}"><i class=' fa fa-sign-out'></i>Cerrar sesión</a>
+                </li>
+              </ul>
+            </li>
           {% else %}
             <li><a href="{% url 'web_system:login_register' %}" class="account"> <i class="fa fa-user"></i>Ingresar</a></li>
 

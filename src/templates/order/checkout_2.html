@@ -1,0 +1,265 @@
+{% extends "common/base_order.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/cart.min.css' %}">
+{% endblock css %}
+{% block content %}
+<section class="main checkout">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="boxw">
+              <div class="w-body">
+                <h3 class="w-body__title">Resumen Información de Contacto</h3>
+                <form class="form-horizontal form-checkout form-checkout-1" action="" method='POST'>
+
+                  <div class="form-group">
+                    <div class="col-xs-6">
+                      <label for="">Email</label>:
+                      <span>{{order_customer.email}}</span>
+                    </div>
+                    <div class="col-xs-6">
+                      <label for="">Telefono:</label>
+                      <span>{{order_customer.phone}}</span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-xs-6">
+                      <label for="">Nombres:</label>
+                      <span>{{order_customer.first_name}}</span>
+                    </div>
+                    <div class="col-xs-6">
+                      <label for="">Apellidos:</label>
+                      <span>{{order_customer.last_name}}</span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-xs-6">
+                      <label for="">Tipo Documento:</label>
+                      <span>{{order_customer.get_type_document_display}}</span>
+                    </div>
+                    <div class="col-xs-6">
+                      <label for="">Documento:</label>
+                      <span>{{order_customer.document}}</span>
+                    </div>
+                  </div>
+
+
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="boxw">
+              <div class="w-body">
+                <h3 class="w-body__title">Resumen Dirección de Envío</h3>
+                <form class="form-horizontal form-checkout form-checkout-1" action="" method='POST'>
+                  <div class="form-group">
+                    <div class="col-xs-6">
+                      <label for="">Nombres:</label>
+                      <span>{{order_shipping.first_name}}</span>
+                    </div>
+                    <div class="col-xs-6">
+                      <label for="">Apellidos:</label>
+                      <span>{{order_shipping.last_name}}</span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-xs-6">
+                      <label for="">Tipo Documento:</label>
+                      <span>{{order_shipping.get_type_document_display}}</span>
+                    </div>
+                    <div class="col-xs-6">
+                      <label for="">Documento:</label>
+                      <span>{{order_shipping.document}}</span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-xs-6">
+                      <label for="">Telefono:</label>
+                      <span>{{order_shipping.phone}}</span>
+                    </div>
+                    <div class="col-xs-6">
+                      <label for="">Zona:</label>
+                      <span>{{order_shipping.ubigeo.full_ubigeo}}</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-xs-6">
+                      <label for="">Dirección:</label>
+                      <span>{{order_shipping.address}}</span>
+                    </div>
+                    <div class="col-xs-6">
+                      <label for="">Referencia:</label>
+                      <span>{{order_shipping.referemce}}</span>
+                    </div>
+                  </div>
+
+
+
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="boxw">
+              <div class="w-body">
+                <h3 class="w-body__title">
+                  Metodo De Pago
+                </h3>
+                <form action="" method="POST" class=' form-horizontal form-checkout form-checkout-1' id="culqi-card-form">
+                    <div data-capture-name="true" class='card-js' id="my-card">
+                      <div class="form-group">
+                          <div class="col-md-12">
+                            <label>
+                             <span>Correo Electrónico</span>
+                            </label>
+                            <input type="text" size="50"id="card[email]" name="card-holders-name" placeholder="Correo Electrónico" class="name form-control" data-culqi="card[email]">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <div class="col-md-4">
+                            <label>
+                             <span>Número de tarjeta</span>
+                            </label>
+                            <input type="text" size="20" name="card-number" name="card-number" placeholder="Número de Tarjeta" class="card-number my-custom-class form-control" data-culqi="card[number]" id="card[number]">
+                          </div>
+                          <div class="col-md-5">
+                            <label>
+                             Fecha expiración (MM/YYYY)
+                            </label>
+                            <input type="hidden" size="2" class="expiry-month form-control"  data-culqi="card[exp_month]" id="card[exp_month]">
+                            <input type="hidden" size="4" class="expiry-year form-control" data-culqi='card[exp_year]' id='card[exp_year]'>
+                          </div>
+                          <div class="col-md-3">
+                            <label>
+                              <span>CVC</span>
+                            </label>
+                            <input type="text" size="4" name='cvc' class="cvc form-control" data-culqi='card[cvv]' id='card[cvv]'>
+                          </div>
+                      </div>
+                    </div>
+
+                  <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="w-lnk-btn"><a href="{% url 'web_order:checkout_paso_1' %}" class="lnk"><i class="fa fa-angle-left"></i>Regresar</a>
+                        <button type="submit" id="pagar" disabled="disabled" class="btn btn-primary">Pagar</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="boxw">
+          <div class="box-items">
+
+          {% for detail in order_details %}
+
+            <div class="item-car">
+              <div class="item">
+                <div class="image">
+                  {% thumbnail detail.productdetail.get_image "60x60" crop="center" as im %}
+                    <img src="{{ im.url }}"  height="{{ im.height }}">
+                  {% endthumbnail %}
+                </div>
+              </div>
+              <div class="detail">
+                <h3>{{detail.productdetail.product_class.name}}</h3>
+                <div class="sizes">Medium</div>
+              </div>
+            </div>
+          {% endfor %}
+
+          </div>
+          <div class="totals">
+            <div class="subtotal"> <span class="title-s">Subtotal: </span><strong>S/. {{order.sub_total}}               </strong></div>
+            <div class="subtotal"> <span class="title-s">Costo de Envio: </span><strong>S/. {{order.total}}               </strong></div>
+            <div class="total"><span class="to">Total:   </span><strong>S/. {{order.total}}</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div id="modal-container">
+  <div class="modal-background">
+    <div class="modal">
+      <h4 class='procesando'>Procesando su Pago</h4>
+      <img src="{% static 'img/culqi_logo.png' %}" alt="" class='logo_culqui'>
+      <svg class="modal-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none">
+                <rect x="0" y="0" fill="none" width="100%" height="100%" rx="3" ry="3"></rect>
+              </svg>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+  <script src="https://checkout.culqi.com/v2"></script>
+  <script src="{% static 'js/cartjs.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+   <script src="{% static 'js/csrfcookie.js' %}"></script>
+  <script>
+    Culqi.publicKey = '{{CULQUI_PUBLIC_KEY_TEST}}';
+    Culqi.init();
+
+    function culqi() {
+      if(Culqi.token) { // ¡Token creado exitosamente!
+          // Get the token ID:
+          var data = Culqi.token;
+
+          $.ajax({
+            url: '{% url "payment:save_token" %}',
+            type: 'POST',
+            data: {'token': JSON.stringify(data)}
+          }).done(function (data) {
+            if (data.status === 'ok') {
+              $('.procesando').text('Se pago con existo su pedido')
+              setTimeout(function(){
+                 window.location.href = '{% url "web_order:checkout_thanks" %}'
+              }, 1000);
+
+            }
+          })
+
+      }else{ // ¡Hubo algún problema!
+          // Mostramos JSON de objeto error en consola
+
+          var data = Culqi.error
+          $('.procesando').text(data.user_message)
+          console.log(data)
+      }
+    };
+    $("#culqi-card-form input").keyup(function(event) {
+      /* Act on the event */
+      console.log('entro')
+      if ($("input[name='card-number']").val() && $("input[name='card-holders-name']").val() && $("input[name='cvc']").val() && $("input.expiry-year").val() && $("input.expiry-month").val()) {
+        $('#pagar').removeAttr('disabled')
+      } else {
+        $('#pagar').attr('disabled', 'disabled')
+      }
+    });
+
+    $('#pagar').click(function(event) {
+      event.preventDefault()
+      $('#modal-container').removeAttr('class').addClass('six');
+      $('body').addClass('modal-active');
+      $('.procesando').text('Procesando su Pago')
+      Culqi.createToken();
+    });
+    $('#modal-container').click(function(){
+      $(this).addClass('out');
+      $('body').removeClass('modal-active');
+    });
+    jQuery(document).ready(function($) {
+      var myCard = $('#my-card');
+      // myCard.CardJs.NAME_PLACEHOLDER = 'Email';
+    });
+</script>
+{% endblock js %}

@@ -27,7 +27,6 @@ class ProductClassCategoryListAPI(ListAPIView):
         filter_influencer = self.request.query_params.getlist('influencer[]', None)
         filter_attribute = self.request.query_params.getlist('attr[]', None)
         attr_list = []
-        print(filter_attribute, 'filter_attribute')
         if filter_influencer:
             queryset = queryset.filter(influencer__slug__in=filter_influencer)
         for attr in filter_attribute:
@@ -36,7 +35,6 @@ class ProductClassCategoryListAPI(ListAPIView):
             attr_list += attr_slug
         if attr_list:
             queryset = queryset.filter(product_class_products__attribute_option__slug__in=attr_list).distinct('id')
-        print(attr_list, 'attr_list,attr_list')
         return queryset
 
     def get_serializer_context(self):
@@ -164,14 +162,12 @@ class ProductClassInfluencerListAPI(ListAPIView):
         # filter_influencer = self.request.query_params.getlist('influencer[]', None)
         filter_attribute = self.request.query_params.getlist('attr[]', None)
         attr_list = []
-        print(filter_attribute, 'filter_attribute')
         for attr in filter_attribute:
             str_attr = '{0}{1}'.format(attr, '[]')
             attr_slug = self.request.query_params.getlist(str_attr, None)
             attr_list += attr_slug
         if attr_list:
             queryset = queryset.filter(product_class_products__attribute_option__slug__in=attr_list).distinct('id')
-        print(attr_list, 'attr_list,attr_list')
         return queryset
 
     def get_serializer_context(self):

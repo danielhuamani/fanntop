@@ -3,7 +3,8 @@ RECHAZADO = "RC"
 PAGADO = "PG"
 CANCELADO = "CN"
 DENEGADO = "DN"
-
+PROCESO = 'PR_1'
+PROCESO_2 = 'PR_2'
 ORDER_VALIDATED = 'VAL'
 ORDER_USED = 'USE'
 
@@ -12,6 +13,8 @@ TYPE_STATUS = (
     ("DN", "Denegado"),
     ("RC", "Rechazado"),
     ("PE", "Pendiente"),
+    (PROCESO, "Proceso Paso 1"),
+    (PROCESO_2, "Proceso Paso 2"),
     ("DES", "En Despacho"),
     ("CAM", "En Camino"),
     ("COM", "Completado"),

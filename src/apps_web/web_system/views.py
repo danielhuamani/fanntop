@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, logout, login as auth_login
 from django.contrib.auth.decorators import login_required
 from apps_base.pages.models import HomeBanner
 from apps_base.influencer.models import Influencer
 from django.contrib.auth.forms import AuthenticationForm
+from apps_base.custom_auth.models import User
 from .forms import UserRegisterForm
 from .constants import REGISTER, LOGIN
+from .utils import send_mail_customer_welcome
 
 
 def home(request):
@@ -30,6 +32,7 @@ def login_register(request):
                 username = form_register.cleaned_data.get('username')
                 raw_password = form_register.cleaned_data.get('password1')
                 user = authenticate(username=username, password=raw_password)
+                send_mail_customer_welcome(user)
                 auth_login(request, user)
                 if request.GET.get('next'):
                     return redirect(request.GET.get('next'))
@@ -59,3 +62,17 @@ def account(request):
 
     }
     return render(request, "system/account.html", ctx)
+
+
+def test_email(request):
+    user = User.objects.get(email='danielhuamani15@gmail.com')
+    send_mail_customer_welcome(user)
+    ctx = {}
+    return render(request, "system/account.html", ctx)
+
+def logout_view(request):
+    logout(request)
+    response = redirect("web_system:home")
+    response.delete_cookie('cart')
+
+    return response

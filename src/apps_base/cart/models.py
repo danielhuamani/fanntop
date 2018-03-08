@@ -49,5 +49,4 @@ class CartItem(models.Model):
 
     @property
     def cart_item_total(self):
-        print(D(self.quantity * self.product.get_price), '-------')
         return D(self.quantity * self.product.get_price)

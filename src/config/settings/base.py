@@ -57,7 +57,8 @@ BASE_APPS = [
     'apps_base.pages',
     'apps_base.cart',
     'apps_base.order',
-    'apps_base.ubigeo'
+    'apps_base.ubigeo',
+    'apps_base.payment'
 ]
 
 WEB_APPS = [
@@ -213,3 +214,12 @@ THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
 THUMBNAIL_REDIS_HOST = 'localhost'
 THUMBNAIL_REDIS_PORT = 6379
 THUMBNAIL_DUMMY = True
+
+
+EMAIL_HOST = ENV.get('EMAIL_HOST')
+EMAIL_HOST_USER = ENV.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = ENV.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = ENV.get('DEFAULT_FROM_EMAIL')
+SERVER_EMAIL = ENV.get('SERVER_EMAIL')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
