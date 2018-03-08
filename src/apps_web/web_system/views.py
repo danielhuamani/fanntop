@@ -6,6 +6,7 @@ from apps_base.pages.models import HomeBanner
 from apps_base.influencer.models import Influencer
 from django.contrib.auth.forms import AuthenticationForm
 from apps_base.custom_auth.models import User
+from django.db import transaction
 from .forms import UserRegisterForm
 from .constants import REGISTER, LOGIN
 from .utils import send_mail_customer_welcome
@@ -20,7 +21,7 @@ def home(request):
     }
     return render(request, "system/home.html", ctx)
 
-
+@transaction.atomic
 def login_register(request):
     if request.method == 'POST':
         form_register = UserRegisterForm(prefix='register')
@@ -28,15 +29,17 @@ def login_register(request):
         if request.POST.get('type_submit') == REGISTER:
             form_register = UserRegisterForm(request.POST, prefix='register')
             if form_register.is_valid():
-                form_register.save()
-                username = form_register.cleaned_data.get('username')
-                raw_password = form_register.cleaned_data.get('password1')
+                user_register = form_register.save()
+                username = user_register.email
+                raw_password = user_register.password
                 user = authenticate(username=username, password=raw_password)
-                send_mail_customer_welcome(form_register)
+                send_mail_customer_welcome(user_register)
                 auth_login(request, user)
                 if request.GET.get('next'):
                     return redirect(request.GET.get('next'))
                 return redirect(reverse_lazy('web_system:account'))
+            else:
+                print(form_register.errors)
         elif request.POST.get('type_submit') == LOGIN:
             form_login = AuthenticationForm(request, data=request.POST, prefix='login')
             if form_login.is_valid():
