@@ -3,9 +3,9 @@ from django.contrib.postgres.fields import JSONField
 from django.utils.translation import ugettext_lazy as _
 from .constants import TYPE_STATUS
 from .utils import generate_code_order
-
 from apps_base.customers.constants import TYPE_DOCUMENT_CHOICES
 from apps_base.core.models import CoreTimeModel, CoreActiveModel
+
 
 class Order(CoreTimeModel, CoreActiveModel):
     customer = models.ForeignKey(
@@ -30,6 +30,11 @@ class Order(CoreTimeModel, CoreActiveModel):
         if not self.code:
             self.code = generate_code_order()
         super(Order, self).save(*args, **kwargs)
+
+    def update_total(self):
+        self.sub_total = self.cart.total
+        self.total = self.cart.total
+        self.save()
 
     def __str__(self):
         return '{}'.format(self.code)
@@ -73,6 +78,8 @@ class OrderCustomer(models.Model):
     def get_full_name(self):
         return "{0} {1} {2}".format(self.name, self.first_name, self.last_name)
 
+    def __str__(self):
+        return '{}'.format(self.first_name)
 
 class OrderShippingAddress(models.Model):
     order = models.OneToOneField(
@@ -92,3 +99,6 @@ class OrderShippingAddress(models.Model):
     class Meta:
         verbose_name = "OrderShipping"
         verbose_name_plural = "OrderShipping"
+
+    def __str__(self):
+        return '{}'.format(self.first_name)

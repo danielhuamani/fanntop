@@ -25,6 +25,7 @@ def save_token(request):
         if status == 'error':
             return JsonResponse(data, status=403)
         order = Order.objects.get(cart__code=code_cart)
+        order.update_total()
         order_customer = order.order_order_customer
         order_shipping = order.order_ordershipping
 

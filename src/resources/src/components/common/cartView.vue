@@ -23,7 +23,8 @@
               <div class="w-quantity">
                 <div class="quantity-control min">
                   <a class="menos" @click.prevent='quantityMenos(item.quantity, item.product_sku)'><i class="fa fa-minus"></i></a>
-                  <input class="select-number" :value='item.quantity' /><a class="menos" @click.prevent='quantityMas(item.quantity, item.product_sku)'><i class="fa fa-plus"></i></a>
+                  <input class="select-number" :value='item.quantity' @keyUp/>
+                  <a class="menos" @click.prevent='quantityMas(item.quantity, item.product_sku)'><i class="fa fa-plus"></i></a>
                 </div>
               </div>
               <div class="w-remove"><a href="" @click.prevent='deleteCartItem(item.product_sku)'>eliminar</a></div>

@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from apps_base.customers.models import CustomerShippingAddress
+from apps_base.customers.models import CustomerShippingAddress, Customer
 from apps_base.cart.models import Cart
-from apps_base.order.models import Order
+from apps_base.order.models import Order, OrderShippingAddress, OrderCustomer
 from apps_base.ubigeo.models import Ubigeo, Departamento
 from apps_base.order.order import OrderGenerate
 from django.db import transaction
@@ -23,9 +23,23 @@ def checkout_paso_1(request):
             'cart_items__product__product_class').get(code=code_cart)
     user = request.user
     customer = user.user_customer
+    code_departamento = ''
+    code_provincia = ''
+    code_distrito = ''
+    existe_order = False
     if Order.objects.filter(cart__code=code_cart).exists():
-        form = OrderCustomerForm(prefix='customer')
+        order_cart = Order.objects.get(cart__code=code_cart)
+        order_shipping_instance = order_cart.order_ordershipping
+        order_customer_instance = order_cart.order_order_customer
+        ubigeo = order_shipping_instance.ubigeo
+        code_departamento = ubigeo.cod_dep_inei
+        code_provincia = ubigeo.cod_prov_inei
+        code_distrito = ubigeo.pk
+        existe_order = True
+        form = OrderCustomerForm(prefix='customer', instance=order_customer_instance)
     else:
+        order_shipping_instance = OrderShippingAddress()
+        order_customer_instance = OrderCustomer()
         initial = {
             'email': user.email,
             'first_name': user.first_name,
@@ -34,36 +48,52 @@ def checkout_paso_1(request):
             'phone': customer.phone,
             'type_document': customer.type_document,
         }
-        form = OrderCustomerForm(prefix='customer', initial=initial)
+        form = OrderCustomerForm(prefix='customer', initial=initial, instance=order_customer_instance)
     shipping_address = CustomerShippingAddress.objects.filter(customer=customer)
-
+    distrito = []
     if request.method == 'POST':
-        form = OrderCustomerForm(request.POST, prefix='customer')
-        form_order_shipping = OrderShippingAddressForm(request.POST, prefix='shipping')
+        form = OrderCustomerForm(request.POST, prefix='customer', instance=order_customer_instance)
+        form_order_shipping = OrderShippingAddressForm(request.POST, prefix='shipping', instance=order_shipping_instance)
+        form_order_shipping.fields['direccion_save'].queryset = CustomerShippingAddress.objects.filter(customer=customer)
         provincia = request.POST.get('provincia')
+        ubigeo = request.POST.get('shipping-ubigeo')
         if provincia:
-            form_order_shipping.fields["ubigeo"].queryset = Ubigeo.objects.filter(cod_ubigeo_inei__startswith=provincia).order_by('desc_ubigeo_inei')
+            form_order_shipping.fields["ubigeo"].queryset = Ubigeo.objects.filter(
+                cod_ubigeo_inei__startswith=provincia).order_by('desc_ubigeo_inei')
+
         if form.is_valid() and form_order_shipping.is_valid():
             data_shipping = form_order_shipping.cleaned_data
             order_generate = OrderGenerate()
-            order = order_generate.create(cart, customer)
+            if existe_order:
+                order = order_generate.update(cart)
+            else:
+                order = order_generate.create(cart, customer)
             form.instance.order = order
-            form.save()
+            order_customer = form.save()
             form_order_shipping.instance.order = order
-            form_order_shipping.save()
-            if data_shipping.get('direccion_save'):
+            order_shipping = form_order_shipping.save()
+            user.first_name = order_customer.first_name
+            user.last_name = order_customer.last_name
+            user.email = order_customer.email
+            user.save()
+            customer.phone = order_customer.phone
+            customer.document = order_customer.document
+            customer.type_document = order_customer.type_document
+            customer.save()
+            print(data_shipping.get('save_data'), data_shipping)
+            if data_shipping.get('save_data'):
                 try:
                     customer_shipping = CustomerShippingAddress(
                         customer=customer,
-                        first_name=form_order_shipping.first_name,
-                        last_name=form_order_shipping.last_name,
-                        type_document=form_order_shipping.type_document,
-                        document=form_order_shipping.document,
-                        phone=form_order_shipping.phone,
-                        address=form_order_shipping.address,
-                        reference=form_order_shipping.reference,
-                        ubigeo=form_order_shipping.ubigeo,
-                        order=order,
+                        first_name=order_shipping.first_name,
+                        last_name=order_shipping.last_name,
+                        type_document=order_shipping.type_document,
+                        document=order_shipping.document,
+                        phone=order_shipping.phone,
+                        address=order_shipping.address,
+                        reference=order_shipping.reference,
+                        ubigeo=order_shipping.ubigeo,
+                        order=order_shipping,
                     )
                     customer_shipping.save()
                 except Exception as e:
@@ -73,12 +103,18 @@ def checkout_paso_1(request):
         else:
             print('invalid', form.errors, form_order_shipping.errors)
     else:
-        form_order_shipping = OrderShippingAddressForm(request.POST, prefix='shipping')
+        print(order_shipping_instance, 'order_shipping_instance', order_shipping_instance.first_name)
+        form_order_shipping = OrderShippingAddressForm(prefix='shipping', instance=order_shipping_instance)
+        form_order_shipping.fields['direccion_save'].queryset = CustomerShippingAddress.objects.filter(customer=customer)
     ctx = {
         'cart': cart,
         'form': form,
         'form_order_shipping': form_order_shipping,
-        'shipping_address': shipping_address
+        'shipping_address': shipping_address,
+        'distrito': distrito,
+        'code_departamento': code_departamento,
+        'code_provincia': code_provincia,
+        'code_distrito': code_distrito
     }
     return render(request, "order/checkout_1.html", ctx)
 
@@ -115,4 +151,6 @@ def checkout_thanks(request):
     ctx = {
         'order': order
     }
-    return render(request, "order/checkout_thanks.html", ctx)
+    response = render(request, "order/checkout_thanks.html", ctx)
+    response.delete_cookie('cart')
+    return response

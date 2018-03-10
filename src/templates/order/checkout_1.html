@@ -178,13 +178,23 @@
   jQuery(document).ready(function($) {
     var departamento_initial = $('#id_shipping-departamento')
     departamento_initial.html('')
+    var code_departamento = '{{code_departamento}}'
+    var code_provincia = '{{code_provincia}}'
+    var code_distrito = '{{code_distrito}}'
     $.ajax({
         'url': '{% url "ubigeo:api_departamentos" %}',
         'method': 'GET',
         'success': function (data) {
             departamento_initial.append('<option value="" selected="selected">Seleccione Departamento</option>');
             for (var i = 0; i < data.departamentos.length; i++) {
+              if (code_departamento == data.departamentos[i].codigo) {
+                departamento_initial.append('<option selected="selected" value="' + data.departamentos[i].codigo + '">' + data.departamentos[i].descripcion + '</option>');
+              } else {
                 departamento_initial.append('<option value="' + data.departamentos[i].codigo + '">' + data.departamentos[i].descripcion + '</option>');
+              }
+            }
+            if (code_departamento) {
+              $('#id_shipping-departamento').trigger('change')
             }
             // provincia.change();
         }
@@ -193,18 +203,33 @@
     /* Act on the event */
       var departamento = $(this).val();
       var provincia = $('#id_shipping-provincia')
+      var distrito = $('#id_shipping-ubigeo')
       provincia.html('');
-      $.ajax({
-            'url': '{% url "ubigeo:api_provincias" %}' + '?departamento=' + departamento,
-            'method': 'GET',
-            'success': function (data) {
-                provincia.append('<option value="" selected="selected">Seleccione Provincia</option>');
-                for (var i = 0; i < data.provincias.length; i++) {
-                    provincia.append('<option value="' + data.provincias[i].codigo + '">' + data.provincias[i].descripcion + '</option>');
-                }
-                // provincia.change();
-            }
-        })
+      distrito.html('');
+      if (departamento) {
+        $.ajax({
+              'url': '{% url "ubigeo:api_provincias" %}' + '?departamento=' + departamento,
+              'method': 'GET',
+              'success': function (data) {
+                  provincia.append('<option value="" selected="selected">Seleccione Provincia</option>');
+                  for (var i = 0; i < data.provincias.length; i++) {
+                    if (code_provincia == data.provincias[i].codigo) {
+                      provincia.append('<option  selected="selected" value="' + data.provincias[i].codigo + '">' + data.provincias[i].descripcion + '</option>');
+                    } else {
+                      provincia.append('<option value="' + data.provincias[i].codigo + '">' + data.provincias[i].descripcion + '</option>');
+                    }
+                  }
+                  if (code_provincia) {
+                    $('#id_shipping-provincia').trigger('change')
+                  }
+                  // provincia.change();
+              }
+          })
+      } else {
+        provincia.append('<option value="" selected="selected">Seleccione Provincia</option>');
+        distrito.append('<option value="" selected="selected">Seleccione Distrito</option>');
+        code_provincia = ''
+      }
 
 
     });
@@ -219,8 +244,13 @@
             'success': function (data) {
                 distrito.append('<option value="" selected="selected">Seleccione Distrito</option>');
                 for (var i = 0; i < data.distritos.length; i++) {
+                  if (code_distrito == data.distritos[i].pk) {
+                    distrito.append('<option selected="selected" value="' + data.distritos[i].pk + '">' + data.distritos[i].descripcion + '</option>');
+                  } else {
                     distrito.append('<option value="' + data.distritos[i].pk + '">' + data.distritos[i].descripcion + '</option>');
+                  }
                 }
+                code_distrito = ''
                 // provincia.change();
             }
         })

@@ -2,6 +2,8 @@ from django import forms
 from apps_base.order.models import Order, OrderCustomer, OrderShippingAddress
 from apps_base.ubigeo.models import Departamento, Provincia, Ubigeo
 from apps_base.customers.models import CustomerShippingAddress
+
+
 class OrderCustomerForm(forms.ModelForm):
     class Meta:
         model = OrderCustomer
@@ -17,7 +19,7 @@ class OrderShippingAddressForm(forms.ModelForm):
     ubigeo = forms.ModelChoiceField(
         queryset=Ubigeo.objects.none(),
         empty_label="Seleccione Distrito")
-    save_data = forms.BooleanField()
+    save_data = forms.BooleanField(initial=False, required=False)
     direccion_save = forms.ModelChoiceField(
         queryset=CustomerShippingAddress.objects.none(),
         empty_label="Seleccione Dirección", label='Mis Direcciones', required=False)

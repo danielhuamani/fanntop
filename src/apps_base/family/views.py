@@ -23,7 +23,6 @@ class FamilyGroupViewSet(BaseAuthenticated, viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         family = self.request.query_params.get('family', False)
-        print("entras")
         if family:
             queryset = queryset.filter(family_id=int(family))
         return queryset
