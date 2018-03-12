@@ -1,6 +1,48 @@
 .main_checkout_thanks__title {
   margin-bottom: 10px;
 }
+.item-result .image {
+  padding: 15px;
+  background: #fff;
+}
+.item-result .detail {
+  margin-top: 10px;
+}
+.item-result .detail h3.title {
+  font-size: 18px;
+}
+.w-filter input[type=range]::-ms-track {
+  width: 300px;
+  height: 5px;
+/*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+  background: transparent;
+/*leave room for the larger thumb to overflow with a transparent border */
+  border-color: transparent;
+  border-width: 6px 0;
+/*remove default tick marks*/
+  color: transparent;
+}
+.w-filter input[type=range]::-ms-fill-lower {
+  background: #777;
+  border-radius: 10px;
+}
+.w-filter input[type=range]::-ms-fill-upper {
+  background: #ddd;
+  border-radius: 10px;
+}
+.w-filter input[type=range]::-ms-thumb {
+  border: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #daa520;
+}
+.w-filter input[type=range]:focus::-ms-fill-lower {
+  background: #888;
+}
+.w-filter input[type=range]:focus::-ms-fill-upper {
+  background: #ccc;
+}
 #header .list-options__menu {
   position: relative;
 }
@@ -47,6 +89,33 @@ nav ul li ul li {
 }
 nav ul li .submenu {
   box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+}
+#footer {
+  padding: 2em 0;
+}
+#footer .service_client {
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+#footer .service_client li {
+  margin-bottom: 5px;
+}
+#footer .service_client li a {
+  cursor: pointer;
+}
+.pages {
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+.pages__title {
+  font-size: 36px;
+  margin-top: 20px;
+  text-align: center;
+}
+.pages__content {
+  margin-top: 40px;
 }
 .form-control {
   border-radius: 4px;

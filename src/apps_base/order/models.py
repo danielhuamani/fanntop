@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 from django.utils.translation import ugettext_lazy as _
-from .constants import TYPE_STATUS
+from .constants import TYPE_STATUS, TYPE_STATUS_SHIPPING, ALMACEN
 from .utils import generate_code_order
 from apps_base.customers.constants import TYPE_DOCUMENT_CHOICES
 from apps_base.core.models import CoreTimeModel, CoreActiveModel
@@ -19,6 +19,8 @@ class Order(CoreTimeModel, CoreActiveModel):
     total = models.DecimalField("total", decimal_places=2, max_digits=8)
     type_status = models.CharField(
         "type_status", choices=TYPE_STATUS, max_length=255, blank=True)
+    type_status_shipping = models.CharField(
+        "type status shipping", choices=TYPE_STATUS_SHIPPING, max_length=255, default=ALMACEN)
     is_send_email = models.BooleanField(default=False)
     is_return_stock = models.BooleanField(default=False)
     extra_data = JSONField(default={})

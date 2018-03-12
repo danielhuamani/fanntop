@@ -26,6 +26,7 @@ class ProductClassCategoryListAPI(ListAPIView):
         queryset = queryset.filter(category=category)
         filter_influencer = self.request.query_params.getlist('influencer[]', None)
         filter_attribute = self.request.query_params.getlist('attr[]', None)
+        orderBy = self.request.query_params.get('orderBy')
         attr_list = []
         if filter_influencer:
             queryset = queryset.filter(influencer__slug__in=filter_influencer)
@@ -34,7 +35,17 @@ class ProductClassCategoryListAPI(ListAPIView):
             attr_slug = self.request.query_params.getlist(str_attr, None)
             attr_list += attr_slug
         if attr_list:
-            queryset = queryset.filter(product_class_products__attribute_option__slug__in=attr_list).distinct('id')
+            queryset = queryset.filter(product_class_products__price__attribute_option__slug__in=attr_list).distinct('id')
+        if orderBy:
+            if orderBy == 'name_asc':
+                queryset = queryset.order_by('name')
+            elif orderBy == 'name_desc':
+                queryset = queryset.order_by('-name')
+            elif orderBy == 'price_asc':
+                queryset = queryset.order_by('product_class_products__price')
+            elif orderBy == 'price_desc':
+                queryset = queryset.order_by('-product_class_products__price')
+
         return queryset
 
     def get_serializer_context(self):

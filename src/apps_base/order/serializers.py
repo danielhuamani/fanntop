@@ -60,11 +60,19 @@ class OrderSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     order_order_customer = OrderCustomerSerializer()
     order_ordershipping = OrderShippingAddressSerializer()
     order_orderdetail = OrderDetailSerializer(many=True)
+
     class Meta:
         model = Order
         fields = ['code', 'total', 'type_status', 'order_order_customer', 'status',
-            'order_ordershipping', 'order_orderdetail', 'id', 'is_send_email']
+            'order_ordershipping', 'order_orderdetail', 'id', 'is_send_email',
+            'type_status_shipping', 'extra_data']
 
+    def update(self, instance, validated_data):
+        order_order_customer = validated_data.pop('order_order_customer')
+        order_ordershipping = validated_data.pop('order_ordershipping')
+        order_orderdetail = validated_data.pop('order_orderdetail')
+        instance = super(OrderSerializer, self).update(instance, validated_data)
+        return instance
 
     def get_status(self, obj):
         return obj.get_type_status_display()

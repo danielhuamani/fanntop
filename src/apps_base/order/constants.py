@@ -21,3 +21,10 @@ TYPE_STATUS = (
     ("CN", "Cancelado"),
 
 )
+
+ALMACEN = 'AL'
+TYPE_STATUS_SHIPPING = (
+    (ALMACEN, "En Almacén"),
+    ("DS", "En Despacho"),
+    ("EG", "Entregado"),
+)

@@ -40,6 +40,13 @@
           </li>
         </ul>
       </div>
+      <div class="w-filter">
+        <h3>Precio</h3>
+        <div class="w-filter__content">
+          <input type="range" min="0" :max="max_price" v-model='price' class="w-filter__price">
+          <span>{{price}}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -50,7 +57,9 @@
     data () {
       return {
         influencer: [],
-        attribute_option: {}
+        attribute_option: {},
+        max_price: 500,
+        price: 200
       }
     },
     created () {

@@ -6,11 +6,12 @@
         <div class="row">
           <div class="result-paginator result-paginator-top">
             <div class="order">
-              <div class="text">Orden</div>
-              <select>
-                <option>todos</option>
-                <option>Ascendente</option>
-                <option>Descendente</option>
+              <div class="text">Ordenar por</div>
+              <select v-model='orderBy' @change='changeOrderBy($event.target.value)'>
+                <option value='name_asc'>Nombre (A-Z)</option>
+                <option value='name_desc'>Nombre (Z-A)</option>
+                <option value='price_asc'>Menor Precio</option>
+                <option value='price_desc'>Mayor Precio</option>
               </select>
             </div>
             <div class="paginator">
@@ -62,8 +63,20 @@
   export default {
     name: 'productList',
     props: ['products'],
+    data () {
+      return {
+        orderBy: 'name_asc'
+      }
+    },
     components: {
       productItem
+    },
+    methods: {
+      changeOrderBy (value) {
+        console.log(value, 'value')
+        this.orderBy = value
+        this.$emit('orderBy', this.orderBy)
+      }
     }
   }
 </script>
