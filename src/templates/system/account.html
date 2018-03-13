@@ -4,7 +4,85 @@
 
 {% endblock css %}
 {% block content %}
+<section class="main page-account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 boxw">
+        <div class="w-body">
+          <div class="sidebar sidebar_account">
+            <h3>Bienvenido</h3>
+            <ul class='sidebar_account__info'>
+              <li><a href="{% url 'web_system:my_address' %}">Mis direcciones</a></li>
+              <li><a href="{% url 'web_system:my_order' %}">Mis Ordenes</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="boxw">
+          <div class="title-page">
+            <h2>Información Personal</h2>
+          </div>
+          <div class="w-body">
+            <div class="row">
 
+              <div class="col-md-12">
+                <form action="" method='POST' class='page-account__form'>
+                  {% csrf_token %}
+                  <div class="row form-group">
+                    <div class="col-md-6">
+                      {{form_user.first_name.label_tag}}
+                      {{form_user.first_name|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.first_name.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      {{form_user.last_name.label_tag}}
+                      {{form_user.last_name|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.last_name.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                     {{form_user.email.label_tag}}
+                      {{form_user.email|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.email.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      {{form_customer.type_document.label_tag}}
+                      {{form_customer.type_document|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.email.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      {{form_customer.document.label_tag}}
+                      {{form_customer.document|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.document.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      {{form_customer.gender.label_tag}}
+                      {{form_customer.gender|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.gender.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      {{form_customer.phone.label_tag}}
+                      {{form_customer.phone|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.phone.errors}}</p>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                        <button class='btn btn-primary'>Guardar</button>
+                      </div>
+                  </div>
+
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock content %}
 {% block js %}
 

@@ -1,0 +1,169 @@
+{% extends "common/base.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main page-account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 boxw">
+        <div class="w-body">
+          <div class="sidebar sidebar_account">
+            <h3>Bienvenido</h3>
+            <ul class='sidebar_account__info'>
+              <li><a href="{% url 'web_system:my_address' %}">Mis direcciones</a></li>
+              <li><a href="{% url 'web_system:my_order' %}">Mis Ordenes</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="boxw">
+          <div class="title-page">
+            <h2>Mi Orden</h2>
+          </div>
+          <div class="w-body">
+            <div class="row ">
+              <div class="col-md-12">
+                <h4 class="title_order">
+                  <strong>Estado de la Orden</strong>
+                </h4>
+              </div>
+            </div>
+            <div class="row order_info">
+              <div class="col-md-4">
+                <p>Estado: {{order.get_type_status_display}}</p>
+              </div>
+              <div class="col-md-4">
+                <p>Costo de envio: {{order.shipping_price}}</p>
+              </div>
+              <div class="col-md-4">
+                <p>Total: {{order.total}}</p>
+              </div>
+              <div class="col-md-4">
+                <p>Codigo: {{order.code}}</p>
+              </div>
+              {% if order.type_status == 'PG' %}
+                <div class="col-md-4">
+                  <p>Codigo: {{order.get_type_status_shipping_display}}</p>
+                </div>
+              {% endif %}
+            </div>
+            <div class="row order_info">
+              <div class="col-md-12">
+                <h4 class="title_order">
+                  <strong>Mis Productos</strong>
+                </h4>
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-2">
+                    <strong>Imagen</strong>
+                  </div>
+                  <div class="col-md-4">
+                      <strong>Nombre</strong>
+                  </div>
+                  <div class="col-md-2">
+                      <strong>Precio</strong>
+                  </div>
+                  <div class="col-md-2">
+                      <strong>Cantidad</strong>
+                  </div>
+                  <div class="col-md-2">
+                      <strong>Total</strong>
+                  </div>
+                </div>
+                {% for detail in order_products %}
+
+
+                <div class="row order_products" >
+                  <div class="col-md-2">
+                    <img src="{{detail.productdetail.product_product_images.all.0.product_image.image.url}}" alt="">
+                  </div>
+                  <div class="col-md-4">
+                     {{detail.productdetail.product_class.name}}
+                  </div>
+                  <div class="col-md-2">
+                     {{detail.price}}
+                  </div>
+                  <div class="col-md-2">
+                     {{detail.quantity}}
+                  </div>
+                  <div class="col-md-2">
+                     {{detail.total}}
+                  </div>
+                </div>
+              {% endfor %}
+              </div>
+            </div>
+            <div class="row order_info">
+              <div class="col-md-12">
+                <h4 class="title_order">
+                  <strong>Informacion Cliente</strong>
+                </h4>
+              </div>
+              <div class="col-md-12">
+                <div class="col-md-4">
+                  <p>Nombres: {{order_customer.first_name}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Apellidos: {{order_customer.last_name}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Email: {{order_customer.email}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Celular: {{order_customer.phone}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Tipo Documento: {{order_customer.type_document}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Documento: {{order_customer.document}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <h4 class="title_order">
+                  <strong>Informacion Envio</strong>
+                </h4>
+              </div>
+              <div class="col-md-12">
+                <div class="col-md-4">
+                  <p>Nombres: {{order_shipping.first_name}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Apellidos: {{order_shipping.last_name}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Tipo Documento: {{order_shipping.type_document}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Documento: {{order_shipping.document}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Celular: {{order_shipping.phone}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Dirección: {{order_shipping.address}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Referencia: {{order_shipping.reference}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Localidad: {{order_shipping.ubigeo.full_ubigeo}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}

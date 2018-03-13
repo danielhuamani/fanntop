@@ -15,7 +15,7 @@ class Customer(models.Model):
     terms_conditions = models.BooleanField("Terms and Conditions", default=True)
     gender = models.CharField(_("Gender"), max_length=120, choices=GENDER_CHOICES)
     phone = models.CharField(_("Phone"), max_length=120, blank=True)
-    birth_date = models.DateField("Fecha Nacimiento", null=True)
+    birth_date = models.DateField("Fecha Nacimiento", null=True, blank=True)
     is_send_email = models.BooleanField(default=False)
     class Meta:
         verbose_name = "Customer"
@@ -43,7 +43,7 @@ class CustomerShippingAddress(models.Model):
     phone = models.CharField(_("Phone"), max_length=120)
     # name = models.CharField("Otra direccion", max_length=120, blank=True)
     address = models.CharField("Dirección", max_length=255)
-    reference = models.CharField("Referencia", max_length=255)
+    reference = models.CharField("Referencia", max_length=255, blank=True)
     ubigeo = models.ForeignKey(
         "ubigeo.Ubigeo", related_name="zip_code_shipping_address")
     order = models.OneToOneField('order.OrderShippingAddress', blank=True, null=True,

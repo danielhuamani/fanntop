@@ -1,0 +1,136 @@
+{% extends "common/base.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main page-account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 boxw">
+        <div class="w-body">
+          <div class="sidebar sidebar_account">
+            <h3>Bienvenido</h3>
+            <ul class='sidebar_account__info'>
+              <li><a href="{% url 'web_system:account' %}">Información Personal
+                 </a></li>
+              <li><a href="{% url 'web_system:my_order' %}">Mis Ordenes</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="boxw">
+          <div class="title-page">
+            <h2>Mis direcciones de envio</h2>
+          </div>
+          <div class="w-body">
+            <div class="row">
+
+              <div class="col-md-12">
+                <div class="row">
+                  {% for add in address %}
+                    <div class="col-md-4">
+                      <a href='{% url "web_system:my_address_edit" add.pk %}' class="content_address">
+                        <strong>{{add.address}}</strong>
+                        <p>{{add.ubigeo.full_ubigeo}}</p>
+                      </a>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+{% block js %}
+<script>
+  jQuery(document).ready(function($) {
+    var departamento_initial = $('#id_shipping-departamento')
+    departamento_initial.html('')
+    var code_departamento = '{{code_departamento}}'
+    var code_provincia = '{{code_provincia}}'
+    var code_distrito = '{{code_distrito}}'
+    $.ajax({
+        'url': '{% url "ubigeo:api_departamentos" %}',
+        'method': 'GET',
+        'success': function (data) {
+            departamento_initial.append('<option value="" selected="selected">Seleccione Departamento</option>');
+            for (var i = 0; i < data.departamentos.length; i++) {
+              if (code_departamento == data.departamentos[i].codigo) {
+                departamento_initial.append('<option selected="selected" value="' + data.departamentos[i].codigo + '">' + data.departamentos[i].descripcion + '</option>');
+              } else {
+                departamento_initial.append('<option value="' + data.departamentos[i].codigo + '">' + data.departamentos[i].descripcion + '</option>');
+              }
+            }
+            if (code_departamento) {
+              $('#id_shipping-departamento').trigger('change')
+            }
+            // provincia.change();
+        }
+    })
+    $('#id_shipping-departamento').change(function(event) {
+    /* Act on the event */
+      var departamento = $(this).val();
+      var provincia = $('#id_shipping-provincia')
+      var distrito = $('#id_shipping-ubigeo')
+      provincia.html('');
+      distrito.html('');
+      if (departamento) {
+        $.ajax({
+              'url': '{% url "ubigeo:api_provincias" %}' + '?departamento=' + departamento,
+              'method': 'GET',
+              'success': function (data) {
+                  provincia.append('<option value="" selected="selected">Seleccione Provincia</option>');
+                  for (var i = 0; i < data.provincias.length; i++) {
+                    if (code_provincia == data.provincias[i].codigo) {
+                      provincia.append('<option  selected="selected" value="' + data.provincias[i].codigo + '">' + data.provincias[i].descripcion + '</option>');
+                    } else {
+                      provincia.append('<option value="' + data.provincias[i].codigo + '">' + data.provincias[i].descripcion + '</option>');
+                    }
+                  }
+                  if (code_provincia) {
+                    $('#id_shipping-provincia').trigger('change')
+                  }
+                  // provincia.change();
+              }
+          })
+      } else {
+        provincia.append('<option value="" selected="selected">Seleccione Provincia</option>');
+        distrito.append('<option value="" selected="selected">Seleccione Distrito</option>');
+        code_provincia = ''
+      }
+
+
+    });
+    $('#id_shipping-provincia').change(function(event) {
+    /* Act on the event */
+      var provincia = $(this).val();
+      var distrito = $('#id_shipping-ubigeo')
+      distrito.html('');
+      $.ajax({
+            'url': '{% url "ubigeo:api_distritos" %}' + '?provincia=' + provincia,
+            'method': 'GET',
+            'success': function (data) {
+                distrito.append('<option value="" selected="selected">Seleccione Distrito</option>');
+                for (var i = 0; i < data.distritos.length; i++) {
+                  if (code_distrito == data.distritos[i].pk) {
+                    distrito.append('<option selected="selected" value="' + data.distritos[i].pk + '">' + data.distritos[i].descripcion + '</option>');
+                  } else {
+                    distrito.append('<option value="' + data.distritos[i].pk + '">' + data.distritos[i].descripcion + '</option>');
+                  }
+                }
+                code_distrito = ''
+                // provincia.change();
+            }
+        })
+
+
+    });
+  });
+</script>
+{% endblock js %}

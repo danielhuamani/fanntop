@@ -120,6 +120,40 @@ nav ul li .submenu {
 .form-control {
   border-radius: 4px;
 }
+.sidebar_account__info {
+  margin-top: 20px;
+}
+.sidebar_account ul li {
+  margin: 5px 0px;
+}
+.page-account__form .col-md-6 {
+  margin-bottom: 15px;
+}
+.page-account .title_order {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+.page-account .order_info {
+  margin-bottom: 20px;
+}
+.page-account .order_products {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.page-account .content_address {
+  border: 1px dashed #ff7e00;
+  display: block;
+  padding: 10px;
+  color: #000;
+  margin-bottom: 15px;
+}
+.page-account .content_address strong {
+  color: #000;
+}
+.page-account .content_address p {
+  color: #000;
+  margin: 3px 0;
+}
 .checkout .boxw {
   margin-bottom: 20px;
 }

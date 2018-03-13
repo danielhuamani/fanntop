@@ -80,7 +80,6 @@ def checkout_paso_1(request):
             customer.document = order_customer.document
             customer.type_document = order_customer.type_document
             customer.save()
-            print(data_shipping.get('save_data'), data_shipping)
             if data_shipping.get('save_data'):
                 try:
                     customer_shipping = CustomerShippingAddress(

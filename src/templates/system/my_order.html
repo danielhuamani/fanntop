@@ -1,0 +1,51 @@
+{% extends "common/base.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main page-account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 boxw">
+        <div class="w-body">
+          <div class="sidebar sidebar_account">
+            <h3>Bienvenido</h3>
+            <ul class='sidebar_account__info'>
+              <li><a href="{% url 'web_system:my_address' %}">Mis direcciones</a></li>
+              <li><a href="{% url 'web_system:my_order' %}">Mis Ordenes</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="boxw">
+          <div class="title-page">
+            <h2>Mis Ordenes</h2>
+          </div>
+          <div class="w-body">
+            <div class="row">
+
+              <div class="col-md-12">
+                {% for order in orders %}
+                    <div class="col-md-4">
+                      <a href='{% url "web_system:my_order_detail" order.pk %}' class="content_address">
+                        <strong>{{order.get_type_status_display}}</strong>
+                        <p>total: {{order.total}}</p>
+                        <p>Costo envio: {{order.shipping_price}}</p>
+                      </a>
+                    </div>
+                  {% endfor %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}
