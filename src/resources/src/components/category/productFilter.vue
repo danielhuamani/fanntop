@@ -43,23 +43,38 @@
       <div class="w-filter">
         <h3>Precio</h3>
         <div class="w-filter__content">
-          <input type="range" min="0" :max="max_price" v-model='price' class="w-filter__price">
-          <span>{{price}}</span>
+          <vue-slider ref="slider" :tooltip-dir='tooltipDir'
+          :min='productsFilters.prices[0]' :clickable='false' v-on:drag-start='dragStart' v-on:drag-end='dragEnd' :max='productsFilters.prices[1]' :processStyle='processStyle' v-model="value"></vue-slider>
+          <br>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+  import vueSlider from 'vue-slider-component'
   export default {
     name: 'productFilter',
     props: ['productsFilters', 'query'],
+    components: {
+      vueSlider
+    },
     data () {
       return {
         influencer: [],
         attribute_option: {},
-        max_price: 500,
-        price: 200
+        prices: [],
+        value: [
+          0,
+          2
+        ],
+        processStyle: {
+          "backgroundColor": "#ff7e00"
+        },
+        tooltipDir: [
+          "bottom",
+          "bottom"
+        ]
       }
     },
     created () {
@@ -76,6 +91,7 @@
           self.attribute_option[attr_slug] = this.query[attr_slug]
         }
       }
+      this.value = this.productsFilters.prices
       // for(let attr in )
 
     },
@@ -86,6 +102,12 @@
       changeAttribute () {
         this.$emit('queryAttribute', this.attribute_option)
 
+      },
+      dragStart (values) {
+        this.$emit('valueStart', values.value)
+      },
+      dragEnd (values) {
+        this.$emit('valueStart', values.value)
       }
     }
   }

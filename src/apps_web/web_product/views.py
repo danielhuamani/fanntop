@@ -6,6 +6,7 @@ from apps_base.product.models import Product, ProductClass
 
 def influencer_products(request, slug):
     influencer = get_object_or_404(Influencer, slug=slug)
+
     ctx = {
         'influencer': influencer
     }

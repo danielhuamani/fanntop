@@ -5,16 +5,17 @@
       <div class="col-md-3">
         <div class="block-list">
           <div class="logo"><img src="{% static 'img/logo_fanntop.png' %}" alt=""/></div>
-          <p class="copy">© 2018 Gymshark US | All Rights Reserved.</p>
+          <p class="copy">Fanntop | Todos los derechos reservados.</p>
         </div>
       </div>
       <div class="col-md-3">
         <div class="block-list">
           <h3>Servicio al cliente</h3>
           <ul class="service_client">
-            <li><a class=''  href='{% url "web_page:question" %}'>Preguntas frecuentas</a></li>
-            <li><a>Formas de Pago</a></li>
-            <li><a>Terminos y condiciones</a></li>
+            {% for page_pro in pages_processors %}
+              <li><a class=''  href='{% url "web_page:pages" page_pro.slug %}'>{{page_pro.name}}</a></li>
+            {% endfor %}
+
             <li><a>Sigue tu pedido</a></li>
             <li><a>Orders</a></li>
             <li><a>Email Support</a></li>
@@ -23,14 +24,15 @@
       </div>
       <div class="col-md-3">
         <div class="block-list">
-          <h3>MY ACCOUNT</h3>
+          <h3>Mi Cuenta</h3>
           <ul>
-            <li><a>Login</a></li>
-            <li><a>Register</a></li>
+            <li><a href='{% url "web_system:login_register" %}'>Ingresar</a></li>
+            <li><a href='{% url "web_system:login_register" %}'>Registro</a></li>
+            <li><a href='{% url "web_system:my_order" %}'>Mis Ordenes</a></li>
           </ul>
         </div>
         <div class="block-list">
-          <h3>SOCIAL MEDIA</h3>
+          <h3>Redes Sociales</h3>
           <ul class="social">
             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -40,7 +42,7 @@
       </div>
       <div class="col-md-3">
         <div class="block-list">
-          <h3>SIGN UP FOR OUR NEWSLETTER</h3>
+          <h3>Suscribite</h3>
           <div class="w-form">
             <form action="">
               <input type="text" class="text"/>

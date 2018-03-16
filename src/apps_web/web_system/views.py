@@ -153,6 +153,42 @@ def my_address_edit(request, pk):
     }
     return render(request, "system/my_address_edit.html", ctx)
 
+
+@login_required(login_url=reverse_lazy("web_system:login_register"))
+def my_address_create(request):
+    user = request.user
+    customer = user.user_customer
+    # ubigeo = address_detail.ubigeo
+    # code_departamento = ubigeo.cod_dep_inei
+    # code_provincia = ubigeo.cod_prov_inei
+    # code_distrito = ubigeo.pk
+
+    # ubigeo = address_detail.ubigeo
+    code_departamento = ''
+    code_provincia = ''
+    code_distrito = ''
+    if request.method == 'POST':
+        form = CustomerShippingAddressForm(request.POST)
+        provincia = request.POST.get('provincia')
+        ubigeo = request.POST.get('ubigeo')
+        if provincia:
+            form.fields["ubigeo"].queryset = Ubigeo.objects.filter(
+                cod_ubigeo_inei__startswith=provincia).order_by('desc_ubigeo_inei')
+        if form.is_valid():
+            form.instance.customer = customer
+            form.save()
+            return redirect(reverse('web_system:my_address'))
+    else:
+        form = CustomerShippingAddressForm()
+    ctx = {
+        'form': form,
+        # 'code_departamento': code_departamento,
+        # 'code_provincia': code_provincia,
+        # 'code_distrito': code_distrito
+    }
+    return render(request, "system/my_address_create.html", ctx)
+
+
 def test_email(request):
     user = User.objects.get(email='danielhuamani15@gmail.com')
     send_mail_customer_welcome(user)

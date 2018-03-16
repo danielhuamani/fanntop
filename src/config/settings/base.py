@@ -95,7 +95,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'apps_web.web_system.context_processors.category_processors'
+                'apps_web.web_system.context_processors.category_processors',
+                'apps_web.web_system.context_processors.pages_processors'
             ],
         },
     },

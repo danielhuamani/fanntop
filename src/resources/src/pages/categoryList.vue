@@ -3,7 +3,7 @@
       <div class="container">
 
         <div class="row">
-          <productFilter :query='query' @queryInfluencer='queryInfluencer' @queryAttribute='queryAttribute'
+          <productFilter :query='query' @valueStart='valueStart' @valueEnd='valueEnd' @queryInfluencer='queryInfluencer' @queryAttribute='queryAttribute'
           :productsFilters='productsFilters' v-if='load_product_filter'></productFilter>
           <div class="col-md-3" v-else>
             <div class="sidebar sidebar-filter box">
@@ -159,6 +159,7 @@
         query: {
           orderBy: 'name_asc'
         },
+        prices: [],
         productsMask: [1,2,3],
         load_products: false,
         load_product_filter: false
@@ -209,6 +210,18 @@
       orderBy (order) {
 
         this.query['orderBy'] = order
+        this.setRouter(this.query)
+        this.getProducts(this.query)
+      },
+      valueEnd (prices) {
+        this.prices = prices
+        this.query['prices'] = prices
+        this.setRouter(this.query)
+        this.getProducts(this.query)
+      },
+      valueStart (prices) {
+        this.prices = prices
+        this.query['prices'] = prices
         this.setRouter(this.query)
         this.getProducts(this.query)
       },

@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Avg, Max, Min
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -9,6 +10,7 @@ from apps_base.attribute.models import Attribute
 from .serializers import (ProductClassSerializer, InfluencerFilterSerializer,
     AttributeFilterSerializer, ProductClassDetailSerializer, ProductClassAttrSerializer)
 from .utils import ProductPagination
+from decimal import Decimal
 
 
 class ProductClassCategoryListAPI(ListAPIView):
@@ -26,25 +28,29 @@ class ProductClassCategoryListAPI(ListAPIView):
         queryset = queryset.filter(category=category)
         filter_influencer = self.request.query_params.getlist('influencer[]', None)
         filter_attribute = self.request.query_params.getlist('attr[]', None)
+        filter_prices = self.request.query_params.getlist('prices[]', [])
         orderBy = self.request.query_params.get('orderBy')
         attr_list = []
         if filter_influencer:
             queryset = queryset.filter(influencer__slug__in=filter_influencer)
+        if filter_prices:
+            queryset = queryset.filter(product_class_products__price__lte=Decimal(filter_prices[1]),
+                product_class_products__price__gte=Decimal(filter_prices[0])).distinct('id')
         for attr in filter_attribute:
             str_attr = '{0}{1}'.format(attr, '[]')
             attr_slug = self.request.query_params.getlist(str_attr, None)
             attr_list += attr_slug
-        if attr_list:
-            queryset = queryset.filter(product_class_products__price__attribute_option__slug__in=attr_list).distinct('id')
-        if orderBy:
-            if orderBy == 'name_asc':
-                queryset = queryset.order_by('name')
-            elif orderBy == 'name_desc':
-                queryset = queryset.order_by('-name')
-            elif orderBy == 'price_asc':
-                queryset = queryset.order_by('product_class_products__price')
-            elif orderBy == 'price_desc':
-                queryset = queryset.order_by('-product_class_products__price')
+            queryset = queryset.filter(
+                product_class_products__attribute_option__slug__in=attr_list).distinct('id')
+        # if orderBy:
+        #     if orderBy == 'name_asc':
+        #         queryset = queryset.order_by("id", 'name')
+        #     elif orderBy == 'name_desc':
+        #         queryset = queryset.order_by("id", '-name')
+        #     elif orderBy == 'price_asc':
+        #         queryset = queryset.order_by("id", 'product_class_products__price')
+        #     elif orderBy == 'price_desc':
+        #         queryset = queryset.order_by("id", '-product_class_products__price')
 
         return queryset
 
@@ -88,9 +94,11 @@ class CategoryFilterAPI(APIView):
         product_class_ids = product_class.values_list('id', flat=True)
         product_class_influencer_ids = product_class.values_list('influencer_id', flat=True)
         filter_influencer = self.request.query_params.getlist('influencer[]', None)
+        list_price = []
+        queryset = self.queryset
         if filter_influencer:
             queryset = product_class.filter(influencer__slug__in=filter_influencer)
-
+        prices = queryset.aggregate(Max('product_class_products__price'), Min('product_class_products__price'))
         product_ids = Product.objects.filter(
             product_class_id__in=product_class_ids, attribute_option__id__isnull=False)
 
@@ -106,7 +114,11 @@ class CategoryFilterAPI(APIView):
         serializer_influencer = InfluencerFilterSerializer(influencers, many=True).data
         data = {
             'influencers': serializer_influencer,
-            'attributes': serializer_attribute
+            'attributes': serializer_attribute,
+            'prices': [
+                prices.get('product_class_products__price__min', 0),
+                prices.get('product_class_products__price__max', 0)
+            ]
         }
         return Response(data)
 
@@ -172,6 +184,7 @@ class ProductClassInfluencerListAPI(ListAPIView):
         queryset = queryset.filter(influencer=influencer)
         # filter_influencer = self.request.query_params.getlist('influencer[]', None)
         filter_attribute = self.request.query_params.getlist('attr[]', None)
+        filter_prices = self.request.query_params.getlist('prices[]', [])
         attr_list = []
         for attr in filter_attribute:
             str_attr = '{0}{1}'.format(attr, '[]')
@@ -179,6 +192,9 @@ class ProductClassInfluencerListAPI(ListAPIView):
             attr_list += attr_slug
         if attr_list:
             queryset = queryset.filter(product_class_products__attribute_option__slug__in=attr_list).distinct('id')
+        if filter_prices:
+            queryset = queryset.filter(product_class_products__price__lte=Decimal(filter_prices[1]),
+                product_class_products__price__gte=Decimal(filter_prices[0])).distinct('id')
         return queryset
 
     def get_serializer_context(self):
@@ -199,13 +215,15 @@ class InfluencerFilterAPI(APIView):
     def get(self, *args, **kwargs):
         slug = self.kwargs.get('slug')
         influencer = get_object_or_404(Influencer, slug=slug)
+        queryset = self.queryset
         product_class = ProductClass.objects.active().filter(is_published=True, influencer=influencer)
         product_class_ids = product_class.values_list('id', flat=True)
         product_class_influencer_ids = product_class.values_list('influencer_id', flat=True)
+
         filter_influencer = self.request.query_params.getlist('influencer[]', None)
         if filter_influencer:
             queryset = product_class.filter(influencer__slug__in=filter_influencer)
-
+        prices = queryset.aggregate(Max('product_class_products__price'), Min('product_class_products__price'))
         product_ids = Product.objects.filter(
             product_class_id__in=product_class_ids, attribute_option__id__isnull=False)
 
@@ -220,6 +238,10 @@ class InfluencerFilterAPI(APIView):
         influencers = Influencer.objects.filter(id__in=list(product_class_influencer_ids))
         serializer_influencer = InfluencerFilterSerializer(influencers, many=True).data
         data = {
-            'attributes': serializer_attribute
+            'attributes': serializer_attribute,
+            'prices': [
+                prices.get('product_class_products__price__min', 0),
+                prices.get('product_class_products__price__max', 0)
+            ]
         }
         return Response(data)

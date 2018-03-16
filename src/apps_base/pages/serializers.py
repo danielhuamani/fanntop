@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from sorl.thumbnail import get_thumbnail
-from .models import HomeBanner, FrequentQuestion
+from .models import HomeBanner, FrequentQuestion, TermsConditions, PaymentMethods, Pages
 
 
 class HomeBannerSerializer(serializers.ModelSerializer):
@@ -20,3 +20,26 @@ class FrequentQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = FrequentQuestion
         fields = ['id', 'content']
+
+
+class TermsConditionsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TermsConditions
+        fields = ['id', 'content']
+
+
+class PaymentMethodsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PaymentMethods
+        fields = ['id', 'content']
+
+
+class PagesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Pages
+        fields = ['id', 'description', 'name', 'position', 'is_active',
+            'slug', 'title', 'meta_description']
+

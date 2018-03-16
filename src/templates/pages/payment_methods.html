@@ -1,0 +1,24 @@
+{% extends "common/base.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main checkout">
+  <div class="container">
+    <div class="row ">
+      <div class="boxw pages">
+        <div class="w-body">
+          <h2 class='pages__title'>Formas de Pago</h2>
+          <div class="pages__content">
+            {{payment.content|safe}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}
