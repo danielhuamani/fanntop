@@ -7,10 +7,10 @@ from apps_base.influencer.models import Influencer
 from django.contrib.auth.forms import AuthenticationForm
 from apps_base.custom_auth.models import User
 from apps_base.ubigeo.models import Ubigeo
-from apps_base.order.models import Order
+from apps_base.order.models import Order, OrderCustomer
 from apps_base.customers.models import CustomerShippingAddress
 from django.db import transaction
-from .forms import UserRegisterForm, CustomerForm, UserUpdateForm, CustomerShippingAddressForm
+from .forms import UserRegisterForm, CustomerForm, UserUpdateForm, CustomerShippingAddressForm, FollowOrdersForm
 from .constants import REGISTER, LOGIN
 from .utils import send_mail_customer_welcome
 
@@ -201,3 +201,33 @@ def logout_view(request):
     response.delete_cookie('cart')
 
     return response
+
+
+def follow_orders(request):
+    order = []
+    order_products = []
+    order_customer = []
+    order_shipping = []
+    if request.method == 'POST':
+        form = FollowOrdersForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            email = cleaned_data.get('email')
+            num_order = cleaned_data.get('num_order')
+            try:
+                order = Order.objects.get(code=num_order, order_order_customer__email=email)
+                order_customer = order.order_order_customer
+                order_shipping = order.order_ordershipping
+                order_products = order.order_orderdetail.all()
+            except Exception as e:
+                form.add_error('num_order', 'No se encontro la Order')
+    else:
+        form = FollowOrdersForm()
+    ctx = {
+        'form': form,
+        'order': order,
+        'order_products': order_products,
+        'order_customer': order_customer,
+        'order_shipping': order_shipping
+    }
+    return render(request, "system/follow_orders.html", ctx)

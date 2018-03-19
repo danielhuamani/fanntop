@@ -1,0 +1,67 @@
+{% extends "common/base.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main page-account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="boxw">
+          <div class="title-page">
+            <h2>Buscar Orden</h2>
+          </div>
+          <div class="w-body">
+            <form class="row order_info" method='POST' action="">
+              {% csrf_token %}
+              {{form.errors}}
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="">Num de Orden</label>
+                  {{form.num_order|add_class:'form-control'}}
+                </div>
+              </div>
+             <div class="col-md-4">
+                <div class="form-group">
+                  <label for="">Email</label>
+                  {{form.email|add_class:'form-control'}}
+                </div>
+              </div>
+              <div class="col-md-12">
+                <button class="btn btn-primary">Buscar</button>
+              </div>
+            </form>
+          {% if order %}
+            <div class="row ">
+              <div class="col-md-12">
+                <h4 class="title_order">
+                  <strong>Estado</strong>
+                </h4>
+              </div>
+              <div class="col-md-12">
+                <div class="row row-status">
+                  <div class="col-md-4">
+                    <h5 class='{% if order.type_status_shipping == "AL" or order.type_status_shipping == "DS" or order.type_status_shipping == "EG" %}active{% endif %}'> En Almacén</h5>
+                  </div>
+                  <div class="col-md-4">
+                    <h5 class='{% if order.type_status_shipping == "DS" or order.type_status_shipping == "EG" %}active{% endif %}'>En Despacho</h5>
+                  </div>
+                  <div class="col-md-4">
+                    <h5 class='{% if order.type_status_shipping == "EG" %}active{% endif %}'>Entregado</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}

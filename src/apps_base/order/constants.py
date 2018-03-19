@@ -13,11 +13,8 @@ TYPE_STATUS = (
     ("DN", "Denegado"),
     ("RC", "Rechazado"),
     ("PE", "Pendiente"),
-    (PROCESO, "Proceso Paso 1"),
+    (PROCESO, "Pendiente"),
     (PROCESO_2, "Proceso Paso 2"),
-    ("DES", "En Despacho"),
-    ("CAM", "En Camino"),
-    ("COM", "Completado"),
     ("CN", "Cancelado"),
 
 )

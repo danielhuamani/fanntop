@@ -27,3 +27,30 @@
         p
             color black
             margin 3px 0
+.row-status
+    margin-top 40px
+    text-align center
+    position relative
+    overflow hidden
+    &:after
+      content ''
+      width 100%
+      height 2px
+      position absolute
+      left 0
+      top 45%
+      background #ff7e00
+    h5
+      display inline-block
+      background #ff7e00
+      padding 18px 15px
+      color white
+      cursor pointer
+      border-radius8px
+      font-size 16px
+      position relative
+      z-index 100
+
+    h5.active
+      background #28a745
+

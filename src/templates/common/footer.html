@@ -16,9 +16,8 @@
               <li><a class=''  href='{% url "web_page:pages" page_pro.slug %}'>{{page_pro.name}}</a></li>
             {% endfor %}
 
-            <li><a>Sigue tu pedido</a></li>
-            <li><a>Orders</a></li>
-            <li><a>Email Support</a></li>
+            <li><a href='{% url "web_system:follow_orders" %}'>Sigue tu orden</a></li>
+            <li><a>Soporte al cliente</a></li>
           </ul>
         </div>
       </div>
