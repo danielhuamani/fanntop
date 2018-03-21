@@ -7,15 +7,14 @@ PROCESO = 'PR_1'
 PROCESO_2 = 'PR_2'
 ORDER_VALIDATED = 'VAL'
 ORDER_USED = 'USE'
-
+REEMBOLSO = 'RE'
 TYPE_STATUS = (
-    ("PG", "Pagado"),
-    ("DN", "Denegado"),
-    ("RC", "Rechazado"),
-    ("PE", "Pendiente"),
     (PROCESO, "Pendiente"),
-    (PROCESO_2, "Proceso Paso 2"),
-    ("CN", "Cancelado"),
+    ("RC", "Rechazado"),
+    ("PG", "Pagado"),
+    # ("PE", "Pendiente"),
+    # (PROCESO_2, "Proceso Paso 2"),
+    ("RE", "Reembolso"),
 
 )
 
