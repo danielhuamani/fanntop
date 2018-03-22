@@ -1,19 +1,16 @@
 <header id="header" class="full-width">
   <div class="container cf">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-3 col-sm-4 col-xs-6">
+        <a href="#menu" class="navbar-toggle collapsed"><span class="sr-only">...</span><i aria-hidden="true" class="fa fa-bars fa-3"></i></a>
         <div class="wrap-logo">
           <h1 class="logo"><a href="{% url 'web_system:home' %}">fanntop</a></h1>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="wrap-search">
-          <input type="text" placeholder="¿ Que buscas ?"/>
-        </div>
-      </div>
-      <div class="col-md-5">
+
+      <div class="col-md-5 col-md-push-4 col-sm-8 col-xs-6">
         <ul class="list-options">
-          <li><a href="#" class="fav"> <i class="fa fa-heart"></i>Mis Favoritos</a></li>
+          <li><a href="#" class="fav"> <i class="fa fa-heart"></i><span>Mis Favoritos</span></a></li>
           {% if request.user.is_authenticated %}
             <li class="list-options__menu">
               <a href="" class="account"> <i class="fa fa-user"></i>{{request.user.first_name}}</a>
@@ -30,11 +27,16 @@
               </ul>
             </li>
           {% else %}
-            <li><a href="{% url 'web_system:login_register' %}" class="account"> <i class="fa fa-user"></i>Ingresar</a></li>
+            <li><a href="{% url 'web_system:login_register' %}" class="account"> <i class="fa fa-user"></i><span>Ingresar</span></a></li>
 
           {% endif %}
-          <li><a href="#" @click.prevent='changeStatusCartView()' class="shop"> <i class="fa fa-shopping-bag"></i>Mis Compras</a></li>
+          <li><a href="#" @click.prevent='changeStatusCartView()' class="shop"> <i class="fa fa-shopping-bag"></i><span>Mis Compras</span></a></li>
         </ul>
+      </div>
+      <div class="col-md-4 col-md-pull-5 col-sm-12 col-xs-12">
+        <div class="wrap-search">
+          <input type="text" placeholder="¿ Que buscas ?"/>
+        </div>
       </div>
     </div>
   </div>

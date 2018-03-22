@@ -53,9 +53,12 @@
         <div class="block-list">
           <h3>Suscribite</h3>
           <div class="w-form">
-            <form action="">
-              <input type="text" class="text"/>
-              <button type="submit" class="btn"><i class="fa fa-chevron-right"></i></button>
+            <form action="" @submit.prevent='submitSuscription' >
+              <input type="text" v-model='emailSuscription' class="text" placeholder="Ingresa tu email" />
+              <button type="submit"  class="btn"><i class="fa fa-chevron-right"></i></button>
+              <br></br>
+              <p v-if='showEmailSuscription'>#{messageEmailSuscription}</p>
+
             </form>
           </div>
         </div>

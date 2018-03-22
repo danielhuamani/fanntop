@@ -15,15 +15,36 @@ Vue.axios.defaults.headers.common['Accept'] = 'application/json';
 Vue.axios.defaults.headers.common['credentials'] = 'same-origin';
 Vue.axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 new Vue({
-  el: '#app',
+  el: '#page',
   router,
   store,
   components: {
     cartView
   },
+  delimiters: ['#{', '}'],
+  data: {
+    emailSuscription: '',
+    showEmailSuscription: false,
+    messageEmailSuscription: ''
+  },
   methods: {
     changeStatusCartView () {
       this.$store.dispatch('changeStatusCartView', true, true)
+    },
+    submitSuscription () {
+      const self = this
+      this.axios.post('/api-suscripcion/', {
+        email: self.emailSuscription,
+      })
+      .then(function (response) {
+        self.showEmailSuscription = true
+        self.emailSuscription = ''
+        self.messageEmailSuscription = 'Gracias por suscribirte'
+      })
+      .catch(function (error) {
+        self.emailSuscription = ''
+        self.messageEmailSuscription = error.response.data.email[0]
+      });
     }
   }
 })

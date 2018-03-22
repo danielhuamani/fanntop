@@ -26,6 +26,8 @@ urlpatterns += [
             include('apps_base.attribute.urls', namespace='attribute')),
         url(r'pages/',
             include('apps_base.pages.urls', namespace='pages')),
+        url(r'form/',
+            include('apps_base.form.urls', namespace='form')),
         url(r'ubigeo/', include('apps_base.ubigeo.urls', namespace='ubigeo')),
         url(r'payment/', include('apps_base.payment.urls', namespace='payment')),
         url(r'customers/', include('apps_base.customers.urls', namespace='customers')),

@@ -29,3 +29,10 @@ def migrate(config):
 def create_admin(config):
     run = ('./src/manage.py createsuperuser --settings=config.settings.{0}').format(config)
     local(run)
+
+@task
+def collect(config):
+    if not config:
+        config = 'local'
+    run = ('./src/manage.py collectstatic --settings=config.settings.{0}').format(config)
+    local(run)

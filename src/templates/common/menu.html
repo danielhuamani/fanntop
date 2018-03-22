@@ -6,7 +6,6 @@
           {% if influencers_processors %}
           <div class="submenu">
             <div class="container">
-              <h3 class="title">Todos los Influenciadores</h3>
               <ul class='row'>
                 {% for influencer in influencers_processors %}
                   <li class='col-md-3'><a href="{% url 'web_product:influencer_products' influencer.slug %}">{{influencer.name}}</a></li>
@@ -38,3 +37,23 @@
     </nav>
   </div>
 </div>
+<nav id="menu">
+  <ul>
+    <li><span>Influenciadores</span>
+      <ul>
+        {% for influencer in influencers_processors %}
+          <li><a href="{% url 'web_product:influencer_products' influencer.slug %}">{{influencer.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% for category in categories_processors %}
+    <li><span>{{category.name}}</span>
+      <ul>
+        {% for category_child in category.category_categories.all %}
+          <li><a href="{% url 'web_product:category_child_products' category.slug category_child.slug %}">{{category_child.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>

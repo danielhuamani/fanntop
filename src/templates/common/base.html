@@ -10,14 +10,15 @@
     <link rel="stylesheet" href="{% static 'css/styl.css' %}?v=0.0.4"/>
     <link rel="stylesheet" href="{% static 'css/slick.css' %}?v=0.0.4"/>
     <link rel="stylesheet" href="{% static 'css/slick-theme.css' %}?v=0.0.4"/>
+    <link rel="stylesheet" href="{% static 'css/jquery.mmenu.css' %}">
     <link rel="stylesheet" href="{% static 'css/styl.css' %}?v=0.0.4"/>
     <link rel="shortcut icon" href="/favicon.ico"/>
     {% block css %}
 
     {% endblock css %}
 </head>
-<body>
-  <main data-section="tab2" class="wrapper" id="app">
+<body class='home'>
+  <div id="page" class="wrapper">
 
     {% include "./header.html" %}
     {% include "./menu.html" %}
@@ -27,10 +28,12 @@
     <cart-view ></cart-view>
     {% include "./footer.html" %}
 
-  </main>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+        <script src='{% static "js/jquery.mmenu.js" %}'></script>
     {% if debug %}
-        <script src='http://localhost:8080/static/app/app.js'></script>
+        <script src='http://localhost:8081/static/app/app.js'></script>
     {% else %}
         <script src='{% static "app/app.js" %}'></script>
 
@@ -38,6 +41,6 @@
     {% block js %}
 
     {% endblock js %}
-
+    <script src="{% static 'js/functions.js' %}?v=0.0.2"></script>
 </body>
 </html>
