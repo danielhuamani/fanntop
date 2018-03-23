@@ -1,0 +1,255 @@
+{% extends "common/base.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main checkout">
+  <div class="container">
+    <div class="row ">
+      <div class="boxw pages">
+        <div class="w-body">
+          <h2 class='pages__title'>Libro de reclamaciones</h2>
+          <form class="pages__content" method="POST" action=".">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <h3 class="w-body__title">1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE</h3>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{form.first_name.label_tag}}
+                      {{form.first_name|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{form.last_name.label_tag}}
+                      {{form.last_name|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{form.email.label_tag}}
+                      {{form.email|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{form.phone.label_tag}}
+                      {{form.phone|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{form.type_document.label_tag}}
+                      {{form.type_document|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{form.document.label_tag}}
+                      {{form.document|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Departamento</label>
+                            <select class="form-control" id='id_shipping-departamento' name="departamento" >
+                              <option value="">Seleccione Departamento</option>
+                            </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Provincia</label>
+                            <select class="form-control" name="provincia" id="id_shipping-provincia">
+                              <option value="">Seleccione Provincia</option>
+                            </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Distrito</label>
+                      {{form.ubigeo|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{form.address.label_tag}}
+                      {{form.address|add_class:'form-control'}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-10 col-md-offset-1">
+                <br></br>
+                <h3 class="w-body__title">2. IDENTIFICACIÓN DEL BIEN CONTRATADO</h3>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Tipo de bien contratado</label>
+                      {{form.well_contracted|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Monto</label>
+                      {{form.mount|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Número de pedido</label>
+                      {{form.pedido|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Descripción</label>
+                      {{form.desciption|add_class:'form-control'}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-10 col-md-offset-1">
+                <br></br>
+                <h3 class="w-body__title">3. DETALLE DE LA RECLAMACIÓN Y PEDIDO DEL CONSUMIDOR</h3>
+                <div class="row">
+                  <div class="col-md-12">
+                    <p>Reclamo: Disconformidad relacionada a los productos o servicios.</p>
+                  </div>
+                  <div class="col-md-12">
+                    <p>Queja: Disconformidad no relacionada a los productos o servicios; o malestar o descontento respecto a la atención al público.</p>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Tipo de bien contratado</label>
+                      {{form.type_claim|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Pedido del consumidor</label>
+                      {{form.consumers_order|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Detalle del reclamo</label>
+                      {{form.detail|add_class:'form-control'}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-10 col-md-offset-1">
+                <br></br>
+                <h3 class="w-body__title">4. OBSERVACIONES Y ACCIONES ADOPTADAS POR EL PROVEEDOR</h3>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Descripción</label>
+                      {{form.observation|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <button class='btn btn-primary btn-lg'>Enviar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+{% block js %}
+<script>
+  jQuery(document).ready(function($) {
+    var departamento_initial = $('#id_shipping-departamento')
+    departamento_initial.html('')
+    var code_departamento = '{{code_departamento}}'
+    var code_provincia = '{{code_provincia}}'
+    var code_distrito = '{{code_distrito}}'
+    $.ajax({
+        'url': '{% url "ubigeo:api_departamentos" %}',
+        'method': 'GET',
+        'success': function (data) {
+            departamento_initial.append('<option value="" selected="selected">Seleccione Departamento</option>');
+            for (var i = 0; i < data.departamentos.length; i++) {
+              if (code_departamento == data.departamentos[i].codigo) {
+                departamento_initial.append('<option selected="selected" value="' + data.departamentos[i].codigo + '">' + data.departamentos[i].descripcion + '</option>');
+              } else {
+                departamento_initial.append('<option value="' + data.departamentos[i].codigo + '">' + data.departamentos[i].descripcion + '</option>');
+              }
+            }
+            if (code_departamento) {
+              $('#id_shipping-departamento').trigger('change')
+            }
+            // provincia.change();
+        }
+    })
+    $('#id_shipping-departamento').change(function(event) {
+    /* Act on the event */
+      var departamento = $(this).val();
+      var provincia = $('#id_shipping-provincia')
+      var distrito = $('#id_shipping-ubigeo')
+      provincia.html('');
+      distrito.html('');
+      if (departamento) {
+        $.ajax({
+              'url': '{% url "ubigeo:api_provincias" %}' + '?departamento=' + departamento,
+              'method': 'GET',
+              'success': function (data) {
+                  provincia.append('<option value="" selected="selected">Seleccione Provincia</option>');
+                  for (var i = 0; i < data.provincias.length; i++) {
+                    if (code_provincia == data.provincias[i].codigo) {
+                      provincia.append('<option  selected="selected" value="' + data.provincias[i].codigo + '">' + data.provincias[i].descripcion + '</option>');
+                    } else {
+                      provincia.append('<option value="' + data.provincias[i].codigo + '">' + data.provincias[i].descripcion + '</option>');
+                    }
+                  }
+                  if (code_provincia) {
+                    $('#id_shipping-provincia').trigger('change')
+                  }
+                  // provincia.change();
+              }
+          })
+      } else {
+        provincia.append('<option value="" selected="selected">Seleccione Provincia</option>');
+        distrito.append('<option value="" selected="selected">Seleccione Distrito</option>');
+        code_provincia = ''
+      }
+
+
+    });
+    $('#id_shipping-provincia').change(function(event) {
+    /* Act on the event */
+      var provincia = $(this).val();
+      var distrito = $('#id_shipping-ubigeo')
+      distrito.html('');
+      $.ajax({
+            'url': '{% url "ubigeo:api_distritos" %}' + '?provincia=' + provincia,
+            'method': 'GET',
+            'success': function (data) {
+                distrito.append('<option value="" selected="selected">Seleccione Distrito</option>');
+                for (var i = 0; i < data.distritos.length; i++) {
+                  if (code_distrito == data.distritos[i].pk) {
+                    distrito.append('<option selected="selected" value="' + data.distritos[i].pk + '">' + data.distritos[i].descripcion + '</option>');
+                  } else {
+                    distrito.append('<option value="' + data.distritos[i].pk + '">' + data.distritos[i].descripcion + '</option>');
+                  }
+                }
+                code_distrito = ''
+                // provincia.change();
+            }
+        })
+
+
+    });
+  });
+</script>
+{% endblock js %}

@@ -1,0 +1,76 @@
+{% extends "common/base.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main checkout">
+  <div class="container">
+    <div class="row ">
+      <div class="boxw pages">
+        <div class="w-body">
+          <h2 class='pages__title'>Contacto</h2>
+          <form class="pages__content" method="POST" action=".">
+            {% csrf_token %}
+            <div class="row">
+
+              <div class="col-md-8 col-md-offset-2">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p>Si tienes alguna consulta, podras contactarnos mediante este formulario. </p>
+                  </div>
+                  <br></br>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{form.first_name.label_tag}}
+                      {{form.first_name|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{form.last_name.label_tag}}
+                      {{form.last_name|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{form.email.label_tag}}
+                      {{form.email|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{form.subject.label_tag}}
+                      {{form.subject|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      {{form.phone.label_tag}}
+                      {{form.phone|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      {{form.message.label_tag}}
+                      {{form.message|add_class:'form-control'}}
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <button class='btn btn-primary btn-lg'>Enviar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}

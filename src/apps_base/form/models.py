@@ -16,7 +16,7 @@ class Suscription(CoreTimeModel, CoreActiveModel):
         return self.email
 
 
-class Contact(models.Model):
+class Contact(CoreTimeModel):
     first_name = models.CharField(_('First Name'), max_length=120)
     last_name = models.CharField(_('Last Name'), max_length=120)
     email = models.EmailField(_('Email'), max_length=120)
@@ -32,7 +32,7 @@ class Contact(models.Model):
         return self.first_name
 
 
-class ComplaintsBook(models.Model):
+class ComplaintsBook(CoreTimeModel):
     first_name = models.CharField(_('First Name'), max_length=120)
     last_name = models.CharField(_('Last Name'), max_length=120)
     email = models.EmailField(_('Email'), max_length=120)
@@ -44,11 +44,12 @@ class ComplaintsBook(models.Model):
     address = models.CharField(_('Address'), max_length=250)
     type_claim = models.CharField(_('Type Claim'), max_length=5, choices=TYPE_CLAIM_CHOICES)
     detail = models.TextField()
-    pedido = models.CharField(max_length=120)
+    pedido = models.CharField(max_length=120, blank=True)
     well_contracted = models.CharField(max_length=120, choices=WELL_CONTRACTED_CHOICES)
     desciption = models.TextField()
-    mount = models.PositiveIntegerField()
-
+    mount = models.PositiveIntegerField(null=True, blank=True)
+    consumers_order = models.TextField()
+    observation = models.TextField(blank=True)
     class Meta:
         verbose_name = "ComplaintsBook"
         verbose_name_plural = "ComplaintsBook"

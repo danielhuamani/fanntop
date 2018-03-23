@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-17 22:31-0500\n"
+"POT-Creation-Date: 2018-03-23 09:09-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,82 +18,318 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/administrador/forms.py:16
+#: administrador/forms.py:16
 msgid "this email is not registered"
 msgstr "El email no se encuentra registrado"
 
-#: src/apps_base/custom_auth/models.py:10
+#: apps_base/attribute/models.py:9 apps_base/category/models.py:7
+#: apps_base/family/models.py:8 apps_base/family/models.py:19
+#: apps_base/influencer/models.py:7 apps_base/order/models.py:68
+#: apps_base/order/models.py:90 apps_base/pages/models.py:48
+#: apps_base/product/models.py:71
+msgid "Name"
+msgstr ""
+
+#: apps_base/attribute/models.py:11 apps_base/configuration/models.py:6
+msgid "Name Store"
+msgstr "Nombre en la tienda"
+
+#: apps_base/attribute/models.py:13
+msgid "Use in search"
+msgstr "Usar en busqueda"
+
+#: apps_base/attribute/models.py:14
+msgid "Type of attribute"
+msgstr ""
+
+#: apps_base/attribute/models.py:16
+msgid "Filtered"
+msgstr ""
+
+#: apps_base/attribute/models.py:17
+msgid "Variation"
+msgstr ""
+
+#: apps_base/attribute/models.py:38
+msgid "attr"
+msgstr ""
+
+#: apps_base/attribute/models.py:39
+msgid "Option"
+msgstr ""
+
+#: apps_base/cart/constants.py:3
+msgid "PENDING"
+msgstr ""
+
+#: apps_base/cart/constants.py:4
+msgid "CHECKOUT"
+msgstr ""
+
+#: apps_base/cart/constants.py:5
+msgid "ORDER"
+msgstr ""
+
+#: apps_base/cart/constants.py:6
+msgid "INACTIVE"
+msgstr ""
+
+#: apps_base/cart/constants.py:8
+msgid "Inactive"
+msgstr ""
+
+#: apps_base/cart/constants.py:9
+msgid "Pending"
+msgstr ""
+
+#: apps_base/cart/constants.py:10
+msgid "Checkout"
+msgstr ""
+
+#: apps_base/cart/constants.py:11
+msgid "Order"
+msgstr ""
+
+#: apps_base/cart/models.py:10
+msgid "Cart Code"
+msgstr ""
+
+#: apps_base/cart/models.py:12
+msgid "Status"
+msgstr ""
+
+#: apps_base/category/models.py:8 apps_base/influencer/models.py:9
+msgid "Photo"
+msgstr ""
+
+#: apps_base/configuration/models.py:7
+msgid "Email Contact"
+msgstr ""
+
+#: apps_base/configuration/models.py:8 apps_base/customers/models.py:17
+#: apps_base/customers/models.py:43
+msgid "Phone"
+msgstr "Teléfono"
+
+#: apps_base/core/models.py:9
+msgid "created"
+msgstr "Creado"
+
+#: apps_base/core/models.py:10
+msgid "modified"
+msgstr "Modificado"
+
+#: apps_base/core/models.py:18
+msgid "is active"
+msgstr ""
+
+#: apps_base/core/models.py:19
+msgid "is trash"
+msgstr ""
+
+#: apps_base/core/models.py:28
+msgid "Position"
+msgstr ""
+
+#: apps_base/core/models.py:39 apps_base/product/models.py:14
+msgid "title"
+msgstr ""
+
+#: apps_base/core/models.py:40 apps_base/product/models.py:15
+msgid "description"
+msgstr ""
+
+#: apps_base/custom_auth/models.py:10
 msgid "email address"
 msgstr ""
 
-#: src/apps_base/custom_auth/models.py:11
+#: apps_base/custom_auth/models.py:11
 msgid "first name"
 msgstr ""
 
-#: src/apps_base/custom_auth/models.py:12
+#: apps_base/custom_auth/models.py:12 apps_base/order/models.py:69
+#: apps_base/order/models.py:91
 msgid "last name"
 msgstr ""
 
-#: src/apps_base/custom_auth/models.py:13
+#: apps_base/custom_auth/models.py:13
 msgid "date joined"
 msgstr ""
 
-#: src/apps_base/custom_auth/models.py:14
+#: apps_base/custom_auth/models.py:14
 msgid "active"
 msgstr ""
 
-#: src/apps_base/custom_auth/models.py:15
+#: apps_base/custom_auth/models.py:15
 msgid "type user"
-msgstr ""
+msgstr "Tipo de usuario"
 
-#: src/apps_base/custom_auth/models.py:18
+#: apps_base/custom_auth/models.py:18
 msgid "staff status"
 msgstr ""
 
-#: src/apps_base/custom_auth/models.py:20
+#: apps_base/custom_auth/models.py:20
 msgid "Designates whether the user can log into this admin site."
 msgstr ""
 
-#: src/apps_base/custom_auth/models.py:26
+#: apps_base/custom_auth/models.py:26
 msgid "user"
-msgstr ""
+msgstr "Usuario"
 
-#: src/apps_base/custom_auth/models.py:27
+#: apps_base/custom_auth/models.py:27
 msgid "users"
-msgstr ""
+msgstr "Usuarios"
 
-#: src/apps_base/customers/constants.py:4
+#: apps_base/customers/constants.py:4
 msgid "Male"
-msgstr ""
+msgstr "Masculino"
 
-#: src/apps_base/customers/constants.py:5
+#: apps_base/customers/constants.py:5
 msgid "Female"
-msgstr ""
+msgstr "Femenino"
 
-#: src/apps_base/customers/models.py:9
+#: apps_base/customers/models.py:11 apps_base/customers/models.py:42
+#: apps_base/form/models.py:39
 msgid "Document"
-msgstr ""
+msgstr "Documento"
 
-#: src/apps_base/customers/models.py:11
+#: apps_base/customers/models.py:13 apps_base/customers/models.py:41
+#: apps_base/form/models.py:41
 msgid "Type Document"
-msgstr ""
+msgstr "TIpo de documento"
 
-#: src/apps_base/customers/models.py:12
+#: apps_base/customers/models.py:14
 msgid "offers and news"
 msgstr ""
 
-#: src/apps_base/customers/models.py:14
+#: apps_base/customers/models.py:16
 msgid "Gender"
+msgstr "Genero"
+
+#: apps_base/customers/models.py:38
+msgid "Nombres"
+msgstr "Nombres"
+
+#: apps_base/customers/models.py:39
+msgid "Apellidos"
+msgstr "Apellidos"
+
+#: apps_base/form/models.py:9 apps_base/form/models.py:22
+#: apps_base/form/models.py:38
+msgid "Email"
+msgstr "Email"
+
+#: apps_base/form/models.py:20 apps_base/form/models.py:36
+msgid "First Name"
+msgstr "Nombres"
+
+#: apps_base/form/models.py:21 apps_base/form/models.py:37
+msgid "Last Name"
+msgstr "Apellidos"
+
+#: apps_base/form/models.py:23 apps_base/form/models.py:42
+msgid "Celephone"
+msgstr "Celular"
+
+#: apps_base/form/models.py:24
+msgid "Subject"
+msgstr "Asunto"
+
+#: apps_base/form/models.py:25
+msgid "Message"
+msgstr "Mensaje"
+
+#: apps_base/form/models.py:44
+msgid "Address"
 msgstr ""
 
-#: src/apps_base/customers/models.py:15
-msgid "Phone"
+#: apps_base/form/models.py:45
+msgid "Type Claim"
 msgstr ""
 
-#: src/config/settings/base.py:126
+#: apps_base/influencer/models.py:8 apps_base/pages/models.py:49
+msgid "Description"
+msgstr "Descripción"
+
+#: apps_base/influencer/models.py:10
+msgid "Banner"
+msgstr ""
+
+#: apps_base/pages/models.py:16 apps_base/pages/models.py:26
+#: apps_base/pages/models.py:37
+msgid "Content"
+msgstr "Contenido"
+
+#: apps_base/product/models.py:16
+msgid "characteristics"
+msgstr "Caracteristicas"
+
+#: apps_base/product/models.py:34
+msgid "sku"
+msgstr ""
+
+#: apps_base/product/models.py:35
+msgid "stock"
+msgstr ""
+
+#: apps_base/product/models.py:36
+msgid "price"
+msgstr ""
+
+#: apps_base/product/models.py:88
+msgid "Attribute"
+msgstr ""
+
+#: apps_base/product/models.py:93
+msgid "Product"
+msgstr ""
+
+#: apps_base/product/models.py:95
+msgid "Text"
+msgstr ""
+
+#: apps_base/product/models.py:96
+msgid "Boolean"
+msgstr ""
+
+#: apps_base/product/models.py:97
+msgid "Input"
+msgstr ""
+
+#: apps_base/product/models.py:101
+msgid "Value multi option"
+msgstr ""
+
+#: apps_base/product/models.py:108
+msgid "Value option"
+msgstr ""
+
+#: apps_base/security/serializers.py:38
+msgid "User account is disabled."
+msgstr ""
+
+#: apps_base/security/serializers.py:48
+msgid "Unable to log in with provided credentials."
+msgstr ""
+
+#: apps_base/security/serializers.py:51
+#, python-brace-format
+msgid "Must include \"{username_field}\" and \"password\"."
+msgstr ""
+
+#: apps_web/web_cart/api_views.py:41 apps_web/web_cart/api_views.py:55
+msgid "No stock available"
+msgstr ""
+
+#: apps_web/web_cart/api_views.py:43 apps_web/web_cart/api_views.py:57
+#: apps_web/web_cart/api_views.py:77 apps_web/web_cart/api_views.py:79
+msgid "There was an error in the shopping cart"
+msgstr ""
+
+#: config/settings/base.py:175
 msgid "English"
 msgstr ""
 
-#: src/config/settings/base.py:127
+#: config/settings/base.py:176
 msgid "Spanish"
 msgstr ""

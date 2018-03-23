@@ -64,7 +64,8 @@ BASE_APPS = [
 ]
 
 WEB_APPS = [
-    'apps_web.web_cart'
+    'apps_web.web_cart',
+    'apps_web.web_product'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BASE_APPS + WEB_APPS

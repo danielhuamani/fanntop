@@ -17,7 +17,8 @@
             {% endfor %}
 
             <li><a href='{% url "web_system:follow_orders" %}'>Sigue tu orden</a></li>
-            <li><a>Soporte al cliente</a></li>
+            <li><a href="{% url 'web_page:contact' %}">Soporte al cliente</a></li>
+            <li><a href="{% url 'web_page:complaints_book' %}">Libro de reclamaciones</a></li>
           </ul>
         </div>
       </div>
