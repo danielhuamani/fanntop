@@ -1,0 +1,159 @@
+{% extends "common/base.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main checkout">
+  <div class="container">
+    <div class="row ">
+      <div class="boxw pages">
+        <div class="w-body">
+          <h2 class='pages__title'>Libro de reclamaciones</h2>
+          <form class="pages__content" method="POST" action=".">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <h3 class="w-body__title">1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE</h3>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Nombres</label>
+                      <p>{{complaints.first_name}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Apellidos</label>
+                      <p>{{complaints.last_name}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Email</label>
+                      <p>{{complaints.email}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Celular</label>
+                      <p>{{complaints.phone}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Tipo de documento</label>
+                      <p>{{complaints.type_document}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Documento</label>
+                      <p>{{complaints.document}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Departamento / Provincia / Distrito</label>
+                      <p>{{complaints.ubigeo.full_ubigeo}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Dirección</label>
+                      <p>{{complaints.address}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-10 col-md-offset-1">
+                <br></br>
+                <h3 class="w-body__title">2. IDENTIFICACIÓN DEL BIEN CONTRATADO</h3>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Tipo de bien contratado</label>
+                      <p>{{complaints.get_well_contracted_display}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Monto</label>
+                      {% if complaints.mount %}
+                        <p>{{complaints.mount}}</p>
+                      {% else %}
+                          <p></p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Número de pedido</label>
+                      <p>{{complaints.pedido}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Descripción</label>
+                      <p>{{complaints.desciption}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-10 col-md-offset-1">
+                <br></br>
+                <h3 class="w-body__title">3. DETALLE DE LA RECLAMACIÓN Y PEDIDO DEL CONSUMIDOR</h3>
+                <div class="row">
+                  <div class="col-md-12">
+                    <p>Reclamo: Disconformidad relacionada a los productos o servicios.</p>
+                  </div>
+                  <div class="col-md-12">
+                    <p>Queja: Disconformidad no relacionada a los productos o servicios; o malestar o descontento respecto a la atención al público.</p>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Tipo de bien contratado</label>
+                      <p>{{complaints.get_type_claim_display}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Pedido del consumidor</label>
+                      <p>{{complaints.consumers_order}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Detalle del reclamo</label>
+                      <p>{{complaints.detail}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-10 col-md-offset-1">
+                <br></br>
+                <h3 class="w-body__title">4. OBSERVACIONES Y ACCIONES ADOPTADAS POR EL PROVEEDOR</h3>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Descripción</label>
+                      <p>{{complaints.observation}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <button class='btn btn-primary btn-lg'>Imprimir</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}

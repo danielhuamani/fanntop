@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from apps_base.core.models import CoreTimeModel, CoreActiveModel
 from apps_base.customers.constants import GENDER_CHOICES, TYPE_DOCUMENT_CHOICES
 from .constants import TYPE_CLAIM_CHOICES, WELL_CONTRACTED_CHOICES
+import uuid
 
 
 class Suscription(CoreTimeModel, CoreActiveModel):
@@ -33,6 +34,7 @@ class Contact(CoreTimeModel):
 
 
 class ComplaintsBook(CoreTimeModel):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     first_name = models.CharField(_('First Name'), max_length=120)
     last_name = models.CharField(_('Last Name'), max_length=120)
     email = models.EmailField(_('Email'), max_length=120)

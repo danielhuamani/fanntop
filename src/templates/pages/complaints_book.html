@@ -124,7 +124,7 @@
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="">Tipo de bien contratado</label>
+                      <label for="">Tipo de reclamo</label>
                       {{form.type_claim|add_class:'form-control'}}
                     </div>
                   </div>
@@ -196,7 +196,7 @@
     /* Act on the event */
       var departamento = $(this).val();
       var provincia = $('#id_shipping-provincia')
-      var distrito = $('#id_shipping-ubigeo')
+      var distrito = $('#id_ubigeo')
       provincia.html('');
       distrito.html('');
       if (departamento) {
@@ -229,7 +229,7 @@
     $('#id_shipping-provincia').change(function(event) {
     /* Act on the event */
       var provincia = $(this).val();
-      var distrito = $('#id_shipping-ubigeo')
+      var distrito = $('#id_ubigeo')
       distrito.html('');
       $.ajax({
             'url': '{% url "ubigeo:api_distritos" %}' + '?provincia=' + provincia,

@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
 from apps_base.core.mixins import BaseAuthenticated
-from .serializers import SuscriptionSerializer, ContactSerializer
-from .models import Suscription, Contact
+from .serializers import SuscriptionSerializer, ContactSerializer, ComplaintsBookSerializer
+from .models import Suscription, Contact, ComplaintsBook
 
 
 class SuscriptionViewSet(BaseAuthenticated, viewsets.ModelViewSet):
@@ -18,3 +18,9 @@ class ContactViewSet(BaseAuthenticated, viewsets.ModelViewSet):
 
     serializer_class = ContactSerializer
     queryset = Contact.objects.all()
+
+
+class ComplaintsBookViewSet(BaseAuthenticated, viewsets.ModelViewSet):
+
+    serializer_class = ComplaintsBookSerializer
+    queryset = ComplaintsBook.objects.all()

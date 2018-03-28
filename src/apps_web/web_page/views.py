@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from .forms import ContactForm, ComplaintsBookForm
+from apps_base.form.models import  ComplaintsBook
 from apps_base.pages.models import FrequentQuestion, TermsConditions, PaymentMethods, Pages
 
 def question(request):
@@ -58,11 +59,22 @@ def complaints_book(request):
     if request.method == 'POST':
         form = ComplaintsBookForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect(reverse('web_page:contact_thanks'))
+            complaints_book_generate = form.save()
+            return redirect(reverse(
+                'web_page:complaints_book_generate',
+                kwargs={'uuid_hash': complaints_book_generate.uuid}))
     else:
         form = ComplaintsBookForm()
     ctx = {
         'form': form
     }
     return render(request, "pages/complaints_book.html", ctx)
+
+
+def complaints_book_generate(request, uuid_hash):
+    complaints = get_object_or_404(ComplaintsBook, uuid=uuid_hash)
+
+    ctx = {
+        'complaints': complaints
+    }
+    return render(request, "pages/complaints_book_generate.html", ctx)
