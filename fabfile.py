@@ -36,3 +36,10 @@ def collect(config):
         config = 'local'
     run = ('./src/manage.py collectstatic --settings=config.settings.{0}').format(config)
     local(run)
+
+@task
+def load(config, load):
+    if not config:
+        config = 'local'
+    run = ('./src/manage.py load_{0} --settings=config.settings.{1}').format(load, config)
+    local(run)

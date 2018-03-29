@@ -60,7 +60,8 @@ BASE_APPS = [
     'apps_base.ubigeo',
     'apps_base.payment',
     'apps_base.configuration',
-    'apps_base.form'
+    'apps_base.form',
+    'apps_base.shipping'
 ]
 
 WEB_APPS = [

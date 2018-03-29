@@ -33,4 +33,4 @@ class Ubigeo(models.Model):
         return self.desc_ubigeo_inei
 
     def full_ubigeo(self):
-        return '{} / {} / {}'.format(self.desc_ubigeo_inei, self.desc_prov_inei, self.desc_dep_inei)
+        return '{} / {} / {}'.format(self.desc_dep_inei, self.desc_prov_inei, self.desc_ubigeo_inei, )
