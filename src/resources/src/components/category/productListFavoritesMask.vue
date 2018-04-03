@@ -1,17 +1,16 @@
 <template>
-  <div class="col-md-9">
+    <div  v-else  class="col-md-9 product-list-mask">
     <div class="content">
       <div class="content-filter-top"></div>
       <div class="result">
         <div class="row">
           <div class="result-paginator result-paginator-top">
             <div class="order">
-              <div class="text">Ordenar por</div>
-              <select v-model='orderBy' @change='changeOrderBy($event.target.value)'>
-                <option value='name_asc'>Nombre (A-Z)</option>
-                <option value='name_desc'>Nombre (Z-A)</option>
-                <option value='price_asc'>Menor Precio</option>
-                <option value='price_desc'>Mayor Precio</option>
+              <div class="text">Orden</div>
+              <select>
+                <option>todos</option>
+                <option>Ascendente</option>
+                <option>Descendente</option>
               </select>
             </div>
             <div class="paginator">
@@ -21,7 +20,7 @@
               <span class="item disabled">
                 <i class="fa fa-angle-left"></i>
               </span>
-              <div class="text">{{products.current_page}} De {{products.total_pages}}</div>
+              <div class="text"></div>
               <a href="#" class="item">
                 <i class="fa fa-angle-right"></i>
               </a>
@@ -32,18 +31,18 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-4"  v-for='product in products.results' >
-            <a :href='"/producto/" + product.slug' class="box item-result">
-              <div class="image"> <img :src="product.product_variant.product_image.image"/></div>
+          <div class="col-md-4"  v-for='product in productsMask' >
+            <a href='' class="box item-result">
+              <div class="image"> <img src=""/></div>
               <div class="detail">
-                <h3 class="title">{{product.name}}</h3>
+                <h3 class="title"></h3>
                 <!-- <h4 class="subtitle">subtitle</h4> -->
                 <div class="price">
-                  <span class="offer">S/. {{product.product_variant.price}}</span>
+                  <span class="offer"></span>
                   <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
                 </div>
               </div>
-              <div class="fav product_favorite" @click.prevent='addFavorite(product.id)'><span ><i class="fa fa-heart"></i></span></div>
+              <div class="fav"><span ><i class="fa fa-heart"></i></span></div>
             </a>
           </div>
         </div>
@@ -59,37 +58,11 @@
   </div>
 </template>
 <script>
-  import productItem from '@/components/category/productItem'
   export default {
-    name: 'productList',
-    props: ['products'],
+    name: 'productListFavoritesMask',
     data () {
       return {
-        orderBy: 'name_asc'
-      }
-    },
-    components: {
-      productItem
-    },
-    methods: {
-      changeOrderBy (value) {
-        this.orderBy = value
-        this.$emit('orderBy', this.orderBy)
-      },
-      addFavorite (idProduct) {
-        console.log(idProduct, 'idProduct')
-        const self = this
-        this.axios({
-          method: 'post',
-          url: '/api/product-favorite/',
-          data: {
-            product_id: idProduct
-          }
-        }).then(response => {
-
-        }).catch(error => {
-
-        })
+        productsMask: [1,2,3,4,5,6,7,8,9,10,11,12]
       }
     }
   }

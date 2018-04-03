@@ -1,0 +1,88 @@
+{% extends "common/base.html" %}
+{% load static %}
+{% block css %}
+<style>
+    [v-cloak] > * { display:none }
+
+    .main-cloak{display: none}
+    [v-cloak] .main-cloak{
+      display: block !important;
+    }
+    p.mask{
+
+    }
+</style>
+{% endblock css %}
+{% block content %}
+<section class="featured">
+  <div class="media-content">
+    <div class="slider-slick">
+      <div class="slider-item"><img src="{{influencer.banner.url}}"/></div>
+    </div>
+  </div>
+</section>
+<div v-cloak>
+  <section class="main main-cloak">
+    <div class="container">
+      <div class="row">
+          <div class="col-md-12 product-list-mask">
+              <div class="content">
+                <div class="content-filter-top"></div>
+                <div class="result">
+                  <div class="row">
+                    <div class="col-md-4"  >
+                      <a href='' class="box item-result">
+                        <div class="image"> <img src=""/></div>
+                        <div class="detail">
+                          <h3 class="title"></h3>
+                          <!-- <h4 class="subtitle">subtitle</h4> -->
+                          <div class="price">
+                            <span class="offer"></span>
+                            <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="col-md-4"  >
+                      <a href='' class="box item-result">
+                        <div class="image"> <img src=""/></div>
+                        <div class="detail">
+                          <h3 class="title"></h3>
+                          <!-- <h4 class="subtitle">subtitle</h4> -->
+                          <div class="price">
+                            <span class="offer"></span>
+                            <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="col-md-4"  >
+                      <a href='' class="box item-result">
+                        <div class="image"> <img src=""/></div>
+                        <div class="detail">
+                          <h3 class="title"></h3>
+                          <!-- <h4 class="subtitle">subtitle</h4> -->
+                          <div class="price">
+                            <span class="offer"></span>
+                            <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <router-view ></router-view>
+</div>
+ <!--name="fade" mode="out-in"  appear-->
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}

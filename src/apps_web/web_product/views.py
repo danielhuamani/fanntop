@@ -34,3 +34,8 @@ def product(request, slug):
         'product': product
     }
     return render(request, 'product/product.html', ctx)
+
+
+def product_favorites(request):
+    ctx = {}
+    return render(request, 'product/product_favorites.html', ctx)

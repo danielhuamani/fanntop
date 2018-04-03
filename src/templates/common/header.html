@@ -10,7 +10,7 @@
 
       <div class="col-md-5 col-md-push-4 col-sm-8 col-xs-6">
         <ul class="list-options">
-          <li><a href="#" class="fav"> <i class="fa fa-heart"></i><span>Mis Favoritos</span></a></li>
+          <li><a href="{% url 'web_product:product_favorites' %}" class="fav"> <i class="fa fa-heart"></i><span>Mis Favoritos</span></a></li>
           {% if request.user.is_authenticated %}
             <li class="list-options__menu">
               <a href="" class="account"> <i class="fa fa-user"></i>{{request.user.first_name}}</a>

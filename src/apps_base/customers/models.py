@@ -4,6 +4,8 @@ from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from apps_base.custom_auth.models import User
 from .constants import GENDER_CHOICES, TYPE_DOCUMENT_CHOICES
+from .utils import generate_code_favorite
+import uuid
 
 
 class Customer(models.Model):
@@ -54,3 +56,21 @@ class CustomerShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
+
+
+class CustomerProductFavorite(models.Model):
+    code = models.CharField(max_length=255)
+    customer = models.OneToOneField('Customer', related_name='customer_favorites', blank=True, null=True)
+    product_class = models.ManyToManyField('product.ProductClass', related_name='product_customer_favorites')
+
+    class Meta:
+        verbose_name = "CustomerProductFavorite"
+        verbose_name_plural = "CustomerProductFavorites"
+
+    def __str__(self):
+        return self.code
+
+    def save(self, *args, **kwargs):
+        if not self.code:
+            self.code = generate_code_favorite()
+        super(CustomerProductFavorite, self).save(*args, **kwargs)

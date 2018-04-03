@@ -11,6 +11,9 @@
 .item-result .detail h3.title {
   font-size: 18px;
 }
+.item-result .fav:hover i {
+  color: #ff7e00;
+}
 .w-filter input[type=range]::-ms-track {
   width: 300px;
   height: 5px;
@@ -79,6 +82,9 @@
 #header .list-options__menu:hover ul {
   z-index: 100;
   opacity: 1;
+}
+#menu {
+  display: none;
 }
 nav ul li ul {
   margin-top: 15px;

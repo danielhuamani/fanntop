@@ -44,7 +44,7 @@
         <h3>Precio</h3>
         <div class="w-filter__content">
           <vue-slider ref="slider" :tooltip-dir='tooltipDir'
-          :min='productsFilters.prices[0]' :clickable='false' v-on:drag-start='dragStart' v-on:drag-end='dragEnd' :max='productsFilters.prices[1]' :processStyle='processStyle' v-model="value"></vue-slider>
+          :min='productsFilters.prices[0]' :clickable='false' :tooltipStyle='tooltipStyle' v-on:drag-start='dragStart' v-on:drag-end='dragEnd' :max='productsFilters.prices[1]' :processStyle='processStyle' v-model="value"></vue-slider>
           <br>
         </div>
       </div>
@@ -71,6 +71,16 @@
         processStyle: {
           "backgroundColor": "#ff7e00"
         },
+        tooltipStyle: [
+          {
+            "backgroundColor": "#ff7e00",
+            "borderColor": "#ff7e00",
+          },
+          {
+            "backgroundColor": "#ff7e00",
+            "borderColor":"#ff7e00",
+          }
+        ],
         tooltipDir: [
           "bottom",
           "bottom"

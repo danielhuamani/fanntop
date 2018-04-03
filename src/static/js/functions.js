@@ -13,60 +13,58 @@
 
 
 	$(document).ready(function(){
-		if ($(".slider-slick").length > 0) {
-			$(".slider-slick").slick({
-				infinite: true,
-				slidesToShow: 1,
-				slidesToScroll: 1
-			});
+		
+		$(".slider-slick").slick({
+			infinite: true,
+			slidesToShow: 1,
+			slidesToScroll: 1
+		});
 
-		}
+		$(".slider-min-slick").slick({
+			infinite: true,
+			slidesToShow: 3,
+			slidesToScroll: 1,
+			responsive: [
+				{
+				breakpoint: 1220,
+					settings: {
+						slidesToShow: 2,
+						slidesToScroll: 1,
+						infinite: false,
+						dots: false
+					}
+				},
+				{
+				breakpoint: 520,
+					settings: {
+						slidesToShow: 1,
+						slidesToScroll: 1,
+						infinite: false,
+						dots: false
+					}
+				}
+			]
+	
+		});
 
-		// $(".slider-min-slick").slick({
-		// 	infinite: true,
-		// 	slidesToShow: 3,
-		// 	slidesToScroll: 1,
-		// 	responsive: [
-		// 		{
-		// 		breakpoint: 1220,
-		// 			settings: {
-		// 				slidesToShow: 2,
-		// 				slidesToScroll: 1,
-		// 				infinite: false,
-		// 				dots: false
-		// 			}
-		// 		},
-		// 		{
-		// 		breakpoint: 520,
-		// 			settings: {
-		// 				slidesToShow: 1,
-		// 				slidesToScroll: 1,
-		// 				infinite: false,
-		// 				dots: false
-		// 			}
-		// 		}
-		// 	]
-
-		// });
-
-		// $('.slider-ticker').slick({
-		// 	slidesToShow: 5,
-		// 	slidesToScroll: 1,
-		// 	autoplay: true,
-		// 	autoplaySpeed: 2000,
-		// 	arrows: false,
-		// 	responsive: [
-		// 		{
-		// 		breakpoint: 1220,
-		// 			settings: {
-		// 				slidesToShow: 4,
-		// 				slidesToScroll: 1,
-		// 				infinite: false,
-		// 				dots: false
-		// 			}
-		// 		}
-		// 	]
-		// });
+		$('.slider-ticker').slick({
+			slidesToShow: 5,
+			slidesToScroll: 1,
+			autoplay: true,
+			autoplaySpeed: 2000,
+			arrows: false,
+			responsive: [
+				{
+				breakpoint: 1220,
+					settings: {
+						slidesToShow: 4,
+						slidesToScroll: 1,
+						infinite: false,
+						dots: false
+					}
+				}
+			]
+		});
 
 
 		var $menulink = $(".menu-toggle");
@@ -79,10 +77,10 @@
 		});
 
 		$('nav#menu').mmenu({
-
+			
 		});
-
-
+	
+		
 	});
 }(window.jQuery || window.$));
 

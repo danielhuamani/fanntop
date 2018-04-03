@@ -10,6 +10,7 @@ from apps_base.attribute.models import Attribute
 from .serializers import (ProductClassSerializer, InfluencerFilterSerializer,
     AttributeFilterSerializer, ProductClassDetailSerializer, ProductClassAttrSerializer)
 from .utils import ProductPagination
+from apps_base.customers.models import CustomerProductFavorite
 from decimal import Decimal
 
 
@@ -245,3 +246,49 @@ class InfluencerFilterAPI(APIView):
             ]
         }
         return Response(data)
+
+class CustomerProductFavoriteAPI(ListAPIView):
+    queryset = ProductClass.objects.active().filter(is_published=True).select_related('influencer').prefetch_related(
+        'product_class_products', 'category')
+    serializer_class = ProductClassSerializer
+    pagination_class = ProductPagination
+
+    def post(self, *args, **kwargs):
+        product_id = self.request.data.get('product_id')
+        code_favorite = self.request.COOKIES.get('code_favorite', '')
+        product = get_object_or_404(ProductClass, id=int(product_id))
+        if self.request.user.is_authenticated():
+            customer_product_favorite, created = CustomerProductFavorite.objects.get_or_create(
+                customer=self.request.user)
+            customer_product_favorite.product_class.add(product)
+            return Response({}, status=200)
+        else:
+            customer_product_favorite = CustomerProductFavorite.objects.filter(code=code_favorite)
+            if customer_product_favorite.exists():
+                customer_product_favorite = customer_product_favorite.first()
+                customer_product_favorite.product_class.add(product)
+                return Response({}, status=200)
+            else:
+                customer_product_favorite = CustomerProductFavorite(customer=None)
+                customer_product_favorite.save()
+                customer_product_favorite.product_class.add(product)
+                response = Response({}, status=200)
+                response.set_cookie('code_favorite', customer_product_favorite.code)
+                return response
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        code_favorite = self.request.COOKIES.get('code_favorite', '')
+        if self.request.user.is_authenticated():
+            customer_product_favorite = get_object_or_404(
+                CustomerProductFavorite, customer=self.request.user)
+            queryset = customer_product_favorite.product_class.all()
+            return queryset
+        else:
+            customer_product_favorite = CustomerProductFavorite.objects.filter(code=code_favorite)
+            if customer_product_favorite.exists():
+                customer_product_favorite = customer_product_favorite.first()
+                queryset = customer_product_favorite.product_class.all()
+                return queryset
+            else:
+                return queryset.none()
