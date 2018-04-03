@@ -126,6 +126,11 @@ nav ul li .submenu {
 .form-control {
   border-radius: 4px;
 }
+@media (max-width: 480px) {
+  .col-mv {
+    width: 100%;
+  }
+}
 .sidebar_account__info {
   margin-top: 20px;
 }

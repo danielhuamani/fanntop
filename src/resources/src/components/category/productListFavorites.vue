@@ -1,7 +1,5 @@
 <template>
   <div class="col-md-12">
-    <div class="content">
-      <div class="content-filter-top"></div>
       <div class="result">
         <div class="row">
             <div class="col-md-12">
@@ -9,7 +7,7 @@
             </div>
         </div>
         <div class="row" v-if='products.results.length > 0'>
-            <div class="col-md-4"   v-for='product in products.results' >
+            <div class="col-md-3 col-sm-4 col-xs-6 col-mv"   v-for='product in products.results' >
                 <a :href='"/producto/" + product.slug' class="box item-result">
                   <div class="image"> <img :src="product.product_variant.product_image.image"/></div>
                   <div class="detail">
@@ -31,7 +29,6 @@
 
         </div>
       </div>
-    </div>
   </div>
 </template>
 <script>

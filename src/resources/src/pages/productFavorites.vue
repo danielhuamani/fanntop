@@ -10,7 +10,7 @@
               <div class="content-filter-top"></div>
               <div class="result">
                 <div class="row">
-                  <div class="col-md-4"  v-for='product in productsMask' >
+                  <div class="col-md-3 col-sm-4 col-xs-6 col-mv"  v-for='product in productsMask' >
                     <a href='' class="box item-result">
                       <div class="image"> <img src=""/></div>
                       <div class="detail">
