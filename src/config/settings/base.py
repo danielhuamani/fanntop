@@ -61,7 +61,8 @@ BASE_APPS = [
     'apps_base.payment',
     'apps_base.configuration',
     'apps_base.form',
-    'apps_base.shipping'
+    'apps_base.shipping',
+    'apps_base.promotion'
 ]
 
 WEB_APPS = [

@@ -33,7 +33,8 @@ urlpatterns += [
         url(r'customers/', include('apps_base.customers.urls', namespace='customers')),
         url(r'order/', include('apps_base.order.urls', namespace='order')),
         url(r'configuration/', include('apps_base.configuration.urls', namespace='configuration')),
-        url(r'shipping/', include('apps_base.shipping.urls', namespace='shipping'))
+        url(r'shipping/', include('apps_base.shipping.urls', namespace='shipping')),
+        url(r'promotion/', include('apps_base.promotion.urls', namespace='promotion'))
     ])),
     url(r'^', include('apps_web.web_system.urls', namespace='web_system')),
     url(r'^', include('apps_web.web_product.urls', namespace='web_product')),

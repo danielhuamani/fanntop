@@ -19,6 +19,7 @@ class Customer(models.Model):
     phone = models.CharField(_("Phone"), max_length=120, blank=True)
     birth_date = models.DateField("Fecha Nacimiento", null=True, blank=True)
     is_send_email = models.BooleanField(default=False)
+
     class Meta:
         verbose_name = "Customer"
         verbose_name_plural = "Customers"
