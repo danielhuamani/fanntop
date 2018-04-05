@@ -23,10 +23,9 @@ class Cart(CoreTimeModel):
 
     @property
     def total(self):
-        total = D(0.00)
+        total = D(0)
         for cart_item in self.cart_items.all().select_related('product'):
             total += cart_item.cart_item_total
-        print(total)
         return total
         # return self.cart_items.all().annotate(total=models.F('cart_items__quantity') * models.F('cart_items__product__quantity'))
 

@@ -65,7 +65,7 @@ class OrderSerializer(QueryFieldsMixin, serializers.ModelSerializer):
         model = Order
         fields = ['code', 'total', 'type_status', 'order_order_customer', 'status',
             'order_ordershipping', 'order_orderdetail', 'id', 'is_send_email',
-            'type_status_shipping', 'extra_data']
+            'type_status_shipping', 'extra_data', 'discount', 'shipping_price', 'sub_total']
 
     def update(self, instance, validated_data):
         order_order_customer = validated_data.pop('order_order_customer')

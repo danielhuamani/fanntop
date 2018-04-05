@@ -1,5 +1,5 @@
 {% extends "common/base_order.html" %}
-{% load static thumbnail widget_tweaks %}
+{% load static thumbnail widget_tweaks l10n %}
 {% block css %}
 
 {% endblock css %}
@@ -164,7 +164,26 @@
 
                 </div>
                 <div class="totals">
-                  <div class="subtotal"> <span class="title-s">Subtotal: </span><strong>S/. {{cart.total}}               </strong></div>
+                  <div class="blo-coupon">
+                    <label for="">Ingrese Cupón</label>
+                    <div class="form-group form-coupon">
+                        <input type="text" class="form-control" id="coupon" placeholder="">
+                        <div class="btn btn-primary btn-coupon">Validar</div>
+                    </div>
+                  </div>
+                  <div class="subtotal"> <span class="title-s">Subtotal: </span><strong>S/. <span class='subTotal'> {{sub_total|unlocalize}}</span>               </strong></div>
+                  <div class="subtotal"> <span class="title-s">Costo envio: </span><strong>S/. <span class='shipping_price'>
+                      {{shipping_price|unlocalize}}
+                    </span></strong>
+                  </div>
+                  <div class="subtotal"> <span class="title-s">Descuento: </span><strong>S/. <span class='descuento'> {{discount|unlocalize}}</span>               </strong></div>
+                  <div class="total">
+                    <span class="title-s">Total: </span>
+                    <strong>S/.
+                      <span class='totalPrice'>
+                        {{total|unlocalize}}
+                      </span></strong>
+                  </div>
                   <!--<div class="total"><span class="to">Total:   </span><strong>S/. {{cart.total}}</strong></div>-->
                 </div>
               </div>
@@ -255,6 +274,51 @@
             }
         })
 
+
+    });
+    function calculateMount(shipping_price) {
+      var subTotal = $(".subTotal").text()
+      var descuento = $(".descuento").text()
+      // var total = $(".totalPrice").text()
+      // var shipping_price = $(".shipping_price").text()
+      var total = ((parseFloat(subTotal) + parseFloat(shipping_price)) - parseFloat(descuento))
+      console.log(subTotal, shipping_price, total)
+      $('.totalPrice').text(total.toFixed(2))
+      $(".shipping_price").text(parseFloat(shipping_price).toFixed(2))
+    }
+    $('#id_shipping-ubigeo').change(function(event) {
+    /* Act on the event */
+      var distrito = $(this).val();
+      $.ajax({
+            'url': '{% url "web_order:get_price_shipping" %}' + '?ubigeo=' + distrito,
+            'method': 'GET',
+            'success': function (data) {
+                // $(".shipping_price").text(data.price)
+                // var total = parseFloat(data.price) + parseFloat($('.subTotal').text())
+                // $('.totalPrice').text(total.toFixed(2))
+                calculateMount(data.price)
+                console.log(data, '...')
+            }
+        })
+
+
+    });
+    $(".btn-coupon").click(function(event) {
+      /* Act on the event */
+      event.preventDefault()
+      var coupon = $("#coupon").val()
+      $.ajax({
+          'url': '{% url "web_order:get_coupon_discount" %}' + '?coupon=' + coupon,
+          'method': 'GET',
+          'success': function (data) {
+              if (data.status == 'ok') {
+                $(".shipping_price").text(parseFloat(data.shipping_price).toFixed(2))
+                $('.totalPrice').text(parseFloat(data.total).toFixed(2))
+                $('.subTotal').text(parseFloat(data.sub_total).toFixed(2))
+                $('.descuento').text(parseFloat(data.discount).toFixed(2))
+              }
+          }
+      })
 
     });
   });

@@ -1,6 +1,28 @@
 .main_checkout_thanks__title {
   margin-bottom: 10px;
 }
+.blo-coupon {
+  margin-top: 20px;
+}
+.blo-coupon .form-coupon {
+  font-size: 0;
+}
+.blo-coupon .form-coupon .form-control {
+  width: calc(100% - 80px);
+  display: inline-block;
+  vertical-align: top;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.blo-coupon .form-coupon .btn-coupon {
+  width: 80px;
+  height: 34px;
+  display: inline-block;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  vertical-align: top;
+  padding: 7px 0px;
+}
 .item-result .image {
   padding: 15px;
   background: #fff;

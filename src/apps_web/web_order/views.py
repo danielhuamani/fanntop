@@ -1,15 +1,18 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.conf import settings
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from apps_base.customers.models import CustomerShippingAddress, Customer
 from apps_base.cart.models import Cart
 from apps_base.order.models import Order, OrderShippingAddress, OrderCustomer
 from apps_base.ubigeo.models import Ubigeo, Departamento
 from apps_base.order.order import OrderGenerate
+from apps_base.shipping.models import ShippingCost
+from apps_base.promotion.models import CouponGenerate, Coupon
 from django.db import transaction
 from .forms import OrderCustomerForm, OrderShippingAddressForm
-
+from decimal import Decimal as D
 
 
 @login_required(login_url=reverse_lazy("web_system:login_register"))
@@ -27,8 +30,15 @@ def checkout_paso_1(request):
     code_provincia = ''
     code_distrito = ''
     existe_order = False
+    sub_total = cart.total
+    total = cart.total
+    shipping_price = 0
+    order = ''
+    discount = 0
+    coupon = request.COOKIES.get('coupon', None)
     if Order.objects.filter(cart__code=code_cart).exists():
         order_cart = Order.objects.get(cart__code=code_cart)
+        order = order_cart
         order_shipping_instance = order_cart.order_ordershipping
         order_customer_instance = order_cart.order_order_customer
         ubigeo = order_shipping_instance.ubigeo
@@ -36,6 +46,9 @@ def checkout_paso_1(request):
         code_provincia = ubigeo.cod_prov_inei
         code_distrito = ubigeo.pk
         existe_order = True
+        discount = order.discount
+        total = total + order.shipping_price - discount
+        shipping_price = order.shipping_price
         form = OrderCustomerForm(prefix='customer', instance=order_customer_instance)
     else:
         order_shipping_instance = OrderShippingAddress()
@@ -65,9 +78,9 @@ def checkout_paso_1(request):
             data_shipping = form_order_shipping.cleaned_data
             order_generate = OrderGenerate()
             if existe_order:
-                order = order_generate.update(cart)
+                order = order_generate.update(cart, data_shipping.get('ubigeo'), coupon)
             else:
-                order = order_generate.create(cart, customer)
+                order = order_generate.create(cart, customer, data_shipping.get('ubigeo'), coupon)
             form.instance.order = order
             order_customer = form.save()
             form_order_shipping.instance.order = order
@@ -102,12 +115,16 @@ def checkout_paso_1(request):
         else:
             print('invalid', form.errors, form_order_shipping.errors)
     else:
-        print(order_shipping_instance, 'order_shipping_instance', order_shipping_instance.first_name)
         form_order_shipping = OrderShippingAddressForm(prefix='shipping', instance=order_shipping_instance)
         form_order_shipping.fields['direccion_save'].queryset = CustomerShippingAddress.objects.filter(customer=customer)
     ctx = {
+        'order': order,
         'cart': cart,
         'form': form,
+        'total': total,
+        'shipping_price': shipping_price,
+        'discount': discount,
+        'sub_total': sub_total,
         'form_order_shipping': form_order_shipping,
         'shipping_address': shipping_address,
         'distrito': distrito,
@@ -152,4 +169,73 @@ def checkout_thanks(request):
     }
     response = render(request, "order/checkout_thanks.html", ctx)
     response.delete_cookie('cart')
+    return response
+
+
+@login_required(login_url=reverse_lazy("web_system:login_register"))
+def get_price_shipping(request):
+    ubigeo = request.GET.get('ubigeo', None)
+    data = {
+        'price': float(0)
+    }
+    if ubigeo:
+        shipping = ShippingCost.objects.filter(ubigeo_id=int(ubigeo))
+        if shipping.exists():
+            price = shipping.first().price
+            data['price'] = price
+    return JsonResponse(data, status=200)
+
+
+@login_required(login_url=reverse_lazy("web_system:login_register"))
+def get_coupon_discount(request):
+    coupon = request.GET.get('coupon', None)
+    code_cart = request.COOKIES.get('cart', None)
+    cart = Cart.objects.get(code=code_cart)
+    sub_total = cart.total
+    total = cart.total
+    order = None
+    total = cart.total
+    shipping_price = 0
+    try:
+        order = Order.objects.get(cart__code=code_cart)
+        shipping_price = order.shipping_price
+        total = total + order.shipping_price
+    except Exception as e:
+        print(e, 'nivel')
+    data = {
+        'status': 'error'
+    }
+    if coupon:
+        try:
+            coupon_generate = CouponGenerate.objects.get(
+                code=coupon.strip(), is_used=False, is_active=True, coupon__is_active=True)
+            if not Order.objects.filter(coupon__code=coupon.strip()).exists():
+                if coupon_generate.coupon.type_discount == 'PTJ':
+                    discount = (float(float(sub_total)*coupon_generate.coupon.discount) / 100)
+                elif coupon_generate.coupon.type_discount == 'SLS':
+                    discount = coupon_generate.coupon.discount
+                if order:
+                    total = total - D(discount)
+                    order.discount = discount
+                    order.coupon = coupon_generate
+                    order.total = total
+                    order.save()
+                    data['discount'] = D(discount)
+                    data['shipping_price'] = shipping_price
+                    data['total'] = total
+                    data['sub_total'] = sub_total
+                    data['status'] = 'ok'
+                else:
+                    data['discount'] = D(discount)
+                    data['shipping_price'] = shipping_price
+                    data['total'] = total
+                    data['sub_total'] = sub_total
+                    data['status'] = 'ok'
+            else:
+                data['msj'] = 'Este cupon ya ha sido usado'
+        except Exception as e:
+            print(e, 'error')
+            return JsonResponse(data, status=200)
+    response = JsonResponse(data, status=200)
+    response.set_cookie('coupon', coupon, max_age=60*60*24*2)
     return response

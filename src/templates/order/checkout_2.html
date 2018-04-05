@@ -1,5 +1,5 @@
 {% extends "common/base_order.html" %}
-{% load static thumbnail widget_tweaks %}
+{% load static thumbnail widget_tweaks l10n %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/cart.min.css' %}">
 {% endblock css %}
@@ -179,9 +179,20 @@
 
           </div>
           <div class="totals">
-            <div class="subtotal"> <span class="title-s">Subtotal: </span><strong>S/. {{order.sub_total}}               </strong></div>
-            <div class="subtotal"> <span class="title-s">Costo de Envio: </span><strong>S/. {{order.total}}               </strong></div>
-            <div class="total"><span class="to">Total:   </span><strong>S/. {{order.total}}</strong></div>
+            <div class="subtotal"> <span class="title-s">Subtotal: </span><strong>S/. <span class='subTotal'> {{order.sub_total|unlocalize}}</span>               </strong></div>
+            <div class="subtotal"> <span class="title-s">Costo envio: </span><strong>S/. <span class='shipping_price'>
+                {{order.shipping_price|unlocalize}}
+              </span></strong>
+            </div>
+            <div class="subtotal"> <span class="title-s">Descuento: </span><strong>S/. <span class='descuento'> {{order.discount|unlocalize}}</span>               </strong></div>
+            <div class="total">
+              <span class="title-s">Total: </span>
+              <strong>S/.
+                <span class='totalPrice'>
+                  {{order.total|unlocalize}}
+                </span></strong>
+            </div>
+            <!--<div class="total"><span class="to">Total:   </span><strong>S/. {{cart.total}}</strong></div>-->
           </div>
         </div>
       </div>

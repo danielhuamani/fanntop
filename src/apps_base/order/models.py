@@ -16,6 +16,8 @@ class Order(CoreTimeModel, CoreActiveModel):
     code = models.CharField("code", max_length=255, unique=True)
     sub_total = models.DecimalField("sub total", decimal_places=2, max_digits=8)
     shipping_price = models.DecimalField("Envio", decimal_places=2, max_digits=8, default=0)
+    discount = models.DecimalField("Descuento", decimal_places=2, max_digits=8, default=0)
+    coupon = models.OneToOneField('promotion.CouponGenerate', related_name='coupon_order', blank=True, null=True)
     total = models.DecimalField("total", decimal_places=2, max_digits=8)
     type_status = models.CharField(
         "type_status", choices=TYPE_STATUS, max_length=255, blank=True)
@@ -23,7 +25,7 @@ class Order(CoreTimeModel, CoreActiveModel):
         "type status shipping", choices=TYPE_STATUS_SHIPPING, max_length=255, default=ALMACEN)
     is_send_email = models.BooleanField(default=False)
     is_return_stock = models.BooleanField(default=False)
-    extra_data = JSONField(default={})
+    extra_data = JSONField(default={}, blank=True)
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Order"
@@ -35,7 +37,7 @@ class Order(CoreTimeModel, CoreActiveModel):
 
     def update_total(self):
         self.sub_total = self.cart.total
-        self.total = self.cart.total
+        self.total = self.cart.total + self.shipping_price
         self.save()
 
     def __str__(self):
