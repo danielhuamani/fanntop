@@ -168,6 +168,17 @@ nav ul li .submenu {
 .form-control {
   border-radius: 4px;
 }
+@media (max-width: 650px) {
+  .pages {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+  .col-tbl-12 {
+    width: 100%;
+  }
+}
 @media (max-width: 480px) {
   .col-mv {
     width: 100%;

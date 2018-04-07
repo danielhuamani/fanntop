@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import FrequentQuestion
+from .models import FrequentQuestionResponse
 
 # Register your models here.
-admin.site.register(FrequentQuestion)
+admin.site.register(FrequentQuestionResponse)

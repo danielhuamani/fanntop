@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import categoryList from '@/pages/categoryList'
 import influencer from '@/pages/influencer'
+import influencerNew from '@/pages/influencerNew'
 import productDetail from '@/pages/productDetail'
 import productFavorites from '@/pages/productFavorites'
 import cart from '@/pages/cart'
@@ -28,6 +29,11 @@ export default new Router({
     },
     {
       path: '/influenciador/:slug/',
+      name: 'influencerNew',
+      component: influencerNew
+    },
+    {
+      path: '/influenciador-new/:slug/',
       name: 'influencer',
       component: influencer
     },

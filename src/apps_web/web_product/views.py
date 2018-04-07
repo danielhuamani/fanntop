@@ -12,6 +12,14 @@ def influencer_products(request, slug):
     }
     return render(request, 'product/influencer_list_products.html', ctx)
 
+def influencer_products_new(request, slug):
+    influencer = get_object_or_404(Influencer, slug=slug)
+
+    ctx = {
+        'influencer': influencer
+    }
+    return render(request, 'product/influencer_list_products_new.html', ctx)
+
 def category_products(request, slug):
     category = get_object_or_404(Category, slug=slug)
     ctx = {

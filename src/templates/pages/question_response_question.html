@@ -1,0 +1,41 @@
+{% extends "common/base.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main checkout">
+  <div class="container">
+    <div class="row ">
+      <div class="col-md-3 col-sm-3 col-xs-4 col-tbl-12">
+        <div class="boxw ">
+          <div class="w-body">
+            <div class="sidebar sidebar_account">
+            <h3>{{question_response.question}}</h3>
+            <ul class='sidebar_account__info'>
+              {% for question_response in question_responses %}
+                <li><a href="{% url 'web_page:question_response_question' question_response.slug %}">{{question_response.question}}
+                   </a></li>
+              {% endfor %}
+            </ul>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 col-sm-9 col-xs-8 col-tbl-12">
+        <div class="boxw pages">
+          <div class="w-body">
+            <h2 class='pages__title'>{{question_response.question}}</h2>
+            <div class="pages__content">
+              {{question_response.content|safe}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}

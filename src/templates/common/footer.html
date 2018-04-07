@@ -15,7 +15,7 @@
             {% for page_pro in pages_processors %}
               <li><a class=''  href='{% url "web_page:pages" page_pro.slug %}'>{{page_pro.name}}</a></li>
             {% endfor %}
-
+            <li><a href='{% url "web_page:question_response" %}'>Preguntas Frecuentes</a></li>
             <li><a href='{% url "web_system:follow_orders" %}'>Sigue tu orden</a></li>
             <li><a href="{% url 'web_page:contact' %}">Soporte al cliente</a></li>
             <li><a href="{% url 'web_page:complaints_book' %}">Libro de reclamaciones</a></li>

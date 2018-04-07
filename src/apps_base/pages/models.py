@@ -12,7 +12,8 @@ class HomeBanner(CoreTimeModel, CoreActiveModel, CorePositionModel):
         return u"HomeBanner"
 
 
-class FrequentQuestion(models.Model):
+class FrequentQuestionResponse(CoreTimeModel, CorePositionModel, CoreActiveModel, CoreSeoSlugModel):
+    question = models.CharField(_('Question'), max_length=120)
     content = models.TextField(_('Content'))
     class Meta:
         verbose_name = "FrequentQuestion"

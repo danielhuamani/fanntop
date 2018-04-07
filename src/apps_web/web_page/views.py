@@ -2,21 +2,38 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from .forms import ContactForm, ComplaintsBookForm
 from apps_base.form.models import  ComplaintsBook
-from apps_base.pages.models import FrequentQuestion, TermsConditions, PaymentMethods, Pages
+from apps_base.pages.models import FrequentQuestionResponse, TermsConditions, PaymentMethods, Pages
 
-def question(request):
-    frequent_question, created = FrequentQuestion.objects.get_or_create(pk=1)
-    ctx = {
-        'frequent_question': frequent_question,
-    }
-    return render(request, "pages/frequent_question.html", ctx)
 
-def terms_conditions(request):
-    terms, created = FrequentQuestion.objects.get_or_create(pk=1)
+# def terms_conditions(request):
+#     terms, created = FrequentQuestion.objects.get_or_create(pk=1)
+#     ctx = {
+#         'terms': terms,
+#     }
+#     return render(request, "pages/terms_conditions.html", ctx)
+
+def question_response(request):
+    question_responses = FrequentQuestionResponse.objects.filter(
+        is_active=True).order_by('position')
+    question_response_first = ''
+    if question_responses.exists():
+        question_response_first = question_responses.first()
     ctx = {
-        'terms': terms,
+        'question_responses': question_responses,
+        'question_response_first': question_response_first
     }
-    return render(request, "pages/terms_conditions.html", ctx)
+    return render(request, "pages/question_response.html", ctx)
+
+
+def question_response_question(request, slug):
+    question_response = get_object_or_404(FrequentQuestionResponse, slug=slug, is_active=True)
+    question_responses = FrequentQuestionResponse.objects.filter(
+        is_active=True).order_by('position')
+    ctx = {
+        'question_response': question_response,
+        'question_responses': question_responses,
+    }
+    return render(request, "pages/question_response_question.html", ctx)
 
 def payment_methods(request):
     payment, created = PaymentMethods.objects.get_or_create(pk=1)

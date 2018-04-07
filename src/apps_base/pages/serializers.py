@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from sorl.thumbnail import get_thumbnail
-from .models import HomeBanner, FrequentQuestion, TermsConditions, PaymentMethods, Pages
+from .models import (HomeBanner, TermsConditions, PaymentMethods, Pages,
+    FrequentQuestionResponse)
 
 
 class HomeBannerSerializer(serializers.ModelSerializer):
@@ -15,11 +16,12 @@ class HomeBannerSerializer(serializers.ModelSerializer):
         return self.context['request'].build_absolute_uri(crop.url)
 
 
-class FrequentQuestionSerializer(serializers.ModelSerializer):
+class FrequentQuestionResponseSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = FrequentQuestion
-        fields = ['id', 'content']
+        model = FrequentQuestionResponse
+        fields = ['id', 'content', 'question', 'is_active', 'position',
+        'slug', 'title', 'meta_description']
 
 
 class TermsConditionsSerializer(serializers.ModelSerializer):
