@@ -30,6 +30,7 @@
                         padding 10px 15px
                         width 100%
                         color black
+
             &:hover
                 ul
                     z-index 100
@@ -37,15 +38,20 @@
 // #menu
 //     display none
 nav ul li
+    a
+        font-family f_lato
     ul
         margin-top 15px
         column-count inherit
         li
             margin 0px 0px 5px 0px
+            a
+                font-family f_lato
     .submenu
         box-shadow 0 5px 10px rgba(0,0,0,0.05)
 #footer
     padding 2em 0
+
     .service_client
         margin-top 15px
         margin-bottom 0
@@ -71,4 +77,10 @@ nav ul li
 @media (max-width: 480px)
     .col-mv
         width 100%
+    #footer
+        text-align center
+        .block-list .logo
+            margin auto
 
+        .block-list .w-form
+            margin auto

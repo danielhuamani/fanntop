@@ -7,18 +7,14 @@
 
 <section class="featured">
   <div class="media-content">
-    <div class="slider-slick">
-
+    <div class="home-slick">
       {% for home_banner in home_banners %}
-        <div class="slider-item">
-          {% thumbnail home_banner.image "1350x380" crop="center" as im %}
-              <img src="{{ im.url }}"  height="{{ im.height }}">
-          {% endthumbnail %}
+        {% thumbnail home_banner.image "x360" crop="center" as im %}
+        <div class="home-slick__item" style='background-image:url({{ im.url }})'>
+
         </div>
+        {% endthumbnail %}
       {% endfor %}
-
-
-
     </div>
   </div>
 </section>
@@ -26,7 +22,7 @@
   <div class="container">
     <div class="row">
       {% for influencer in influencers %}
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-xs-6 col-mv">
           <a href="{% url 'web_product:influencer_products' influencer.slug %}" class="box item-influencer">
             <div class="image">
               {% thumbnail influencer.image "350x350" crop="center" as im %}
@@ -44,7 +40,15 @@
 </section>
 {% endblock content %}
 {% block js %}
-
+<script>
+jQuery(document).ready(function($) {
+    $(".home-slick").slick({
+      infinite: true,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    });
+});
+</script>
 
 
 {% endblock js %}

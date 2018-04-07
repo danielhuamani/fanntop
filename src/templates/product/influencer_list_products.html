@@ -16,14 +16,11 @@
 {% block content %}
 <section class="featured">
   <div class="media-content">
-    <div class="slider-">
-      <div class="slider-item">
+      {% thumbnail influencer.banner "x360" crop="center" as im %}
+    <div class="product-banner" style='background-image:url({{ im.url }})'>
 
-        {% thumbnail influencer.banner "x350" crop="center" as im %}
-                <img src="{{ im.url }}"  height="{{ im.height }}">
-              {% endthumbnail %}
-      </div>
     </div>
+      {% endthumbnail %}
   </div>
 </section>
 <div v-cloak>
