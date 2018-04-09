@@ -28,12 +28,12 @@ export default new Router({
       component: productDetail
     },
     {
-      path: '/influenciador/:slug/',
+      path: '/influenciador-new/:slug/',
       name: 'influencerNew',
       component: influencerNew
     },
     {
-      path: '/influenciador-new/:slug/',
+      path: '/influenciador/:slug/',
       name: 'influencer',
       component: influencer
     },

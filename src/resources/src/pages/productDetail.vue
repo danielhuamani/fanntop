@@ -27,14 +27,14 @@
             <div  :class="[attr.type_name === 'SELECT_SINGLE' ?  'cnt-size' : 'cnt-color']" v-for='attr in productClass.attributes'>
               <span class="text">{{attr.name_store}}:</span>
               <ul v-if="attr.type_name === 'SELECT_SINGLE'">
-                <li v-for='option in attr.attribute_options_query'>
+                <li v-for='option in attr.attribute_options_query' :class="[isActiveProductDetail(option.slug) ?  'is-active' : '']">
                   <a href="#">
                     <span>{{option.option}}</span>
                   </a>
                 </li>
               </ul>
               <ul v-else>
-                <li v-for='option in attr.attribute_options_query'>
+                <li v-for='option in attr.attribute_options_query' :class="[isActiveProductDetail(option.slug) ?  'is-active' : '']">
                   <a href="#" class="">
                     <span :style='{background: option.attr}' ></span>
                   </a>
@@ -75,7 +75,8 @@
         productCart: {
           quantity: 1,
           sku: ''
-        }
+        },
+        selectProduct: {}
       }
     },
     created () {
@@ -97,14 +98,29 @@
 
         })
       },
+      isActiveProductDetail (attr) {
+        var is_active = false
+        for(var index in this.productDetail.attribute_option) {
+          if (this.productDetail.attribute_option[index].slug === attr) {
+            is_active = true
+          }
+
+        }
+        return is_active
+      },
       getProductDetail() {
         const self = this
         this.axios({
           method: 'get',
           url: '/api/product-detail/' + this.$route.params.slug + '/'
         }).then(response => {
-          self.productDetail = response.data.product_variant
-          self.productCart.sku = response.data.product_variant.sku
+          self.productDetail = response.data
+          self.productCart.sku = response.data.sku
+          for(var index in self.productDetail.attribute_option) {
+            if (this.productDetail.attribute_option[index].slug === attr) {
+            }
+
+          }
         }).catch(error => {
 
         })

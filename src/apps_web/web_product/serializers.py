@@ -15,6 +15,23 @@ class AttributeOptionFilterSerializer(QueryFieldsMixin, serializers.ModelSeriali
         ]
 
 
+class AttributeOptionDetailSerializer(QueryFieldsMixin, serializers.ModelSerializer):
+    attribute_name = serializers.SerializerMethodField()
+    attribute_type_name = serializers.SerializerMethodField()
+    class Meta:
+        model = AttributeOption
+        fields = [
+            'id', 'attr', 'option', 'slug', 'attribute_name', 'attribute_type_name'
+        ]
+
+    def get_attribute_name(self, obj):
+
+        return obj.attribute.slug
+
+    def get_attribute_type_name(self, obj):
+
+        return obj.attribute.type_name
+
 class AttributeFilterSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     attribute_options_query = serializers.SerializerMethodField()
     class Meta:
@@ -104,7 +121,7 @@ class ProductImageDetailSerializer(serializers.ModelSerializer):
 
 class ProductDetailSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     product_image = serializers.SerializerMethodField()
-    attribute_option = AttributeOptionFilterSerializer(many=True)
+    attribute_option = AttributeOptionDetailSerializer(many=True)
 
     class Meta:
         model = Product
@@ -120,19 +137,28 @@ class ProductDetailSerializer(QueryFieldsMixin, serializers.ModelSerializer):
         return ProductImageDetailSerializer(product_image, many=True).data
 
 
-class ProductClassAttrSerializer(QueryFieldsMixin, serializers.ModelSerializer):
-
-    product_variant = serializers.SerializerMethodField()
-    influencer_name = serializers.CharField(source='get_influencer_name', read_only=True)
+class ProductDetailAttributeSerializer(QueryFieldsMixin, serializers.ModelSerializer):
+    attribute_option = AttributeOptionDetailSerializer(many=True)
 
     class Meta:
+        model = Product
+        fields = ['attribute_option', 'is_exhausted', 'sku']
+
+
+
+class ProductClassAttrSerializer(QueryFieldsMixin, serializers.ModelSerializer):
+
+    # product_variant = serializers.SerializerMethodField()
+    influencer_name = serializers.CharField(source='get_influencer_name', read_only=True)
+    product_class_products = ProductDetailAttributeSerializer(many=True)
+    class Meta:
         model = ProductClass
-        fields = ['name', 'slug', 'id', 'product_variant', 'description', 'influencer_name']
+        fields = ['name', 'slug', 'id', 'product_class_products', 'description', 'influencer_name']
 
 
-    def get_product_variant(self, obj):
-        product_variant = obj.product_class_products.filter(is_active=True).order_by('is_featured')
-        return ProductDetailSerializer(product_variant.first()).data
+    # def get_product_variant(self, obj):
+    #     product_variant = obj.product_class_products.filter(is_active=True).order_by('is_featured')
+    #     return ProductDetailSerializer(product_variant.first()).data
 
 
 class ProductClassDetailSerializer(QueryFieldsMixin, serializers.ModelSerializer):

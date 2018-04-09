@@ -75,6 +75,9 @@
   background-size: cover;
   background-position: center center;
 }
+.detail-product .is-active {
+  border: 1px solid #ff7e00;
+}
 @media (max-width: 768px) {
   .product-banner {
     height: 300px;
@@ -167,6 +170,12 @@ nav ul li .submenu {
 }
 .form-control {
   border-radius: 4px;
+}
+.item-car .item {
+  margin-right: 5px;
+}
+.item-car .item a {
+  display: block;
 }
 @media (max-width: 650px) {
   .pages {

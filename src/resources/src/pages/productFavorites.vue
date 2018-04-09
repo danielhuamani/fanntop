@@ -5,7 +5,7 @@
         <div class="row">
           <productListFavorites v-if="load_products" :products='products'></productListFavorites>
           <!--<productList v-if="products.results.length > 0" :products='products'></productList>-->
-          <div  v-else  class="col-md-12 product-list-mask">
+          <div  v-else-if='!load_products'  class="col-md-12 product-list-mask">
             <div class="content">
               <div class="content-filter-top"></div>
               <div class="result">
@@ -51,7 +51,8 @@
         prices: [],
         productsMask: [1,2,3],
         load_products: false,
-        load_product_filter: false
+        load_product_filter: false,
+        load: false
       }
     },
     components: {
@@ -72,7 +73,7 @@
           self.products = response.data
           self.load_products = true
         }).catch(error => {
-
+          self.load_products = true
         })
       },
     }

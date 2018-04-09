@@ -8,7 +8,7 @@ from apps_base.category.models import Category
 from apps_base.influencer.models import Influencer
 from apps_base.attribute.models import Attribute
 from .serializers import (ProductClassSerializer, InfluencerFilterSerializer,
-    AttributeFilterSerializer, ProductClassDetailSerializer, ProductClassAttrSerializer)
+    AttributeFilterSerializer, ProductClassDetailSerializer, ProductClassAttrSerializer, ProductDetailSerializer)
 from .utils import ProductPagination
 from apps_base.customers.models import CustomerProductFavorite
 from decimal import Decimal
@@ -141,8 +141,10 @@ class ProductClassAttrAPI(APIView):
         product_class = self.get_object(slug)
         attributes = product_class.attribute.all()
         attribute_option = []
-        for product in product_class.product_class_products.all().prefetch_related('attribute_option'):
-            attribute_option += product.attribute_option.all().values_list('id', flat=True)
+        # for product in product_class.product_class_products.all().prefetch_related('attribute_option'):
+        #     attribute_option += product.attribute_option.all().values_list('id', flat=True)
+        # print(attribute_option, product_class.product_class_products.all().values_list('attribute_option', flat=True))
+        attribute_option = product_class.product_class_products.all().values_list('attribute_option', flat=True)
         serializer_attribute = AttributeFilterSerializer(attributes, many=True, context={
             'attribute_option_ids': attribute_option})
         serializer = ProductClassAttrSerializer(product_class, context={'request': self.request})
@@ -153,7 +155,7 @@ class ProductClassAttrAPI(APIView):
         return Response(data)
 
 
-class ProductClassDetailAPI(APIView):
+class ProductDetailAPI(APIView):
     # queryset = ProductClass.objects.active().filter(is_published=True).select_related('influencer')
     lookup_field = 'slug'
 
@@ -161,9 +163,12 @@ class ProductClassDetailAPI(APIView):
         return get_object_or_404(ProductClass, slug=slug)
 
     def get(self, request, slug, format=None):
-        product_class = self.get_object(slug)
-        serializer = ProductClassDetailSerializer(product_class, context={'request': self.request})
-        return Response(serializer.data)
+        product_details = Product.objects.filter(product_class__slug=slug, is_active=True).prefetch_related('attribute_option__attribute', 'product_product_images')
+        if product_details.exists():
+            product_detail = product_details.order_by('is_featured').first()
+            serializer = ProductDetailSerializer(product_detail, context={'request': self.request})
+            return Response(serializer.data, status=200)
+        return Response({}, status=404)
     # lookup_field = slug
     # def get(self, request, format=None):
     #     snippets = Snippet.objects.all()
@@ -259,7 +264,7 @@ class CustomerProductFavoriteAPI(ListAPIView):
         product = get_object_or_404(ProductClass, id=int(product_id))
         if self.request.user.is_authenticated():
             customer_product_favorite, created = CustomerProductFavorite.objects.get_or_create(
-                customer=self.request.user)
+                customer=self.request.user.user_customer)
             customer_product_favorite.product_class.add(product)
             return Response({}, status=200)
         else:
@@ -281,7 +286,7 @@ class CustomerProductFavoriteAPI(ListAPIView):
         code_favorite = self.request.COOKIES.get('code_favorite', '')
         if self.request.user.is_authenticated():
             customer_product_favorite = get_object_or_404(
-                CustomerProductFavorite, customer=self.request.user)
+                CustomerProductFavorite, customer=self.request.user.user_customer)
             queryset = customer_product_favorite.product_class.all()
             return queryset
         else:

@@ -126,7 +126,7 @@
                         </div>
                         <div class="form-group">
                           <div class="col-md-12">
-                            <div class="w-lnk-btn"><a href="#" class="lnk"><i class="fa fa-angle-left"></i>Regresar al carrito</a>
+                            <div class="w-lnk-btn"><a href="{% url 'web_cart:cart' %}" class="lnk"><i class="fa fa-angle-left"></i>Regresar al carrito</a>
                               <button type="submit" class="btn btn-primary">Continuar</button>
                             </div>
                           </div>
@@ -172,11 +172,11 @@
                     </div>
                   </div>
                   <div class="subtotal"> <span class="title-s">Subtotal: </span><strong>S/. <span class='subTotal'> {{sub_total|unlocalize}}</span>               </strong></div>
+                  <div class="subtotal"> <span class="title-s">Descuento: </span><strong>S/. <span class='descuento'> {{discount|unlocalize}}</span>               </strong></div>
                   <div class="subtotal"> <span class="title-s">Costo envio: </span><strong>S/. <span class='shipping_price'>
                       {{shipping_price|unlocalize}}
                     </span></strong>
                   </div>
-                  <div class="subtotal"> <span class="title-s">Descuento: </span><strong>S/. <span class='descuento'> {{discount|unlocalize}}</span>               </strong></div>
                   <div class="total">
                     <span class="title-s">Total: </span>
                     <strong>S/.
