@@ -285,9 +285,12 @@ class CustomerProductFavoriteAPI(ListAPIView):
         queryset = super().get_queryset()
         code_favorite = self.request.COOKIES.get('code_favorite', '')
         if self.request.user.is_authenticated():
-            customer_product_favorite = get_object_or_404(
-                CustomerProductFavorite, customer=self.request.user.user_customer)
-            queryset = customer_product_favorite.product_class.all()
+            try:
+                customer_product_favorite = get_object_or_404(
+                    CustomerProductFavorite, customer=self.request.user.user_customer)
+                queryset = customer_product_favorite.product_class.all()
+            except Exception as e:
+                queryset = queryset.none()
             return queryset
         else:
             customer_product_favorite = CustomerProductFavorite.objects.filter(code=code_favorite)

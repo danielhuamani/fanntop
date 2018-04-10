@@ -11,7 +11,7 @@
         <div class="boxw ">
           <div class="w-body">
             <div class="sidebar sidebar_account">
-            <h3>{{question_response_first.question}}</h3>
+            <h3>Pregunta Frecuentes</h3>
             <ul class='sidebar_account__info'>
               {% for question_response in question_responses %}
                 <li><a href="{% url 'web_page:question_response_question' question_response.slug %}">{{question_response.question}}

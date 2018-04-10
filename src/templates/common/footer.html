@@ -58,6 +58,7 @@
               <input type="text" v-model='emailSuscription' class="text" placeholder="Ingresa tu email" />
               <button type="submit"  class="btn"><i class="fa fa-chevron-right"></i></button>
               <br></br>
+              #{!showEmailSuscription}
               <p v-if='showEmailSuscription'>#{messageEmailSuscription}</p>
 
             </form>
