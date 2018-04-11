@@ -175,7 +175,7 @@ class ProductDetailAPI(APIView):
                 print(attr_list, '----')
                 product_detail = product_details.filter(attribute_option__slug__in=attr_list).order_by('is_featured').first()
             else:
-                product_detail = product_details.order_by('is_featured').first()
+                product_detail = product_details.filter(is_active=True).order_by('is_featured').first()
             serializer = ProductDetailSerializer(product_detail, context={'request': self.request})
             return Response(serializer.data, status=200)
         return Response({}, status=404)
