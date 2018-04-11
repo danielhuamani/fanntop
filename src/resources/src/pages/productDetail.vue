@@ -159,13 +159,19 @@
         const self = this
         let resultVerify = this.verifyProductDetail()
         console.log(resultVerify, '----')
+        self.productCart['quantity'] = 1
         if (resultVerify['sku']){
-          console.log(resultVerify['is_exhausted'], '----')
-          self.isExhausted = resultVerify['is_exhausted']
-          self.productCart['sku'] = resultVerify['sku']
-          self.stockMaximo = resultVerify['stock']
-          if (self.changeColorAttr) {
-            self.getProductDetail()
+          if (!resultVerify['is_exhausted']) {
+            self.isExhausted = resultVerify['is_exhausted']
+            self.productCart['sku'] = resultVerify['sku']
+            self.stockMaximo = resultVerify['stock']
+            if (self.changeColorAttr) {
+              self.getProductDetail()
+            }
+          } else {
+            self.isExhausted = true
+            self.productCart['sku'] = ''
+            self.stockMaximo = 0
           }
         } else {
           self.isExhausted = true
@@ -182,11 +188,18 @@
         const self = this
         let resultVerify = this.verifyProductDetail()
         self.changeColorAttr = true
+        self.productCart['quantity'] = 1
         if (resultVerify['sku']){
-          self.isExhausted = resultVerify['is_exhausted']
-          self.productCart['sku'] = resultVerify['sku']
-          self.stockMaximo = resultVerify['stock']
-          self.getProductDetail()
+          if (!resultVerify['is_exhausted']) {
+            self.isExhausted = resultVerify['is_exhausted']
+            self.productCart['sku'] = resultVerify['sku']
+            self.stockMaximo = resultVerify['stock']
+            self.getProductDetail()
+          } else {
+            self.isExhausted = true
+            self.productCart['sku'] = ''
+            self.stockMaximo = 0
+          }
         } else {
           self.isExhausted = true
           self.productCart['sku'] = ''
