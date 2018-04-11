@@ -142,7 +142,7 @@ class ProductDetailAttributeSerializer(QueryFieldsMixin, serializers.ModelSerial
 
     class Meta:
         model = Product
-        fields = ['attribute_option', 'is_exhausted', 'sku']
+        fields = ['attribute_option', 'is_exhausted', 'sku', 'stock']
 
 
 

@@ -56,10 +56,27 @@
 .detail-product
     .is-active
         border 1px solid color_main
+.product_detail_vue
+    &__content
+        float right
+    &__galery
+        float left
+// @media (max-width: 992px)
+.product_detail
+    .wrap-desc-info .tab-content .tab-pane
+        padding 20px 10px
 @media (max-width: 768px)
+    // .detail-product
+    //     margin-top 30px
     .product-banner
         height 300px
-
+    .detail-product h2
+        font-size 22px
+    .product_detail_vue
+        &__content
+            float inherit
+        &__galery
+            float inherit
 @media (max-width: 480px)
     .product-banner
         height 240px

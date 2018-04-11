@@ -165,7 +165,17 @@ class ProductDetailAPI(APIView):
     def get(self, request, slug, format=None):
         product_details = Product.objects.filter(product_class__slug=slug, is_active=True).prefetch_related('attribute_option__attribute', 'product_product_images')
         if product_details.exists():
-            product_detail = product_details.order_by('is_featured').first()
+            attr = self.request.query_params.getlist('attr[]', None)
+            attr_list = []
+            print(attr, 'attr')
+            for str_attr in attr:
+                attr_slug = self.request.query_params.get(str_attr, None)
+                attr_list.append(attr_slug)
+            if attr_list:
+                print(attr_list, '----')
+                product_detail = product_details.filter(attribute_option__slug__in=attr_list).order_by('is_featured').first()
+            else:
+                product_detail = product_details.order_by('is_featured').first()
             serializer = ProductDetailSerializer(product_detail, context={'request': self.request})
             return Response(serializer.data, status=200)
         return Response({}, status=404)

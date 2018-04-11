@@ -78,9 +78,27 @@
 .detail-product .is-active {
   border: 1px solid #ff7e00;
 }
+.product_detail_vue__content {
+  float: right;
+}
+.product_detail_vue__galery {
+  float: left;
+}
+.product_detail .wrap-desc-info .tab-content .tab-pane {
+  padding: 20px 10px;
+}
 @media (max-width: 768px) {
   .product-banner {
     height: 300px;
+  }
+  .detail-product h2 {
+    font-size: 22px;
+  }
+  .product_detail_vue__content {
+    float: inherit;
+  }
+  .product_detail_vue__galery {
+    float: inherit;
   }
 }
 @media (max-width: 480px) {
@@ -280,6 +298,22 @@ border-radius8px
 @media (max-width: 480px) {
   .home-slick__item {
     height: 240px;
+  }
+}
+.btn-dark {
+  background: #000;
+  color: #fff;
+}
+.btn-dark:hover,
+.btn-dark:visited,
+.btn-dark:active,
+.btn-dark:focus {
+  color: #fff;
+}
+@media (max-width: 480px) {
+  .col-mv {
+    width: 100%;
+    margin-left: 0;
   }
 }
 .checkout .boxw {
