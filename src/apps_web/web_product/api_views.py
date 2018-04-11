@@ -131,7 +131,7 @@ class ProductClassListAPI(ListAPIView):
 
 
 class ProductClassAttrAPI(APIView):
-    queryset = ProductClass.objects.active().filter(is_published=True).select_related('influencer')
+    queryset = ProductClass.objects.active().filter(is_published=True, product_class_products__is_active=True).select_related('influencer')
     lookup_field = 'slug'
 
     def get_object(self, slug):
