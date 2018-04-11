@@ -131,7 +131,7 @@ class ProductClassListAPI(ListAPIView):
 
 
 class ProductClassAttrAPI(APIView):
-    queryset = ProductClass.objects.active().filter(is_published=True, product_class_products__is_active=True).select_related('influencer')
+    queryset = ProductClass.objects.active().filter(is_published=True).select_related('influencer')
     lookup_field = 'slug'
 
     def get_object(self, slug):
@@ -144,7 +144,7 @@ class ProductClassAttrAPI(APIView):
         # for product in product_class.product_class_products.all().prefetch_related('attribute_option'):
         #     attribute_option += product.attribute_option.all().values_list('id', flat=True)
         # print(attribute_option, product_class.product_class_products.all().values_list('attribute_option', flat=True))
-        attribute_option = product_class.product_class_products.filter(is_active=True).values_list('attribute_option', flat=True)
+        attribute_option = product_class.product_class_products.all().values_list('attribute_option', flat=True)
         serializer_attribute = AttributeFilterSerializer(attributes, many=True, context={
             'attribute_option_ids': attribute_option})
         serializer = ProductClassAttrSerializer(product_class, context={'request': self.request})
@@ -163,7 +163,7 @@ class ProductDetailAPI(APIView):
         return get_object_or_404(ProductClass, slug=slug)
 
     def get(self, request, slug, format=None):
-        product_details = Product.objects.filter(product_class__slug=slug, is_active=True).prefetch_related('attribute_option__attribute', 'product_product_images')
+        product_details = Product.objects.filter(product_class__slug=slug).prefetch_related('attribute_option__attribute', 'product_product_images')
         if product_details.exists():
             attr = self.request.query_params.getlist('attr[]', None)
             attr_list = []
