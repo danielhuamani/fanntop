@@ -144,7 +144,7 @@ class ProductClassAttrAPI(APIView):
         # for product in product_class.product_class_products.all().prefetch_related('attribute_option'):
         #     attribute_option += product.attribute_option.all().values_list('id', flat=True)
         # print(attribute_option, product_class.product_class_products.all().values_list('attribute_option', flat=True))
-        attribute_option = product_class.product_class_products.all().values_list('attribute_option', flat=True)
+        attribute_option = product_class.product_class_products.filter(is_active=True).values_list('attribute_option', flat=True)
         serializer_attribute = AttributeFilterSerializer(attributes, many=True, context={
             'attribute_option_ids': attribute_option})
         serializer = ProductClassAttrSerializer(product_class, context={'request': self.request})
