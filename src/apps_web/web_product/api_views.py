@@ -167,13 +167,10 @@ class ProductDetailAPI(APIView):
         if product_details.exists():
             attr = self.request.query_params.getlist('attr[]', None)
             attr_list = []
-            print(attr, 'attr')
             for str_attr in attr:
                 attr_slug = self.request.query_params.get(str_attr, None)
                 product_details = product_details.filter(attribute_option__slug=attr_slug)
             if attr:
-                print(attr_list, '----')
-                raise
                 product_detail = product_details.order_by('-is_featured').first()
             else:
                 product_detail = product_details.filter(is_active=True).order_by('is_featured').first()
