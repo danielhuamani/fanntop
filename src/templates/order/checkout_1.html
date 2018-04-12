@@ -171,6 +171,9 @@
                         <div class="btn btn-primary btn-coupon">Validar</div>
                     </div>
                   </div>
+                  <div class="msj-coupon">
+                    <p class='text-danger'></p>
+                  </div>
                   <div class="subtotal"> <span class="title-s">Subtotal: </span><strong>S/. <span class='subTotal'> {{sub_total|unlocalize}}</span>               </strong></div>
                   <div class="subtotal"> <span class="title-s">Descuento: </span><strong>S/. <span class='descuento'> {{discount|unlocalize}}</span>               </strong></div>
                   <div class="subtotal"> <span class="title-s">Costo envio: </span><strong>S/. <span class='shipping_price'>
@@ -316,6 +319,9 @@
                 $('.totalPrice').text(parseFloat(data.total).toFixed(2))
                 $('.subTotal').text(parseFloat(data.sub_total).toFixed(2))
                 $('.descuento').text(parseFloat(data.discount).toFixed(2))
+              }
+              if (data.status == 'error') {
+                $('.msj-coupon p').text(data.msj)
               }
           }
       })

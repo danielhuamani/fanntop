@@ -17,7 +17,8 @@ class Order(CoreTimeModel, CoreActiveModel):
     sub_total = models.DecimalField("sub total", decimal_places=2, max_digits=8)
     shipping_price = models.DecimalField("Envio", decimal_places=2, max_digits=8, default=0)
     discount = models.DecimalField("Descuento", decimal_places=2, max_digits=8, default=0)
-    coupon = models.OneToOneField('promotion.CouponGenerate', related_name='coupon_order', blank=True, null=True)
+    # coupon = models.OneToOneField('promotion.CouponGenerate', related_name='coupon_order', blank=True, null=True)
+    coupon_discount = models.ForeignKey('promotion.Coupon', related_name='coupon_orders', blank=True, null=True)
     total = models.DecimalField("total", decimal_places=2, max_digits=8)
     type_status = models.CharField(
         "type_status", choices=TYPE_STATUS, max_length=255, blank=True)

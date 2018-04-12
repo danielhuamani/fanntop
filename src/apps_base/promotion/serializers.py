@@ -19,18 +19,18 @@ class CouponGenerateSerializer(QueryFieldsMixin, serializers.ModelSerializer):
             return ''
 
 class CouponSerializer(QueryFieldsMixin, serializers.ModelSerializer):
-    quantity_generate = serializers.IntegerField(required=False)
+    # quantity_generate = serializers.IntegerField(required=False)
 
     class Meta:
         model = Coupon
         fields = ['name', 'influencers', 'is_limit', 'date_start', 'date_end',
-            'prefix', 'type_discount', 'discount', 'quantity_customer', 'quantity_generate', 'id',
+            'prefix', 'type_discount', 'discount', 'quantity_customer', 'id',
             'is_active']
 
-    @transaction.atomic
-    def create(self, validated_data):
-        print(validated_data, 'validated_data')
-        quantity_generate = validated_data.pop('quantity_generate')
-        coupon = super(CouponSerializer, self).create(validated_data)
-        generate_code_coupon(coupon, quantity_generate)
-        return coupon
+    # @transaction.atomic
+    # def create(self, validated_data):
+    #     print(validated_data, 'validated_data')
+    #     quantity_generate = validated_data.pop('quantity_generate')
+    #     coupon = super(CouponSerializer, self).create(validated_data)
+    #     generate_code_coupon(coupon, quantity_generate)
+    #     return coupon

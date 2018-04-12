@@ -29,7 +29,7 @@
                         <div class="image"><a href="#"><img :src="item.image" /></a></div>
                         <div class="detail">
                           <h3>{{item.product_name}}</h3>
-                          <div class="sku">SKU: 13006893</div>
+                          <div class="sku">SKU: {{item.product_sku}}</div>
                         </div>
                       </div>
                     </td>

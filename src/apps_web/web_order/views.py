@@ -207,17 +207,17 @@ def get_coupon_discount(request):
     }
     if coupon:
         try:
-            coupon_generate = CouponGenerate.objects.get(
-                code=coupon.strip(), is_used=False, is_active=True, coupon__is_active=True)
-            if not Order.objects.filter(coupon__code=coupon.strip()).exists():
-                if coupon_generate.coupon.type_discount == 'PTJ':
-                    discount = (float(float(sub_total)*coupon_generate.coupon.discount) / 100)
-                elif coupon_generate.coupon.type_discount == 'SLS':
-                    discount = coupon_generate.coupon.discount
+            coupon_generate = Coupon.objects.get(
+                prefix=coupon.strip(), is_active=True)
+            if not Order.objects.filter(coupon_discount__prefix=coupon.strip()).exists():
+                if coupon_generate.type_discount == 'PTJ':
+                    discount = (float(float(sub_total)*coupon_generate.discount) / 100)
+                elif coupon_generate.type_discount == 'SLS':
+                    discount = coupon_generate.discount
                 if order:
                     total = total - D(discount)
                     order.discount = discount
-                    order.coupon = coupon_generate
+                    order.coupon_discount = coupon_generate
                     order.total = total
                     order.save()
                     data['discount'] = D(discount)
@@ -235,6 +235,7 @@ def get_coupon_discount(request):
                 data['msj'] = 'Este cupon ya ha sido usado'
         except Exception as e:
             print(e, 'error')
+            data['msj'] = 'Este cupon no existe'
             return JsonResponse(data, status=200)
     response = JsonResponse(data, status=200)
     response.set_cookie('coupon', coupon, max_age=60*60*24*2)
