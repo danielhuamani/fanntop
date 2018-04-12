@@ -16,7 +16,7 @@ class Coupon(CoreActiveModel):
         choices=TYPE_DISCOUNT_CHOICES, max_length=60)
     discount = models.FloatField(_('Discount'))
     quantity_customer = models.PositiveIntegerField(_('Use for Customer'), default=1)
-
+    stock = models.PositiveIntegerField(_('Stock'), default=1)
     class Meta:
         verbose_name = "Coupon"
         verbose_name_plural = "Coupons"

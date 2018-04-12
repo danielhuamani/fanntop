@@ -16,12 +16,12 @@ class OrderGenerate(object):
         #     price = 0
 
         try:
-            coupon_generate = CouponGenerate.objects.get(
-                code=coupon.strip(), is_used=False, is_active=True, coupon__is_active=True)
+            coupon_generate = Coupon.objects.get(
+                prefix=coupon.strip(),  is_active=True)
             if coupon_generate.coupon.type_discount == 'PTJ':
-                discount = (float(float(sub_total)*coupon_generate.coupon.discount) / 100)
-            elif coupon_generate.coupon.type_discount == 'SLS':
-                discount = coupon_generate.coupon.discount
+                discount = (float(float(sub_total)*coupon_generate.discount) / 100)
+            elif coupon_generate.type_discount == 'SLS':
+                discount = coupon_generate.discount
         except Exception as e:
             coupon_generate = None
             discount = 0
@@ -38,7 +38,7 @@ class OrderGenerate(object):
             type_status=PROCESO,
         )
         if coupon_generate:
-            order.coupon = coupon_generate
+            order.coupon_discount = coupon_generate
             order.save()
         self.create_details(cart, order)
         return order
@@ -46,12 +46,12 @@ class OrderGenerate(object):
     def update(self, cart, ubigeo, coupon):
         getcontext().prec = 2
         try:
-            coupon_generate = CouponGenerate.objects.get(
-                code=coupon.strip(), is_used=False, is_active=True, coupon__is_active=True)
-            if coupon_generate.coupon.type_discount == 'PTJ':
-                discount = (float(float(sub_total)*coupon_generate.coupon.discount) / 100)
-            elif coupon_generate.coupon.type_discount == 'SLS':
-                discount = coupon_generate.coupon.discount
+            coupon_generate = Coupon.objects.get(
+                prefix=coupon.strip(), is_active=True)
+            if coupon_generate.type_discount == 'PTJ':
+                discount = (float(float(sub_total)*coupon_generate.discount) / 100)
+            elif coupon_generate.type_discount == 'SLS':
+                discount = coupon_generate.discount
         except Exception as e:
             coupon_generate = None
             discount = 0
