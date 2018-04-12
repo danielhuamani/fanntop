@@ -173,7 +173,7 @@ class ProductDetailAPI(APIView):
                 attr_list.append(attr_slug)
             if attr_list:
                 print(attr_list, '----')
-                product_detail = product_details.filter(attribute_option__slug__in=attr_list)
+                product_detail = product_details.filter(attribute_option__slug=attr_list)
                 raise
                 product_detail = product_detail.order_by('-is_featured').first()
             else:
