@@ -1,5 +1,5 @@
 {% extends "common/base.html" %}
-{% load static %}
+{% load static thumbnail widget_tweaks l10n %}
 {% block css %}
 <style>
     [v-cloak] > * { display:none }
@@ -18,11 +18,39 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h4>Resultados de la busqueda: <strong>'{{request.GET.search}}'</strong></h4>
+                <h3>Resultados de la busqueda: <strong>'{{request.GET.search}}'</strong></h3>
             </div>
+        </div>
+        <div class="row">
+            {% if products_search %}
+                {% for product in products_search %}
+                    <div class="col-md-3 col-sm-4 col-xs-6 col-mv"   >
+                        <a href='' class="box item-result">
+                          <div class="image">
+                                {% thumbnail product.get_image "264x250" crop="center" as im %}
+                                    <img src="{{im.url}}"/>
+                                {% endthumbnail %}
+                          </div>
+                          <div class="detail">
+                            <h3 class="title">{{product.product_class.name}}</h3>
+                            <!-- <h4 class="subtitle">subtitle</h4> -->
+                            <div class="price">
+                              <span class="offer">S/. {{product.price|unlocalize}}</span>
+                              <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
+                            </div>
+                          </div>
+                        </a>
+                   </div>
+               {% endfor %}
+            {% else %}
+            <div class="col-md-12" >
+                <p>No se encontraron resultados</p>
+            </div>
+           {% endif %}
         </div>
     </div>
 </section>
+
  <!--name="fade" mode="out-in"  appear-->
 {% endblock content %}
 {% block js %}

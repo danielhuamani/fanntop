@@ -7,7 +7,6 @@
             <h2 class="title">{{productClass.product_class.name}}</h2>
             <div class="detalle-precio">
               <div class="price-promo">
-
                 Precio: <span class="price">S/ {{productDetail.price}}</span>
               </div>
               <div class="detaller-description" v-html="productClass.product_class.description">
