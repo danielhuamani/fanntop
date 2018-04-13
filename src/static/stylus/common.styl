@@ -1,6 +1,21 @@
 // HEADER
 
 #header
+    .wrap-search
+        // border-bottom 1px solid white
+        position relative
+        input
+            border none
+            border-radius 0
+            padding-right 30px
+            font-size 15px
+            border-bottom 1px solid white
+        &__icon
+            position absolute
+            right 4px
+            top 7px
+            color white
+            font-size 18px
     .list-options
         &__menu
             position relative
@@ -35,8 +50,8 @@
                 ul
                     z-index 100
                     opacity 1
-// #menu
-//     display none
+#menu
+    display none
 nav ul li
     a
         font-family f_lato
@@ -49,6 +64,7 @@ nav ul li
                 font-family f_lato
     .submenu
         box-shadow 0 5px 10px rgba(0,0,0,0.05)
+
 #footer
     padding 2em 0
 
@@ -78,6 +94,10 @@ nav ul li
     a
         display block
 
+
+@media (max-width: 768px)
+    #menu
+        display block
 @media (max-width: 650px)
     .pages
         padding-left 15px

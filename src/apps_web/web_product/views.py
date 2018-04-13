@@ -49,5 +49,7 @@ def product_favorites(request):
     return render(request, 'product/product_favorites.html', ctx)
 
 def product_search(request):
-    ctx = {}
+    ctx = {
+        'search': request.GET.get('search')
+    }
     return render(request, 'product/product_search.html', ctx)

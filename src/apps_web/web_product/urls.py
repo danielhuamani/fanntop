@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from .views import (influencer_products, category_products, category_child_products,
-    product, product_favorites, influencer_products_new)
+    product, product_favorites, influencer_products_new, product_search)
 from .api_views import (ProductClassListAPI, CategoryFilterAPI, ProductClassCategoryListAPI,
     ProductClassListAPI, ProductClassAttrAPI, InfluencerFilterAPI,
     ProductClassInfluencerListAPI, ProductDetailAPI, CustomerProductFavoriteAPI)
@@ -10,6 +10,7 @@ urlpatterns = [
     url(r"^categoria/(?P<slug>[\w-]+)/$", category_products, name="category_products"),
     url(r"^categoria/(?P<slug>[\w-]+)/(?P<slug_child>[\w-]+)/$", category_child_products, name="category_child_products"),
     url(r"^producto/(?P<slug>[\w-]+)/$", product, name="product"),
+    url(r"^search//$", product_search, name="product_search"),
     url(r"^mis-favoritos/$", product_favorites, name="product_favorites"),
     url(r"^influenciador-new/(?P<slug>[\w-]+)/$", influencer_products_new, name="influencer_products_new"),
     #  API

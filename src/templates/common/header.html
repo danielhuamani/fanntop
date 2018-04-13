@@ -34,8 +34,9 @@
         </ul>
       </div>
       <div class="col-md-4 col-md-pull-5 col-sm-12 col-xs-12">
-        <form method='GET' action='' class="wrap-search">
-          <input type="text" placeholder="¿ Que buscas ?"/>
+        <form method='GET' action='{% url "web_product:product_search" %}' class="wrap-search">
+          <input type="text" name='search' placeholder="¿ Que buscas ?"/>
+          <div class="fa fa-search wrap-search__icon"></div>
         </form>
       </div>
     </div>
