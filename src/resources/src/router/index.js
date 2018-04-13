@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import categoryList from '@/pages/categoryList'
 import influencer from '@/pages/influencer'
 import influencerNew from '@/pages/influencerNew'
-import productSearch from '@/pages/productSearch'
 import productDetail from '@/pages/productDetail'
 import productFavorites from '@/pages/productFavorites'
 import cart from '@/pages/cart'
@@ -38,11 +37,6 @@ export default new Router({
       path: '/influenciador/:slug/',
       name: 'influencer',
       component: influencer
-    },
-    {
-      path: '/search/',
-      name: 'product_search',
-      component: productSearch
     },
     {
       path: '/carro-compras/',
