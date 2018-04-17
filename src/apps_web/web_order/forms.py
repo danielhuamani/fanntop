@@ -19,10 +19,11 @@ class OrderShippingAddressForm(forms.ModelForm):
     ubigeo = forms.ModelChoiceField(
         queryset=Ubigeo.objects.none(),
         empty_label="Seleccione Distrito")
-    save_data = forms.BooleanField(initial=False, required=False)
+    # save_data = forms.BooleanField(initial=False, required=False)
     direccion_save = forms.ModelChoiceField(
         queryset=CustomerShippingAddress.objects.none(),
-        empty_label="Seleccione Dirección", label='Mis Direcciones', required=False)
+        empty_label="Nueva Dirección", label='Mis Direcciones', required=False)
+    # title = forms.CharField(max_length=120)
 
     class Meta:
         model = OrderShippingAddress

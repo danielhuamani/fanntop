@@ -38,6 +38,7 @@ class CustomerShippingAddress(models.Model):
     customer = models.ForeignKey(
         "Customer", related_name="customer_shipping_address"
     )
+    title = models.CharField(_('title'), max_length=120, blank=True)
     first_name = models.CharField(_("Nombres"), max_length=255, blank=True)
     last_name = models.CharField(_("Apellidos"), max_length=255, blank=True)
     type_document = models.CharField(

@@ -117,13 +117,16 @@
                             {{form_order_shipping.phone|add_class:'form-control'}}
                           </div>
                         </div>
-                        <div class="form-group">
-                          <div class="col-xs-12">
-                            <label for="{{form_order_shipping.save_data.id_for_label}}">
-                              {{form_order_shipping.save_data}}Guarde esta información para la próxima vez
-                            </label>
+                        {% comment %}
+                          <div class="form-group">
+                            <div class="col-xs-12">
+                              <label for="{{form_order_shipping.save_data.id_for_label}}">
+                                {{form_order_shipping.save_data}}Guarde esta información para la próxima vez
+                              </label>
+                            </div>
                           </div>
-                        </div>
+                        {% endcomment %}
+
                         <div class="form-group">
                           <div class="col-md-12">
                             <div class="w-lnk-btn"><a href="{% url 'web_cart:cart' %}" class="lnk"><i class="fa fa-angle-left"></i>Regresar al carrito</a>
@@ -244,6 +247,7 @@
                   if (code_provincia) {
                     $('#id_shipping-provincia').trigger('change')
                   }
+                  distrito.append('<option value="" selected="selected">Seleccione Distrito</option>');
                   // provincia.change();
               }
           })
@@ -289,22 +293,97 @@
       $('.totalPrice').text(total.toFixed(2))
       $(".shipping_price").text(parseFloat(shipping_price).toFixed(2))
     }
+    function ajaxUbigeoPrice (code_distrito) {
+      $.ajax({
+          'url': '{% url "web_order:get_price_shipping" %}' + '?ubigeo=' + code_distrito,
+          'method': 'GET',
+          'success': function (data) {
+              // $(".shipping_price").text(data.price)
+              // var total = parseFloat(data.price) + parseFloat($('.subTotal').text())
+              // $('.totalPrice').text(total.toFixed(2))
+              calculateMount(data.price)
+              console.log(data, '...')
+          }
+      })
+    }
     $('#id_shipping-ubigeo').change(function(event) {
     /* Act on the event */
       var distrito = $(this).val();
-      $.ajax({
-            'url': '{% url "web_order:get_price_shipping" %}' + '?ubigeo=' + distrito,
-            'method': 'GET',
-            'success': function (data) {
-                // $(".shipping_price").text(data.price)
-                // var total = parseFloat(data.price) + parseFloat($('.subTotal').text())
-                // $('.totalPrice').text(total.toFixed(2))
-                calculateMount(data.price)
-                console.log(data, '...')
-            }
+      ajaxUbigeoPrice(distrito)
+    });
+    function setUbigeo(data){
+      code_provincia = data.provincia
+      code_distrito = data.ubigeo
+      $("#id_shipping-departamento").val(data.departamento)
+      $("#id_shipping-departamento").trigger('change')
+      ajaxUbigeoPrice(code_distrito)
+      // $("#id_shipping-provincia").trigger('change')
+    }
+    function cleanProvincia(){
+      var distrito_clean = $('#id_shipping-ubigeo')
+      distrito_clean.html('');
+      distrito_clean.append('<option value="" selected="selected">Seleccione Provincia</option>');
+    }
+    function cleanDistrito(){
+      var provincia_clean = $('#id_shipping-provincia')
+      provincia_clean.html('');
+      provincia_clean.append('<option value="" selected="selected">Seleccione Provincia</option>');
+
+    }
+    function clean() {
+      $("#id_shipping-first_name").val('')
+      $("#id_shipping-last_name").val('')
+      $("#id_shipping-document").val('')
+      $("#id_shipping-type_document").val('')
+      $("#id_shipping-reference").val('')
+      $("#id_shipping-address").val('')
+      $("#id_shipping-phone").val('')
+      $("#id_shipping-ubigeo").val('')
+      $("#id_shipping-departamento").val('')
+      $("#id_shipping-provincia").val('')
+      cleanProvincia()
+      cleanDistrito()
+      ajaxUbigeoPrice('00')
+
+    }
+    function setData(data) {
+      $("#id_shipping-first_name").val(data.first_name)
+      $("#id_shipping-last_name").val(data.last_name)
+      $("#id_shipping-document").val(data.document)
+      $("#id_shipping-type_document").val(data.type_document)
+      $("#id_shipping-reference").val(data.reference)
+      $("#id_shipping-address").val(data.address)
+      $("#id_shipping-phone").val(data.phone)
+      setUbigeo(data)
+
+    }
+    $("#id_shipping-direccion_save").change(function(event) {
+      /* Act on the event */
+      var address = $(this).val()
+
+      if (address) {
+        $.ajax({
+          url: '{% url "web_order:customer_shipping_address" %}',
+          type: 'GET',
+          data: {address: address},
+          success: function (data) {
+            console.log(data, 'data')
+            setData(data)
+          }
         })
+        .done(function() {
+          console.log("success");
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
 
-
+      } else {
+        clean()
+      }
     });
     $(".btn-coupon").click(function(event) {
       /* Act on the event */
@@ -326,6 +405,17 @@
           }
       })
 
+    });
+    $("#id_shipping-save_data").change(function(event) {
+      /* Act on the event */
+      var value_save = $(this).prop('checked')
+      if (value_save) {
+        $(".save_name_address").show('300');
+        $('#id_shipping-title').attr('required', 'required');
+      } else {
+        $(".save_name_address").hide('300');
+        $('#id_shipping-title').removeAttr('required')
+      }
     });
   });
 </script>

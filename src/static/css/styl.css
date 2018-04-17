@@ -23,6 +23,9 @@
   vertical-align: top;
   padding: 7px 0px;
 }
+.save_hidden {
+  display: none;
+}
 .item-result .image {
   padding: 15px;
   background: #fff;

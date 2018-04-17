@@ -40,6 +40,7 @@ def checkout_paso_1(request):
         order_cart = Order.objects.get(cart__code=code_cart)
         order = order_cart
         order_shipping_instance = order_cart.order_ordershipping
+        order_shipping_address = order_shipping_instance.shipping_address
         order_customer_instance = order_cart.order_order_customer
         ubigeo = order_shipping_instance.ubigeo
         code_departamento = ubigeo.cod_dep_inei
@@ -53,6 +54,7 @@ def checkout_paso_1(request):
     else:
         order_shipping_instance = OrderShippingAddress()
         order_customer_instance = OrderCustomer()
+        order_shipping_address = None
         initial = {
             'email': user.email,
             'first_name': user.first_name,
@@ -93,7 +95,8 @@ def checkout_paso_1(request):
             customer.document = order_customer.document
             customer.type_document = order_customer.type_document
             customer.save()
-            if data_shipping.get('save_data'):
+            direccion_save = data_shipping.get('direccion_save')
+            if not direccion_save:
                 try:
                     customer_shipping = CustomerShippingAddress(
                         customer=customer,
@@ -105,11 +108,26 @@ def checkout_paso_1(request):
                         address=order_shipping.address,
                         reference=order_shipping.reference,
                         ubigeo=order_shipping.ubigeo,
-                        order=order_shipping,
+                        order=order_shipping
                     )
                     customer_shipping.save()
+                    order_shipping.shipping_address = customer_shipping
+                    order_shipping.save()
                 except Exception as e:
                     print(e, 'error')
+            else:
+                direccion_save.first_name = order_shipping.first_name
+                direccion_save.last_name = order_shipping.last_name
+                direccion_save.type_document = order_shipping.type_document
+                direccion_save.document = order_shipping.document
+                direccion_save.phone = order_shipping.phone
+                direccion_save.address = order_shipping.address
+                direccion_save.reference = order_shipping.reference
+                direccion_save.ubigeo = order_shipping.ubigeo
+                direccion_save.order = order_shipping
+                direccion_save.save()
+                order_shipping.shipping_address = direccion_save
+                order_shipping.save()
             return redirect(reverse_lazy('web_order:checkout_paso_2'))
 
         else:
@@ -117,6 +135,7 @@ def checkout_paso_1(request):
     else:
         form_order_shipping = OrderShippingAddressForm(prefix='shipping', instance=order_shipping_instance)
         form_order_shipping.fields['direccion_save'].queryset = CustomerShippingAddress.objects.filter(customer=customer)
+        form_order_shipping.fields['direccion_save'].initial = order_shipping_address
     ctx = {
         'order': order,
         'cart': cart,

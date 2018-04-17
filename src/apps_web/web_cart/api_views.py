@@ -49,7 +49,7 @@ class CartAPI(APIView):
                     cart = cart_object.get_cart()
                     serializer = CartSerializer(cart)
                     response = Response(serializer.data, status=200)
-                    response.set_cookie('cart', cart.code)
+                    response.set_cookie('cart', cart.code, max_age=60*60*24*2)
                     return response
                 else:
                     error = _('No stock available')
