@@ -107,8 +107,7 @@ def checkout_paso_1(request):
                         phone=order_shipping.phone,
                         address=order_shipping.address,
                         reference=order_shipping.reference,
-                        ubigeo=order_shipping.ubigeo,
-                        order=order_shipping
+                        ubigeo=order_shipping.ubigeo
                     )
                     customer_shipping.save()
                     order_shipping.shipping_address = customer_shipping

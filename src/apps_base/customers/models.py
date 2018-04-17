@@ -38,7 +38,7 @@ class CustomerShippingAddress(models.Model):
     customer = models.ForeignKey(
         "Customer", related_name="customer_shipping_address"
     )
-    title = models.CharField(_('title'), max_length=120, blank=True)
+    # title = models.CharField(_('title'), max_length=120, blank=True)
     first_name = models.CharField(_("Nombres"), max_length=255, blank=True)
     last_name = models.CharField(_("Apellidos"), max_length=255, blank=True)
     type_document = models.CharField(
@@ -50,8 +50,8 @@ class CustomerShippingAddress(models.Model):
     reference = models.CharField("Referencia", max_length=255, blank=True)
     ubigeo = models.ForeignKey(
         "ubigeo.Ubigeo", related_name="zip_code_shipping_address")
-    order = models.OneToOneField('order.OrderShippingAddress', blank=True, null=True,
-        related_name='order_shipping_adress_customers', on_delete=models.SET_NULL)
+    # order = models.OneToOneField('order.OrderShippingAddress', blank=True, null=True,
+    #     related_name='order_shipping_adress_customers', on_delete=models.SET_NULL)
     class Meta:
         verbose_name = "ShippingAddress"
         verbose_name_plural = "ShippingAddress"
