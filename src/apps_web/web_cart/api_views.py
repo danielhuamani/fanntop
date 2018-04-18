@@ -39,6 +39,11 @@ class CartAPI(APIView):
                     return response
                 else:
                     error = _('No stock available')
+                    cart = cart_object.get_cart()
+                    serializer = CartSerializer(cart)
+                    data = serializer.data
+                    data['error'] = error
+                    return Response(data, status=403)
             else:
                 error = _('There was an error in the shopping cart')
         else:

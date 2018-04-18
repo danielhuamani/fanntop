@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import JsonResponse
 from apps_base.order.models import Order
+from apps_base.order.utils import validate_stock
 from apps_base.order.constants import PAGADO
-from .constants import CULQI_VENTA_EXITOSA, ERROR_PEDIDO_PAGADO
+from .constants import CULQI_VENTA_EXITOSA, ERROR_PEDIDO_PAGADO, ERROR_STOCK
 from .utils import verify_charge
+from apps_web.web_order.utils import send_mail_order_success
 import culqipy
 import json
 
@@ -48,12 +50,19 @@ def save_token(request):
         if order.type_status == PAGADO:
             data['msg'] = ERROR_PEDIDO_PAGADO
             return JsonResponse(data)
-        charge = culqipy.Charge.create(dir_charge)
-        response, id_charge = verify_charge(charge, order)
-        order.extra_data = {
-            'token_id': token.get('id'),
-            'id_charge': id_charge
-        }
-        order.save()
-        data.update(response)
+        if validate_stock(order):
+            charge = culqipy.Charge.create(dir_charge)
+            response, id_charge = verify_charge(charge, order)
+            if response.get('status') == 'ok':
+                send_mail_order_success(order)
+            order.extra_data = {
+                'token_id': token.get('id'),
+                'id_charge': id_charge
+            }
+            order.save()
+            data.update(response)
+        else:
+            order.delete()
+            data['type_error'] = 'STOCK'
+            data['msg'] = ERROR_STOCK
     return JsonResponse(data)

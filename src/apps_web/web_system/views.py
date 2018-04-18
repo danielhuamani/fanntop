@@ -8,12 +8,13 @@ from django.contrib.auth.forms import AuthenticationForm
 from apps_base.custom_auth.models import User
 from apps_base.ubigeo.models import Ubigeo
 from apps_base.order.models import Order, OrderCustomer
+from django.http import JsonResponse
 from apps_base.customers.models import CustomerShippingAddress
 from django.db import transaction
 from .forms import UserRegisterForm, CustomerForm, UserUpdateForm, CustomerShippingAddressForm, FollowOrdersForm
 from .constants import REGISTER, LOGIN
 from .utils import send_mail_customer_welcome
-
+from apps_web.web_order.utils import send_mail_order_success
 
 def home(request):
     home_banners = HomeBanner.objects.active()
@@ -231,3 +232,8 @@ def follow_orders(request):
         'order_shipping': order_shipping
     }
     return render(request, "system/follow_orders.html", ctx)
+
+def testing_view(request):
+    order = Order.objects.all().last()
+    send_mail_order_success(order)
+    return JsonResponse({}, status=200)

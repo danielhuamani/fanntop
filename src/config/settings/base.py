@@ -22,7 +22,7 @@ ENV = get_env(BASE_DIR)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = ENV.get('SECRET_KEY')
-
+URL_SITE = 'http://fanntop.com/'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

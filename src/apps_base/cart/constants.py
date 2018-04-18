@@ -10,3 +10,6 @@ CART_STATUS_CHOICES = (
     (CHECKOUT,  _('Checkout')),
     (ORDER,  _('Order'))
 )
+
+
+DANGER = 'danger'

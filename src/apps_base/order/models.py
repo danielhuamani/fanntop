@@ -27,6 +27,8 @@ class Order(CoreTimeModel, CoreActiveModel):
     is_send_email = models.BooleanField(default=False)
     is_return_stock = models.BooleanField(default=False)
     extra_data = JSONField(default={}, blank=True)
+    discount_stock = models.BooleanField(default=False)
+
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Order"
@@ -81,7 +83,7 @@ class OrderCustomer(models.Model):
         verbose_name_plural = "OrderCustomer"
 
     def get_full_name(self):
-        return "{0} {1} {2}".format(self.name, self.first_name, self.last_name)
+        return "{0} {1}".format(self.first_name, self.last_name)
 
     def __str__(self):
         return '{}'.format(self.first_name)
@@ -107,3 +109,6 @@ class OrderShippingAddress(models.Model):
 
     def __str__(self):
         return '{}'.format(self.first_name)
+
+    def get_full_name(self):
+        return "{0} {1}".format(self.first_name, self.last_name)

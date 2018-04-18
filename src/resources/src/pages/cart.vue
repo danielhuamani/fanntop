@@ -8,6 +8,13 @@
           </div>
         </div>
       </div>
+      <div class="row" v-if='getCart.extra_data'>
+        <div class="col-md-12">
+          <div class="alert-cart boxw box-car">
+            <strong>{{getCart.extra_data.msj}}</strong>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-12">
           <div class="boxw box-car">
@@ -31,14 +38,17 @@
                           <div class="detail">
                             <h3>{{item.product_name}}</h3>
                             <div class="sku">SKU: {{item.product_sku}}</div>
+                            <div class="cart-msj" v-if="item.extra_data.status">
+                              {{item.extra_data.msj}}
+                            </div>
                           </div>
                         </div>
                       </td>
                       <td valign="center">
                         <div class="w-price">
-                          <div class="price-promo">
+                          <div class="price-">
 
-                            Precio: <span class="price">S/ {{item.product_price}}</span>
+                           <span class="price">S/ {{item.product_price}}</span>
                           </div>
                           <!-- <div class="price-normal">Precio regular: <span class="trought">S/ 399.00</span><span class="precio-percentage">-12%</span></div> -->
                         </div>
@@ -131,5 +141,14 @@
     .box-car .w-total{
       font-size: 18px;
     }
+  }
+  .cart-msj{
+    margin-top: 5px;
+    color: #ff4338;
+    font-size: 14px;
+  }
+  .alert-cart{
+    margin-bottom: 15px;
+    color: #ff4338;
   }
 </style>

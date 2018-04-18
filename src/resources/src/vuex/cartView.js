@@ -28,7 +28,9 @@ const moduleCartView = {
       state.statusCartView = status
     },
     setCart (state, cart) {
-      state.cart = cart
+      if (cart.total) {
+        state.cart = cart
+      }
     },
     setIsMenu (state, status) {
       state.isMenu = status
@@ -53,6 +55,7 @@ const moduleCartView = {
         commit('setCart', response.data)
       }).catch(error => {
         commit('setError', error.response.data.error)
+        commit('setCart', error.response.data)
         setTimeout(()=> {
           commit('setError', '')
         }, 3000)

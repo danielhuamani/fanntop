@@ -94,7 +94,7 @@
                     </div>
                     <div class="col-xs-6">
                       <label for="">Referencia:</label>
-                      <span>{{order_shipping.referemce}}</span>
+                      <span>{{order_shipping.reference}}</span>
                     </div>
                   </div>
 
@@ -140,6 +140,13 @@
                             </label>
                             <input type="text" size="4" name='cvc' class="cvc form-control" data-culqi='card[cvv]' id='card[cvv]'>
                           </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group">
+                        <label for="">
+                          <input type="checkbox" id='terminos_condiciones'> <a href="/terminos-condiciones" target='_blank'>Acepto terminos y condiciones</a>
+                        </label>
                       </div>
                     </div>
 
@@ -231,11 +238,19 @@
             data: {'token': JSON.stringify(data)}
           }).done(function (data) {
             if (data.status === 'ok') {
-              $('.procesando').text('Se pago con existo su pedido')
+              $('.procesando').text('Se proceso su pago ')
               setTimeout(function(){
                  window.location.href = '{% url "web_order:checkout_thanks" %}'
               }, 1000);
 
+            } else {
+              $('.procesando').text(data.msg)
+              if (data.type_error == 'STOCK') {
+                setTimeout(function(){
+                 window.location.href = '{% url "web_cart:cart" %}'
+                }, 1000);
+              }
+              console.log(data)
             }
           })
 
@@ -247,10 +262,17 @@
           console.log(data)
       }
     };
+    $("#terminos_condiciones").change(function(event) {
+      if ($("input[name='card-number']").val() && $("input[name='card-holders-name']").val() && $("input[name='cvc']").val() && $("input.expiry-year").val() && $("input.expiry-month").val() && $("#terminos_condiciones").is(":checked")) {
+        $('#pagar').removeAttr('disabled')
+      } else {
+        $('#pagar').attr('disabled', 'disabled')
+      }
+    });
     $("#culqi-card-form input").keyup(function(event) {
       /* Act on the event */
       console.log('entro')
-      if ($("input[name='card-number']").val() && $("input[name='card-holders-name']").val() && $("input[name='cvc']").val() && $("input.expiry-year").val() && $("input.expiry-month").val()) {
+      if ($("input[name='card-number']").val() && $("input[name='card-holders-name']").val() && $("input[name='cvc']").val() && $("input.expiry-year").val() && $("input.expiry-month").val() && $("#terminos_condiciones").is(":checked")) {
         $('#pagar').removeAttr('disabled')
       } else {
         $('#pagar').attr('disabled', 'disabled')

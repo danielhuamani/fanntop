@@ -1,0 +1,348 @@
+{% load static thumbnail widget_tweaks l10n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>GRAMD</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+     <!--  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+   -->
+    <link href='http://fonts.googleapis.com/css?family=Raleway:600,700,400' rel='stylesheet' type='text/css'>
+
+
+
+    <!--  General CSS  -->
+    <style type="text/css">
+      html{
+          width: 100%;
+      }
+
+      body{
+        width: 100%;
+        margin:0;
+        padding:0;
+        -webkit-font-smoothing: antialiased;
+        mso-margin-top-alt:0px;
+        mso-margin-bottom-alt:0px;
+        mso-padding-alt: 0px 0px 0px 0px;
+        background: #E7E7E7;
+      }
+
+      p,h1,h2,h3,h4{
+        margin-top:0;
+        margin-bottom:0;
+        padding-top:0;
+        padding-bottom:0;
+      }
+
+      table{
+        font-size: 14px;
+        border: 0;
+      }
+
+      img{
+        border: none!important;
+      }
+      .main_container{
+        max-width: 850px;
+        height: 100%;
+        background: #ffffff;
+        overflow: hidden;
+        margin: 0px auto 40px auto;
+        box-shadow: 0 0 7px #cdcccc;
+        -webkit-box-shadow: 0 0 7px #cdcccc;
+        -moz-box-shadow: 0 0 7px #cdcccc;
+        -o-box-shadow: 0 0 7px #cdcccc;
+      }
+      a{
+        text-decoration:none;
+      }
+    </style>
+
+    <!--  Responsive CSS  -->
+
+  </head>
+  <body style="margin: 0; padding: 0;" yahoo="fix">
+
+      <!--  features section  -->
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#fbfbfb" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+          <!--  spacing  -->
+          <tr>
+            <td width="100%" height="20">&nbsp;</td>
+          </tr>
+          <!--  end spacing  -->
+
+          <tr>
+            <td>
+              <table width="600" align="center" border="0" cellpadding="0" cellspacing="0" style="text-align:center;" class="content_width">
+                <!--  section title  -->
+
+
+                <!--  end section title  -->
+
+                <!--  spacing  -->
+
+                <!--  end spacing  -->
+
+                <!--  vertical separator  -->
+                <tr>
+                  <td>
+                    <table width="1" height="20" align="center" bgcolor="#e9e9e9" border="0"  cellpadding="0" cellspacing="0"style="height:20px!important; padding:0; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+                      <tr>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <!--  end vertical separator  -->
+
+
+
+                <!--  spacing  -->
+
+                <!--  end spacing  -->
+                <tr>
+                  <td style='background:#ff7e00'>
+                    <img src="http://fanntop.com/static/img/logo_fanntop.png" alt="" />
+                  </td>
+                </tr>
+                <!--  features  -->
+
+                <tr>
+                  <td width="100%" height="20">&nbsp;</td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <table width="100%" height="1" align="center" bgcolor="#ff7e00" border="0"  cellpadding="0" cellspacing="0"style="padding:0;border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+                      <tr>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td width="100%" height="20">&nbsp;</td>
+                </tr>
+
+
+                <tr >
+                    <td style="text-align:left;color:black; font-family: Helvetica, Arial, sans-serif; line-height:20px; font-size: 16px; padding-bottom:10px;">
+                        <strong>¡Hola {{order.order_order_customer.get_full_name}} !</strong>
+                    </td>
+                </tr>
+
+                <tr>
+                  <td style="text-align:left;color:black; font-family: Helvetica, Arial, sans-serif; line-height:20px; margin-bottom:20px;">
+                    <p style="padding-bottom:10px">¡Recibimos tu orden de compra! </p>
+                    <p style="padding-bottom:10px">Número de orden {{order.code}} </p>
+
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td width="100%" height="20">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1px solid #ff7e00; font-family: Helvetica, Arial, sans-serif; font-size: 16px; text-align:left;">
+                    <strong>Resumen de envío</strong>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td width="100%" height="20">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td style="text-align:left; font-family: Helvetica, Arial, sans-serif;">
+                    <table width="100%" >
+                      <tr>
+                        <td>Nombre: {{order.order_ordershipping.get_full_name}}</td>
+                        <td>Dirección: {{order.order_ordershipping.address}}</td>
+                      </tr>
+                      <tr>
+                        <td>Referencia: {{order.order_ordershipping.reference}}</td>
+                        <td>Teléfono: {{order.order_ordershipping.phone}}</td>
+                      </tr>
+                      <tr>
+                        <td>Localidad: {{order.order_ordershipping.ubigeo.full_ubigeo}}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                  <tr>
+                  <td width="100%" height="20">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td style="border-bottom:1px solid #ff7e00; font-family: Helvetica, Arial, sans-serif; font-size: 16px; text-align:left;">
+                    <strong>Detalle de la compra</strong>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td width="100%" height="20">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td style="text-align:left; font-family: Helvetica, Arial, sans-serif;">
+                    <table border="1" cellpadding="0" cellspacing="0" style="width: 100%;border-collapse: collapse;width: 100%;" class="tbl-car" >
+                      <thead>
+                        <tr>
+                          <th style="text-align: left;padding: 8px; background-color: #ff7e00;
+    color: white;" valign="top" width="" class="product-item"></th>
+                          <th style="text-align: left;padding: 8px; background-color: #ff7e00;
+    color: white;" valign="top" width="200px" class="product-item">Producto</th>
+                          <th style="text-align: left;padding: 8px; background-color: #ff7e00;
+    color: white;" valign="top" class="price">Precio</th>
+                          <th style="text-align: left;padding: 8px; background-color: #ff7e00;
+    color: white;" valign="top" width="90px" class="quantity">Cantidad</th>
+                          <th style="text-align: left;padding: 8px; background-color: #ff7e00;
+    color: white;" valign="top" class="subtotal">Subtotal</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for detail in order_details %}
+
+                        <tr class="item-car">
+                          <td style="text-align: left;padding: 8px;">
+                             {% thumbnail detail.productdetail.get_image "80x80" crop="center" as im %}
+                                  <img src="{{URL_SITE}}{{im.url}}"/>
+                              {% endthumbnail %}
+                          </td>
+                          <td style="text-align: left;padding: 8px;" valign="center">
+                            <div class="detail-car">
+
+                                <h4>{{detail.productdetail.product_class.name}}</h4>
+                                <div class="sku">
+                                  {% for attr in detail.productdetail.attribute_option.all %}
+                                  <p>{{attr.attribute.name_store}}: {{attr.option}}</p>
+                                  {% endfor %}
+                                </div>
+                                <div class="sku">SKU: {{detail.productdetail.sku}}</div>
+                            </div>
+                          </td>
+                          <td style="text-align: left;padding: 8px;" valign="center">
+                            S/ {{detail.price|unlocalize}}
+                          </td>
+                          <td style="text-align: left;padding: 8px;" valign="center">
+                            {{detail.quantity}}
+                          </td>
+                          <td style="text-align: left;padding: 8px;" valign="center">
+                            <div class="w-subtotal"><span class="st">S/. {{detail.sub_total|unlocalize}}</span></div>
+                          </td>
+
+                        </tr>
+                      {% endfor %}
+
+
+                        <tfoot>
+                          <tr>
+                            <td style="text-align: left;padding: 8px; border:none;" valign="center" colspan="3"></td>
+                            <td style="text-align: left;padding: 8px;" valign="center" colspan="1">SubTotal</td>
+                            <td style="text-align: left;padding: 8px;" valign="center" colspan="2">
+                              <strong>S/. {{order.sub_total|unlocalize}}</strong>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: left;padding: 8px; border:none;" valign="center" colspan="3"></td>
+                            <td style="text-align: left;padding: 8px;" valign="center" colspan="1">Descuento</td>
+                            <td style="text-align: left;padding: 8px;" valign="center" colspan="2">
+                              <strong>S/. {{order.discount|unlocalize}}</strong>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: left;padding: 8px; border:none;" valign="center" colspan="3"></td>
+                            <td style="text-align: left;padding: 8px;" valign="center" colspan="1">Costo de énvio</td>
+                            <td style="text-align: left;padding: 8px;" valign="center" colspan="2">
+                              <strong>S/.  {{order.shipping_price|unlocalize}}</strong>
+                            </td>
+                          </tr>
+                          <tr>
+
+                            <td style="text-align: left;padding: 8px; border:none;" valign="center" colspan="3"></td>
+                            <td style="text-align: left;padding: 8px;" valign="center" colspan="1">Total</td>
+                            <td style="text-align: left;padding: 8px;" valign="center" colspan="2">
+                              <strong>S/. {{order.total|unlocalize}}</strong>
+                            </td>
+                          </tr>
+                        </tfoot>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td  style="color:black; font-family: Helvetica, Arial, sans-serif; line-height:20px; margin-bottom:20px;">
+                    <a href="http://fanntop.com/" style="display:inline-block;margin-top:20px;background:#ff7e00;padding:8px;border-radius:4px;color:white;">Ir a la Tienda</a>
+                  </td>
+                </tr>
+
+
+
+                <tr>
+                  <td width="100%" height="20">&nbsp;</td>
+                </tr>
+
+                <tr >
+                    <td style="text-align:left;color:black; font-family: Helvetica, Arial, sans-serif; line-height:20px; padding-bottom:10px; padding-top:10px">
+
+                        <p>Gracias y cordiales saludos,</p>
+                        <p>Fanntop</p>
+                        <a href="">http://fanntop.com/ </a>
+                    </td>
+                </tr>
+                <!--  end features  -->
+
+              </table>
+            </td>
+          </tr>
+
+      </table><!--  end features section  -->
+
+      <!--  footer  -->
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#f5f5f5" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+
+        <tr>
+          <td>
+            <!--  footer top block  -->
+
+            <!--  footer bottom block  -->
+            <table width="600" align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="content_width">
+              <tr>
+                <td width="100%" height="20"></td>
+              </tr>
+              <!--  end spacing  -->
+
+              <!--  content  -->
+              <tr>
+                <td>
+                  <!--  copyrights  -->
+                  <table align="left" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="full_width center_txt">
+                    <tr>
+                      <td style="color: #414d5f; font-family: 'Raleway', Helvetica, Arial, sans-serif; font-size: 12px; letter-spacing:.5px; font-weight: 400;">
+                         Copyright © 2018. Fanntop. Todos los derechos reservados.
+                      </td>
+                    </tr>
+                  </table>
+                  <!--  end copyrights  -->
+
+                  <!--  spacing  -->
+
+                  <!--  end social media  -->
+                </td>
+              </tr>
+              <!--  end content  -->
+
+              <!--  spacing  -->
+              <tr>
+                <td width="100%" height="20">&nbsp;</td>
+              </tr>
+              <!--  end spacing  -->
+            </table>
+            <!--  end footer bottom block  -->
+          </td>
+        </tr>
+      </table>
+      <!--  end footer  -->
+
+  </body>
+</html>

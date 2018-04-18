@@ -1,5 +1,6 @@
 from decimal import Decimal as D
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 from django.utils.translation import ugettext_lazy as _
 from apps_base.core.models import (CoreTimeModel, CoreSeoSlugModel, CoreActiveModel, CorePositionModel)
 from .constants import CART_STATUS_CHOICES
@@ -10,6 +11,7 @@ class Cart(CoreTimeModel):
     code = models.CharField(_("Cart Code"), unique=True, max_length=120)
     user = models.ForeignKey('custom_auth.User', related_name='user_carts', null=True, blank=True)
     status = models.CharField(_('Status'), choices=CART_STATUS_CHOICES, max_length=120)
+    extra_data = JSONField(default={}, blank=True)
 
     class Meta:
         verbose_name = "Cart"
@@ -37,7 +39,7 @@ class CartItem(models.Model):
     quantity = models.PositiveSmallIntegerField()
     cart = models.ForeignKey('Cart', related_name='cart_items')
     product = models.ForeignKey('product.Product', related_name='product_cart_items')
-
+    extra_data = JSONField(default={}, blank=True)
     class Meta:
         verbose_name = "CartItem"
         verbose_name_plural = "CartItems"

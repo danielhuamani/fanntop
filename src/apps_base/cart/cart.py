@@ -26,11 +26,30 @@ class CartObject(object):
         product = Product.objects.filter(sku=sku)
         if product.exists():
             quantity_max = product.first().stock
-            return int(quantity_max) >= int(quantity)
+            if int(quantity_max) >= int(quantity):
+                return True
+            self.get_max_stock_product(sku)
+            return False
         return False
 
     def validate_product(self, sku, quantity):
         return self.validate_sku_quantity(sku, quantity)
+
+    def get_max_stock_product(self, sku):
+        product = self.get_product(sku)
+        cart = self.get_cart()
+        cart_item = CartItem.objects.filter(
+            cart__pk=cart.pk, product=product)
+        if cart_item.exists():
+            cart_item = cart_item.first()
+            if cart_item.extra_data.get('msj'):
+                cart_item.extra_data = {}
+                cart_item.quantity = product.stock
+                cart_item.save()
+            cart = self.get_cart()
+            if not cart.cart_items.filter(extra_data__has_key='msj').exists():
+                cart.extra_data = {}
+                cart.save()
 
     def get_product(self, sku):
         return Product.objects.get(sku=sku)
