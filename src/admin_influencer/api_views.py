@@ -58,7 +58,6 @@ class ProductDetailAPI(BaseInfluencerAuthenticated, RetrieveAPIView):
     def get_queryset(self):
         user = self.request.user
         user_influencer = user.user_user_influencer
-        print('reqest', self.kwargs)
         queryset = ProductClass.objects.filter(
             influencer_id=user_influencer.influencer_id).prefetch_related(
             'product_class_products', 'product_class_products__attribute_option')

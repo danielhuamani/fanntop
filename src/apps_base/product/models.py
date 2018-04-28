@@ -54,7 +54,10 @@ class Product(CoreActiveModel, CoreTimeModel):
         return True
 
     def get_image(self):
-        return self.product_product_images.order_by('-is_featured').first().product_image.image
+        try:
+            return self.product_product_images.order_by('-is_featured').first().product_image.image
+        except Exception as e:
+            return ''
 
     @property
     def get_price(self):
