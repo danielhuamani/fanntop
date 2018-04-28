@@ -11,7 +11,7 @@ class Coupon(CoreActiveModel):
     is_limit = models.BooleanField(default=False)
     date_start = models.DateField(_('Date Start'), null=True, blank=True)
     date_end = models.DateField(_('Date End'), null=True, blank=True)
-    prefix = models.CharField(_('Prefix'), max_length=120, unique=True)
+    prefix = models.CharField(_('Code Coupon'), max_length=120, unique=True)
     type_discount = models.CharField(_('Type Discount'),
         choices=TYPE_DISCOUNT_CHOICES, max_length=60)
     discount = models.FloatField(_('Discount'))

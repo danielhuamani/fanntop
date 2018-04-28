@@ -36,4 +36,4 @@ def post_pago(order):
     order.discount_stock = True
     order.type_status = PAGADO
     order.save()
-    discount_stock_order()
+    discount_stock_order(order)

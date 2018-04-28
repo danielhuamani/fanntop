@@ -42,7 +42,8 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'rest_framework',
     'widget_tweaks',
-    'sorl.thumbnail'
+    'sorl.thumbnail',
+    # 'django_filters'
 ]
 
 BASE_APPS = [
@@ -230,3 +231,8 @@ SERVER_EMAIL = ENV.get('SERVER_EMAIL')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_FILTER_BACKENDS': (
+#         'django_filters.rest_framework.DjangoFilterBackend',
+#     ),
+# }

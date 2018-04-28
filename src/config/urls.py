@@ -34,8 +34,10 @@ urlpatterns += [
         url(r'order/', include('apps_base.order.urls', namespace='order')),
         url(r'configuration/', include('apps_base.configuration.urls', namespace='configuration')),
         url(r'shipping/', include('apps_base.shipping.urls', namespace='shipping')),
-        url(r'promotion/', include('apps_base.promotion.urls', namespace='promotion'))
+        url(r'promotion/', include('apps_base.promotion.urls', namespace='promotion')),
+        url(r'custom_auth/', include('apps_base.custom_auth.urls', namespace='custom_auth'))
     ])),
+    url(r'^api-influencer/', include('admin_influencer.urls', namespace='admin_influencer')),
     url(r'^', include('apps_web.web_system.urls', namespace='web_system')),
     url(r'^', include('apps_web.web_product.urls', namespace='web_product')),
     url(r'^', include('apps_web.web_cart.urls', namespace='web_cart')),

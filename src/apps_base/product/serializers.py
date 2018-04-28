@@ -120,8 +120,21 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
             if product_class_attr_value.get('id') or product_class_attr_value.get('id') == 0:
                 product_class_attr_value.pop('id')
             ProductAttributeValue.objects.create(product_class=product_class, **product_class_attr_value)
+        # add data extra
         if update_json_data_sheet:
             product_class.attribute.all()
+            data = {
+                'ficha': []
+            }
+            for attr in product_class.family.family_familygroupatribute.filter(
+                attribute__is_variation=False).prefetch_related('attribute'):
+                data['ficha'].append({
+                    'name': attr.attribute.name_store,
+                    'value': product_class.product_class_product_attr_value.all().get(
+                        attribute_id=attr.attribute_id).get_value()
+                })
+            product_class.data_sheet = data
+            product_class.save()
         return product_class
 
     @transaction.atomic
@@ -145,10 +158,8 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
             data = {
                 'ficha': []
             }
-            print(instance.id, '-')
             for attr in instance.family.family_familygroupatribute.filter(
                 attribute__is_variation=False).prefetch_related('attribute'):
-                print(attr, attr.attribute_id)
                 data['ficha'].append({
                     'name': attr.attribute.name_store,
                     'value': instance.product_class_product_attr_value.all().get(

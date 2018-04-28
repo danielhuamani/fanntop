@@ -10,6 +10,7 @@ from apps_base.ubigeo.models import Ubigeo, Departamento
 from apps_base.order.order import OrderGenerate
 from apps_base.shipping.models import ShippingCost
 from apps_base.promotion.models import CouponGenerate, Coupon
+from apps_base.order.constants import PAGADO
 from django.db import transaction
 from .forms import OrderCustomerForm, OrderShippingAddressForm
 from decimal import Decimal as D
@@ -206,6 +207,8 @@ def get_price_shipping(request):
 
 @login_required(login_url=reverse_lazy("web_system:login_register"))
 def get_coupon_discount(request):
+    user = request.user
+    customer = user.user_customer
     coupon = request.GET.get('coupon', None)
     code_cart = request.COOKIES.get('cart', None)
     cart = Cart.objects.get(code=code_cart)
@@ -227,7 +230,11 @@ def get_coupon_discount(request):
         try:
             coupon_generate = Coupon.objects.get(
                 prefix=coupon.strip(), is_active=True)
-            if not Order.objects.filter(coupon_discount__prefix=coupon.strip()).exists():
+            quantity_customer = coupon_generate.quantity_customer
+            coupon_total_used = Order.objects.filter(
+                coupon_discount__prefix=coupon.strip(),
+                type_status=PAGADO, customer=customer).count()
+            if quantity_customer > coupon_total_used:
                 if coupon_generate.type_discount == 'PTJ':
                     discount = (float(float(sub_total)*coupon_generate.discount) / 100)
                 elif coupon_generate.type_discount == 'SLS':

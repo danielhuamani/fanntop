@@ -1,5 +1,5 @@
 <template>
-  <section class="main car">
+  <section class="main car" >
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -8,14 +8,14 @@
           </div>
         </div>
       </div>
-      <div class="row" v-if='getCart.extra_data'>
+      <div class="row" v-if='getCart.extra_data.msj'>
         <div class="col-md-12">
           <div class="alert-cart boxw box-car">
             <strong>{{getCart.extra_data.msj}}</strong>
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-if='getCart.cart_items.length >0'>
         <div class="col-md-12">
           <div class="boxw box-car">
             <div class="inner">

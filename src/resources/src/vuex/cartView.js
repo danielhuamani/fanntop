@@ -4,7 +4,10 @@ const moduleCartView = {
   state: {
     statusCartView: false,
     cart: {
-      cart_items: []
+      cart_items: [],
+      extra_data: {
+        msj: ''
+      }
     },
     isMenu: false,
     error: ''

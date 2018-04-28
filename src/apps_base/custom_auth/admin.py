@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import User, UserInfluencer
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
 class MyUserCreationForm(UserCreationForm):
@@ -33,3 +33,4 @@ class UserAdmin(UserAdmin):
     exclude = ()
 
 admin.site.register(User, UserAdmin)
+admin.site.register(UserInfluencer)

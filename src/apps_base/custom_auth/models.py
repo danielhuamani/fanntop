@@ -41,3 +41,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         Returns the short name for the user.
         '''
         return self.first_name
+
+
+class UserInfluencer(models.Model):
+    influencer = models.ForeignKey('influencer.Influencer', related_name='influencer_user_influencers')
+    user = models.OneToOneField(User, related_name='user_user_influencer')
+    class Meta:
+        verbose_name = "UserInfluencer"
+        verbose_name_plural = "UserInfluencers"
+
+    def __str__(self):
+        return self.user.email

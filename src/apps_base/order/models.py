@@ -28,7 +28,7 @@ class Order(CoreTimeModel, CoreActiveModel):
     is_return_stock = models.BooleanField(default=False)
     extra_data = JSONField(default={}, blank=True)
     discount_stock = models.BooleanField(default=False)
-
+    shipping_influencer = JSONField(default={}, blank=True)
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Order"
