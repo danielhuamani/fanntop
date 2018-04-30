@@ -38,7 +38,7 @@ class CartAPI(APIView):
                     response.set_cookie('cart', cart.code, max_age=60*60*24*2)
                     return response
                 else:
-                    error = _('No stock available')
+                    error = _('No se cuenta con stock disponible')
                     cart = cart_object.get_cart()
                     serializer = CartSerializer(cart)
                     data = serializer.data
@@ -57,7 +57,7 @@ class CartAPI(APIView):
                     response.set_cookie('cart', cart.code, max_age=60*60*24*2)
                     return response
                 else:
-                    error = _('No stock available')
+                    error = _('No se cuenta con stock disponible')
             else:
                 error = _('There was an error in the shopping cart')
 

@@ -29,6 +29,7 @@ class Order(CoreTimeModel, CoreActiveModel):
     extra_data = JSONField(default={}, blank=True)
     discount_stock = models.BooleanField(default=False)
     shipping_influencer = JSONField(default={}, blank=True)
+
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Order"
@@ -40,7 +41,7 @@ class Order(CoreTimeModel, CoreActiveModel):
 
     def update_total(self):
         self.sub_total = self.cart.total
-        self.total = self.cart.total + self.shipping_price
+        self.total = self.cart.total + self.shipping_price - self.discount
         self.save()
 
     def __str__(self):

@@ -40,10 +40,12 @@ class CartItem(models.Model):
     cart = models.ForeignKey('Cart', related_name='cart_items')
     product = models.ForeignKey('product.Product', related_name='product_cart_items')
     extra_data = JSONField(default={}, blank=True)
+
     class Meta:
         verbose_name = "CartItem"
         verbose_name_plural = "CartItems"
         unique_together = ('product', 'cart')
+        ordering = ('id',)
 
     def __str__(self):
         return '{0}{1}'.format(self.cart.code, self.product.sku)

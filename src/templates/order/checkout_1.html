@@ -398,8 +398,13 @@
                 $('.totalPrice').text(parseFloat(data.total).toFixed(2))
                 $('.subTotal').text(parseFloat(data.sub_total).toFixed(2))
                 $('.descuento').text(parseFloat(data.discount).toFixed(2))
+                $('.msj-coupon p').text(data.msj)
+                $('.msj-coupon p').addClass('text-success')
+                $('.msj-coupon p').removeClass('text-danger')
               }
               if (data.status == 'error') {
+                $('.msj-coupon p').removeClass('text-success')
+                $('.msj-coupon p').addClass('text-danger')
                 $('.msj-coupon p').text(data.msj)
               }
           }

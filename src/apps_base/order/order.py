@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from .models import Order, OrderDetail
 from apps_base.shipping.models import ShippingCost
 from apps_base.promotion.models import CouponGenerate, Coupon
@@ -7,6 +8,31 @@ from decimal import Decimal as D, getcontext
 
 class OrderGenerate(object):
 
+    def get_discount_infuencer_coupon(self, coupon, discount, order):
+        order_details = order.order_orderdetail.all()
+        influencers = coupon.influencers.all()
+        total_sum_influencer = order.order_orderdetail.filter(
+            productdetail__product_class__influencer__in=influencers.values_list('id', flat=True)).aggregate(Sum('total'))
+        total_sum = total_sum_influencer.get('total__sum')
+        total_discount = discount
+        shipping_influencer = {}
+        for influencer in influencers:
+            total_influencer = order_details.filter(
+                productdetail__product_class__influencer__id=influencer.id)
+            if total_influencer.exists():
+                total_influencer = total_influencer.aggregate(Sum('total')).get('total__sum', 0)
+                percentage = float(total_influencer / total_sum)
+                shipping_influencer[influencer.id] = {
+                    'discount': 0,
+                    'name': influencer.name,
+                    'total_sum': float(total_sum),
+                    'percentage': percentage * float(100),
+                    'total': total_discount * percentage
+                }
+        return shipping_influencer
+        #     pass
+        # shipping_influencer
+        # key : {'discount': 0, 'name': 'mox', 'percentage': 20}
     def create(self, cart, customer, ubigeo, coupon):
 
         # try:
@@ -14,11 +40,12 @@ class OrderGenerate(object):
         #     price = shipping.price
         # except Exception as e:
         #     price = 0
-
+        print(coupon, 'coupon')
         try:
             coupon_generate = Coupon.objects.get(
                 prefix=coupon.strip(),  is_active=True)
-            if coupon_generate.coupon.type_discount == 'PTJ':
+            print(coupon_generate, 'coupon_generate---')
+            if coupon_generate.type_discount == 'PTJ':
                 discount = (float(float(sub_total)*coupon_generate.discount) / 100)
             elif coupon_generate.type_discount == 'SLS':
                 discount = coupon_generate.discount
@@ -41,6 +68,11 @@ class OrderGenerate(object):
             order.coupon_discount = coupon_generate
             order.save()
         self.create_details(cart, order)
+        print(coupon_generate, 'coupon_generate')
+        if coupon_generate:
+            order.shipping_influencer = self.get_discount_infuencer_coupon(coupon_generate, discount, order)
+            order.save()
+        # raise
         return order
 
     def update(self, cart, ubigeo, coupon):
@@ -64,8 +96,11 @@ class OrderGenerate(object):
         order.total = total
         order.shipping_price = price
         order.type_status = PROCESO
+        self.update_details(cart, order)
         if coupon_generate:
             order.coupon = coupon_generate
+            shipping_influencer = self.get_discount_infuencer_coupon(coupon_generate, discount, order)
+            order.shipping_influencer = self.get_discount_infuencer_coupon(coupon_generate, discount, order)
             order.save()
         order.save()
         return order

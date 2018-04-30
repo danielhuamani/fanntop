@@ -12,6 +12,7 @@ class OrderViewSet(BaseAuthenticated, viewsets.ModelViewSet):
     queryset = Order.objects.all().prefetch_related('order_ordershipping',
         'order_ordershipping__ubigeo', 'order_orderdetail', 'order_order_customer',
         'order_orderdetail__productdetail',
-        'order_orderdetail__productdetail__product_product_images__product_image')
+        'order_orderdetail__productdetail__product_product_images__product_image'
+        ).order_by('-created')
     serializer_class = OrderSerializer
 

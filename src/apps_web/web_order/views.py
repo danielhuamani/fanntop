@@ -207,6 +207,8 @@ def get_price_shipping(request):
 
 @login_required(login_url=reverse_lazy("web_system:login_register"))
 def get_coupon_discount(request):
+    # shipping_influencer
+    # key : {'discount': 0, 'name': 'mox', 'percentage': 20}
     user = request.user
     customer = user.user_customer
     coupon = request.GET.get('coupon', None)
@@ -230,34 +232,41 @@ def get_coupon_discount(request):
         try:
             coupon_generate = Coupon.objects.get(
                 prefix=coupon.strip(), is_active=True)
+            influencer_ids = coupon_generate.influencers.all().values_list('id', flat=True)
             quantity_customer = coupon_generate.quantity_customer
             coupon_total_used = Order.objects.filter(
                 coupon_discount__prefix=coupon.strip(),
                 type_status=PAGADO, customer=customer).count()
-            if quantity_customer > coupon_total_used:
-                if coupon_generate.type_discount == 'PTJ':
-                    discount = (float(float(sub_total)*coupon_generate.discount) / 100)
-                elif coupon_generate.type_discount == 'SLS':
-                    discount = coupon_generate.discount
-                if order:
-                    total = total - D(discount)
-                    order.discount = discount
-                    order.coupon_discount = coupon_generate
-                    order.total = total
-                    order.save()
-                    data['discount'] = D(discount)
-                    data['shipping_price'] = shipping_price
-                    data['total'] = total
-                    data['sub_total'] = sub_total
-                    data['status'] = 'ok'
+            if cart.cart_items.filter(product__product_class__influencer__in=influencer_ids).exists():
+                if quantity_customer > coupon_total_used:
+                    # cart.cart_items.filter(product__product_class__influencer__in):
+                    if coupon_generate.type_discount == 'PTJ':
+                        discount = (float(float(sub_total)*coupon_generate.discount) / 100)
+                    elif coupon_generate.type_discount == 'SLS':
+                        discount = coupon_generate.discount
+                    if order:
+                        total = total - D(discount)
+                        order.discount = discount
+                        order.coupon_discount = coupon_generate
+                        order.total = total
+                        order.save()
+                        data['discount'] = D(discount)
+                        data['shipping_price'] = shipping_price
+                        data['total'] = total
+                        data['sub_total'] = sub_total
+                        data['status'] = 'ok'
+                    else:
+                        total = total - D(discount)
+                        data['discount'] = D(discount)
+                        data['shipping_price'] = shipping_price
+                        data['total'] = total
+                        data['sub_total'] = sub_total
+                        data['status'] = 'ok'
+                    data['msj'] = 'Se realizo su descuento'
                 else:
-                    data['discount'] = D(discount)
-                    data['shipping_price'] = shipping_price
-                    data['total'] = total
-                    data['sub_total'] = sub_total
-                    data['status'] = 'ok'
+                    data['msj'] = 'Este cupon ya ha sido usado'
             else:
-                data['msj'] = 'Este cupon ya ha sido usado'
+                data['msj'] = 'Este cupon no es valido para estos productos'
         except Exception as e:
             print(e, 'error')
             data['msj'] = 'Este cupon no existe'

@@ -6,7 +6,7 @@
 
     </div>
     <div class="cart-view__error" v-if='getError'>
-      <h4>{{getError}}dd</h4>
+      <h4>{{getError}}</h4>
     </div>
     <div class="box-caritem  boxw">
       <div class="inner">

@@ -4,7 +4,14 @@ from apps_base.cart.constants import DANGER
 import uuid
 
 def generate_code_order():
-    return 'order-' + str(uuid.uuid4())[:8].replace("-", "")
+    from apps_base.order.models import Order
+
+    try:
+        last_id = Order.objects.all().last().id
+    except Exception as e:
+        last_id = 0
+    last_id = last_id + 1
+    return str(last_id).zfill(8)
 
 def validate_stock(order):
     stock = True
