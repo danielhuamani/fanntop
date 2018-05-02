@@ -1,5 +1,6 @@
 from django.db.models import Sum
 from .models import Order, OrderDetail
+from apps_base.influencer.models import Influencer
 from apps_base.shipping.models import ShippingCost
 from apps_base.promotion.models import CouponGenerate, Coupon
 from apps_base.order.constants import PROCESO
@@ -7,6 +8,61 @@ from decimal import Decimal as D, getcontext
 
 
 class OrderGenerate(object):
+
+    def get_influencer_total(self, order, coupon, discount):
+        order_details = order.order_orderdetail.all()
+        influencer_ids = order_details.values_list(
+            'productdetail__product_class__influencer__id', flat=True)
+        influencers = Influencer.objects.filter(id__in=influencer_ids)
+        shipping_influencer = {}
+        if coupon:
+            influencers_coupon = coupon.influencers.all()
+            total_sum_influencer = order.order_orderdetail.filter(
+                productdetail__product_class__influencer__in=influencers_coupon.values_list('id', flat=True)).aggregate(Sum('total'))
+            total_sum = total_sum_influencer.get('total__sum')
+        for influencer in influencers:
+            # total_ifn = order.order_orderdetail.filter(
+            #     productdetail__product_class__influencer__id=influencer.id).aggregate(Sum('total'))
+            # total_ifn = total_ifn.get('total__sum')
+            total_influencer = order_details.filter(
+                productdetail__product_class__influencer__id=influencer.id)
+            total_influencer = total_influencer.aggregate(Sum('total')).get('total__sum', 0)
+            if coupon:
+                influencer_coupon = influencers_coupon.filter(id=influencer.id)
+                if influencer_coupon.exists():
+                    percentage = float(total_influencer / total_sum)
+                    percentage = round(percentage, 2)
+                    total_discount = float(discount * percentage)
+                    shipping_influencer[influencer.id] = {
+                        'discount_global': discount,
+                        'name': influencer.name,
+                        'total_sum': float(total_sum),
+                        'percentage': percentage * float(100),
+                        'total_discount': total_discount,
+                        'total_influencer': round(float(float(total_influencer) - float(number, ndigits)), 2),
+                        'total': float(total_influencer)
+                    }
+                else:
+                    shipping_influencer[influencer.id] = {
+                        'discount_global': discount,
+                        'name': influencer.name,
+                        'total_sum': float(0),
+                        'percentage': 0,
+                        'total_discount': float(0),
+                        'total_influencer': float(total_influencer),
+                        'total': float(total_influencer)
+                    }
+            else:
+                shipping_influencer[influencer.id] = {
+                    'discount': discount,
+                    'name': influencer.name,
+                    'total_sum': float(0),
+                    'percentage': 0,
+                    'total': float(0),
+                    'total_influencer': float(total_influencer),
+                    'total': float(total_influencer)
+                }
+        return shipping_influencer
 
     def get_discount_infuencer_coupon(self, coupon, discount, order):
         order_details = order.order_orderdetail.all()
@@ -23,7 +79,7 @@ class OrderGenerate(object):
                 total_influencer = total_influencer.aggregate(Sum('total')).get('total__sum', 0)
                 percentage = float(total_influencer / total_sum)
                 shipping_influencer[influencer.id] = {
-                    'discount': 0,
+                    'discount': discount,
                     'name': influencer.name,
                     'total_sum': float(total_sum),
                     'percentage': percentage * float(100),
@@ -40,7 +96,6 @@ class OrderGenerate(object):
         #     price = shipping.price
         # except Exception as e:
         #     price = 0
-        print(coupon, 'coupon')
         try:
             coupon_generate = Coupon.objects.get(
                 prefix=coupon.strip(),  is_active=True)
@@ -68,10 +123,13 @@ class OrderGenerate(object):
             order.coupon_discount = coupon_generate
             order.save()
         self.create_details(cart, order)
+        shipping_influencer = self.get_influencer_total(order, coupon_generate, discount)
+        order.shipping_influencer = shipping_influencer
+        order.save()
         print(coupon_generate, 'coupon_generate')
-        if coupon_generate:
-            order.shipping_influencer = self.get_discount_infuencer_coupon(coupon_generate, discount, order)
-            order.save()
+        # if coupon_generate:
+        #     order.shipping_influencer = self.get_discount_infuencer_coupon(coupon_generate, discount, order)
+        #     order.save()
         # raise
         return order
 
@@ -97,11 +155,13 @@ class OrderGenerate(object):
         order.shipping_price = price
         order.type_status = PROCESO
         self.update_details(cart, order)
+        shipping_influencer = self.get_influencer_total(order, coupon_generate, discount)
+        order.shipping_influencer = shipping_influencer
         if coupon_generate:
             order.coupon = coupon_generate
-            shipping_influencer = self.get_discount_infuencer_coupon(coupon_generate, discount, order)
-            order.shipping_influencer = self.get_discount_infuencer_coupon(coupon_generate, discount, order)
-            order.save()
+            # shipping_influencer = self.get_discount_infuencer_coupon(coupon_generate, discount, order)
+            # order.shipping_influencer = self.get_discount_infuencer_coupon(coupon_generate, discount, order)
+            # order.save()
         order.save()
         return order
 
