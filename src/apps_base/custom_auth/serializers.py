@@ -20,7 +20,8 @@ class UserPasswordSerializer(serializers.Serializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    influencer = serializers.IntegerField(write_only=True, max_value=None, min_value=None, required=False)
+    influencer = serializers.IntegerField(
+        write_only=True, max_value=None, min_value=None, required=False, allow_null=True)
     email = serializers.EmailField(
             required=True,
             validators=[UniqueValidator(queryset=User.objects.all())]
@@ -34,8 +35,8 @@ class UserSerializer(serializers.ModelSerializer):
             'user_influencer_id']
 
     def update(self, instance, validated_data):
-        instance.email = validated_data['email'],
-        instance.first_name = validated_data['first_name'],
+        instance.email = validated_data['email']
+        instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
         instance.is_active = validated_data['is_active']
         if validated_data.get('influencer'):
@@ -46,6 +47,7 @@ class UserSerializer(serializers.ModelSerializer):
             user_influencer.save()
         else:
             instance.type_user = ADMIN
+        instance.save()
         return instance
 
     def get_user_influencer_id(self, obj):
@@ -54,10 +56,6 @@ class UserSerializer(serializers.ModelSerializer):
         except UserInfluencer.DoesNotExist as e:
             user_influencer_id = None
         return user_influencer_id
-
-
-
-
 
 
 class UserCreateSerializer(UserSerializer):

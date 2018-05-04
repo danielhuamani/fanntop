@@ -1,11 +1,12 @@
 from django.shortcuts import render
-# from django.contrib.postgres.fields import KeyTextTransform
-from django.contrib.postgres.fields.jsonb import KeyTextTransform
 from django.db.models.expressions import RawSQL
-from django.db.models import Count, Min, Sum, Case, Q, F, Subquery, Count, Value, When, FloatField
+from rest_framework.generics import RetrieveUpdateAPIView, UpdateAPIView
+from django.db.models import Count, Sum, Case, Q, F, Subquery, Value, When, FloatField
 from django.db.models.functions import Cast
+from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from .serializers.system import UserInfluencerJSONWebTokenSerializer
+from .serializers.system import (UserInfluencerJSONWebTokenSerializer, UserSerializer,
+    UserChangePassSerializer)
 from .serializers.product import ProductClassSerializer
 from .serializers.order import OrderSerializer
 from .mixins import StandardPagination
@@ -128,3 +129,33 @@ class OrderDetailAPI(BaseInfluencerAuthenticated, RetrieveAPIView):
             'influencer_id': user_influencer.influencer_id
         }
 
+
+class UserAPI(BaseInfluencerAuthenticated, RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        user = self.request.user
+        return user
+
+
+class UserChangePassAPI(BaseInfluencerAuthenticated, UpdateAPIView):
+    serializer_class = UserChangePassSerializer
+
+    def get_object(self):
+        user = self.request.user
+        return user
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            # Check old password
+            if not self.object.check_password(serializer.data.get("password")):
+                return Response({"password": ["Wrong password."]}, status=403)
+            # set_password also hashes the password that the user will get
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            return Response({}, status=200)
+
+        return Response(serializer.errors, status=403)
