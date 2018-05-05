@@ -200,6 +200,7 @@ JWT_AUTH = {
    'JWT_RESPONSE_PAYLOAD_HANDLER': 'apps_base.security.utils.jwt_response_payload_handler',
    'JWT_ALLOW_REFRESH': True,
    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300*12*24*7),
+   # 'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=10),
 }
 
 STATICFILES_DIRS = (

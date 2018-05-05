@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.db.models.expressions import RawSQL
 from rest_framework.generics import RetrieveUpdateAPIView, UpdateAPIView
-from django.db.models import Count, Sum, Case, Q, F, Subquery, Value, When, FloatField
-from django.db.models.functions import Cast
+from django.db.models import Count, Sum, Case, Q, F, Subquery, Value, When, FloatField, CharField, Value as V
+from django.db.models.functions import Cast, Concat
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.views import APIView
 from .serializers.system import (UserInfluencerJSONWebTokenSerializer, UserSerializer,
     UserChangePassSerializer)
 from .serializers.product import ProductClassSerializer
@@ -15,6 +16,8 @@ from apps_base.product.models import Product, ProductClass
 from apps_base.order.models import Order
 from apps_base.order.constants import PAGADO
 from rest_framework_jwt.views import JSONWebTokenAPIView
+from .utils import range_month
+import locale
 
 
 class ObtainJSONWebToken(JSONWebTokenAPIView):
@@ -82,11 +85,40 @@ class OrderListAPI(BaseInfluencerAuthenticated, ListAPIView):
         user_influencer = user.user_user_influencer
         shipping_influencer = str(user_influencer.influencer_id)
         shipping_influencer__price = 'shipping_influencer__' + shipping_influencer + '__total'
-        queryset = Order.objects.filter(type_status=PAGADO,
+        queryset_initial = Order.objects.filter(type_status=PAGADO,
             order_orderdetail__productdetail__product_class__influencer__id=user_influencer.influencer_id
-            ).prefetch_related(
-                'order_order_customer', 'order_ordershipping', 'order_orderdetail').distinct('id')
-
+            )
+        search = self.request.query_params.get('search', None)
+        field = self.request.query_params.get('field', None)
+        orderBy = self.request.query_params.get('orderBy', None)
+        if search:
+            queryset_initial = queryset_initial.filter(
+                Q(order_order_customer__first_name__icontains=search) |
+                Q(order_order_customer__last_name__icontains=search) |
+                Q(order_order_customer__email__icontains=search))
+        order_ids = queryset_initial.distinct('id').values_list('id', flat=True)
+        queryset = Order.objects.filter(
+            id__in=order_ids
+            ).annotate(full_name=Concat(
+                'order_order_customer__first_name', V(' '), 'order_order_customer__last_name',
+                output_field=CharField())).prefetch_related(
+                'order_order_customer', 'order_ordershipping', 'order_orderdetail')
+        if field:
+            if field == 'influencer_total':
+                ordering = field
+                if orderBy == 'desc':
+                    ordering = '{0}{1}'.format('-', field)
+                queryset = queryset.annotate(influencer_json=RawSQL(
+                    "(shipping_influencer->%s->%s)::text",
+                    (shipping_influencer, 'total'))).annotate(
+                    influencer_total=Cast('influencer_json', FloatField()))
+                queryset = queryset.order_by(ordering)
+            else:
+                if orderBy == 'desc':
+                    ordering = '{0}{1}'.format('-', field)
+                    queryset = queryset.order_by(ordering)
+                else:
+                    queryset = queryset.order_by(field)
 
         return queryset
 
@@ -159,3 +191,42 @@ class UserChangePassAPI(BaseInfluencerAuthenticated, UpdateAPIView):
             return Response({}, status=200)
 
         return Response(serializer.errors, status=403)
+
+
+class DashboardaAPI(BaseInfluencerAuthenticated, APIView):
+
+    def get(self, request, format=None):
+        locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+        user = self.request.user
+        user_influencer = user.user_user_influencer
+        shipping_influencer = str(user_influencer.influencer_id)
+        list_sum_total = []
+        list_mes_anio = []
+        queryset = Order.objects.filter(
+            type_status=PAGADO,
+            order_orderdetail__productdetail__product_class__influencer__id=user_influencer.influencer_id).annotate(influencer_json=RawSQL(
+                "(shipping_influencer->%s->%s)::text",
+                (shipping_influencer, 'total'))).annotate(
+                influencer_total=Cast('influencer_json', FloatField()))
+            # influencer_json=RawSQL(
+            #     "(shipping_influencer->%s->%s)::text",
+            #     (shipping_influencer, 'total_influencer'))).annotate(
+            #     influencer_total=Cast('influencer_json', FloatField())).prefetch_related(
+            #     'order_order_customer', 'order_ordershipping', 'order_orderdetail').distinct('id')
+        for day in range_month():
+            order_day = queryset.filter(
+                created__date__gte=day.get('mes_start'),
+                created__date__lt=day.get('mes_end')
+
+            ).aggregate(total_fecha=Sum('influencer_total'))
+            mes_anio = day.get('mes_start').strftime("%b %y").title()
+            sum_anio = order_day.get('total_fecha')
+            if not sum_anio:
+                sum_anio = 0
+            list_mes_anio.append(mes_anio)
+            list_sum_total.append(sum_anio)
+        data = {
+            'mes_anio': list_mes_anio,
+            'sum_total': list_sum_total
+        }
+        return Response(data)

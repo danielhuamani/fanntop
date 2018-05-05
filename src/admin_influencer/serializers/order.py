@@ -69,15 +69,16 @@ class OrderSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
     details = serializers.SerializerMethodField()
     influencer_extra = serializers.SerializerMethodField()
+    full_name = serializers.CharField(max_length=120)
     class Meta:
         model = Order
         fields = ['code', 'order_order_customer',
             'order_ordershipping', 'details', 'id', 'is_send_email',
             'status', 'extra_data',
-            'fecha', 'influencer_extra']
+            'fecha', 'influencer_extra', 'full_name']
 
     def get_fecha(self, obj):
-        return timezone.localtime(obj.created).strftime("%I:%M %p %d/%m/%Y ")
+        return timezone.localtime(obj.created).strftime("%d/%m/%Y ")
     # def get_total_discount(self, obj):
     #     influencer_id = self.context.get('influencer_id')
     #     print(influencer_id, 'shippingss', obj.shipping_influencer)
