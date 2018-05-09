@@ -22,3 +22,7 @@ def range_month():
             'mes_end': mes_end
         }
         yield dic
+
+
+def format_date(my_date):
+    return datetime.strptime(my_date, '%d/%m/%Y')

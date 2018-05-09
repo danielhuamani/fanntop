@@ -23,18 +23,21 @@ class UserInfluencerJSONWebTokenSerializer(JSONWebTokenSerializer):
 
         if all(credentials.values()):
             user = authenticate(**credentials)
-            print(user, 'user', user.type_user)
-            if user and user.type_user == INFLUENCER:
-                if not user.is_active:
-                    msg = _('User account is disabled.')
+            if user:
+                if user.type_user == INFLUENCER:
+                    if not user.is_active:
+                        msg = _('User account is disabled.')
+                        raise serializers.ValidationError(msg)
+
+                    payload = jwt_payload_handler(user)
+
+                    return {
+                        'token': jwt_encode_handler(payload),
+                        'user': user
+                    }
+                else:
+                    msg = _('Unable to log in with provided credentials.')
                     raise serializers.ValidationError(msg)
-
-                payload = jwt_payload_handler(user)
-
-                return {
-                    'token': jwt_encode_handler(payload),
-                    'user': user
-                }
             else:
                 msg = _('Unable to log in with provided credentials.')
                 raise serializers.ValidationError(msg)

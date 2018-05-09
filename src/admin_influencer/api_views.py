@@ -16,8 +16,9 @@ from apps_base.product.models import Product, ProductClass
 from apps_base.order.models import Order
 from apps_base.order.constants import PAGADO
 from rest_framework_jwt.views import JSONWebTokenAPIView
-from .utils import range_month
+from .utils import range_month, format_date
 import locale
+import json
 
 
 class ObtainJSONWebToken(JSONWebTokenAPIView):
@@ -91,6 +92,8 @@ class OrderListAPI(BaseInfluencerAuthenticated, ListAPIView):
         search = self.request.query_params.get('search', None)
         field = self.request.query_params.get('field', None)
         orderBy = self.request.query_params.get('orderBy', None)
+        filters = self.request.query_params.get('filter', None)
+
         if search:
             queryset_initial = queryset_initial.filter(
                 Q(order_order_customer__first_name__icontains=search) |
@@ -102,16 +105,32 @@ class OrderListAPI(BaseInfluencerAuthenticated, ListAPIView):
             ).annotate(full_name=Concat(
                 'order_order_customer__first_name', V(' '), 'order_order_customer__last_name',
                 output_field=CharField())).prefetch_related(
-                'order_order_customer', 'order_ordershipping', 'order_orderdetail')
+                'order_order_customer', 'order_ordershipping', 'order_orderdetail').annotate(influencer_json=RawSQL(
+                    "(shipping_influencer->%s->%s)::text",
+                    (shipping_influencer, 'total'))).annotate(
+                    influencer_total=Cast('influencer_json', FloatField()))
+        if filters:
+            filters = json.loads(filters)
+            total_to = filters.get('total_to')
+            total_from = filters.get('total_from')
+            create_from = filters.get('create_from')
+            create_to = filters.get('create_to')
+            status = filters.get('status')
+            if total_to:
+                queryset = queryset.filter(influencer_total__lte=float(total_to))
+            if total_from:
+                queryset = queryset.filter(influencer_total__gte=float(total_from))
+            if create_to:
+                queryset = queryset.filter(created__lte=format_date(create_to))
+            if create_from:
+                queryset = queryset.filter(created__gte=format_date(create_from))
+            if status:
+                queryset = queryset.filter(type_status_shipping__in=status)
         if field:
             if field == 'influencer_total':
                 ordering = field
                 if orderBy == 'desc':
                     ordering = '{0}{1}'.format('-', field)
-                queryset = queryset.annotate(influencer_json=RawSQL(
-                    "(shipping_influencer->%s->%s)::text",
-                    (shipping_influencer, 'total'))).annotate(
-                    influencer_total=Cast('influencer_json', FloatField()))
                 queryset = queryset.order_by(ordering)
             else:
                 if orderBy == 'desc':
