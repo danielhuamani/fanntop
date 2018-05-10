@@ -125,7 +125,7 @@ class OrderListAPI(BaseInfluencerAuthenticated, ListAPIView):
             if create_from:
                 queryset = queryset.filter(created__gte=format_date(create_from))
             if status:
-                queryset = queryset.filter(type_status_shipping__in=status)
+                queryset = queryset.filter(type_status_shipping=status)
         if field:
             if field == 'influencer_total':
                 ordering = field
