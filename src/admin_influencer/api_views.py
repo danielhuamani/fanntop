@@ -39,21 +39,48 @@ class ProductListAPI(BaseInfluencerAuthenticated, ListAPIView):
     def get_queryset(self):
         user = self.request.user
         user_influencer = user.user_user_influencer
-        queryset = ProductClass.objects.filter(
+        queryset_initial = ProductClass.objects.filter(
             influencer_id=user_influencer.influencer_id).prefetch_related(
             'product_class_products', 'product_class_products__attribute_option')
         search = self.request.query_params.get('search', None)
         field = self.request.query_params.get('field', None)
         orderBy = self.request.query_params.get('orderBy', None)
+        filters = self.request.query_params.get('filter', None)
         if search:
-            queryset = queryset.filter(name__icontains=search)
+            queryset_initial = queryset_initial.filter(name__icontains=search)
+        if filters:
+            filters = json.loads(filters)
+            price_to = filters.get('price_to')
+            price_from = filters.get('price_from')
+            stock_from = filters.get('stock_from')
+            stock_to = filters.get('stock_to')
+            is_published = filters.get('is_published', False)
+            if is_published == '':
+                queryset_initial = queryset_initial.filter(is_published=False)
+            else:
+                queryset_initial = queryset_initial.filter(is_published=is_published)
+            if price_to:
+                queryset_initial = queryset_initial.filter(product_class_products__price__lte=float(price_to))
+            if price_from:
+                queryset_initial = queryset_initial.filter(product_class_products__price__gte=float(price_from))
+            if stock_from:
+                queryset_initial = queryset_initial.filter(product_class_products__stock__gte=format_date(stock_from))
+            if stock_to:
+                queryset_initial = queryset_initial.filter(product_class_products__stock__lte=format_date(create_from))
+            print('is_published', is_published)
+
+        product_ids = queryset_initial.distinct('id').values_list('id', flat=True)
+        queryset = ProductClass.objects.filter(
+            id__in=product_ids,
+            influencer_id=user_influencer.influencer_id).prefetch_related(
+            'product_class_products', 'product_class_products__attribute_option')
         if field:
             if field == 'product_class_products__price':
                 ordering = field
                 if orderBy == 'desc':
                     ordering = '{0}{1}'.format('-', field)
                 queryset = queryset.order_by(ordering)
-                queryset = ProductClass.objects.filter(id__in=queryset.values_list('id', flat=True))
+                # queryset = ProductClass.objects.filter(id__in=queryset.values_list('id', flat=True))
             else:
                 if orderBy == 'desc':
                     ordering = '{0}{1}'.format('-', field)
