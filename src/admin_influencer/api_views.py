@@ -16,7 +16,7 @@ from apps_base.product.models import Product, ProductClass
 from apps_base.order.models import Order
 from apps_base.order.constants import PAGADO
 from rest_framework_jwt.views import JSONWebTokenAPIView
-from .utils import range_month, format_date
+from .utils import range_month, format_date, range_start_end
 import locale
 import json
 
@@ -239,7 +239,7 @@ class UserChangePassAPI(BaseInfluencerAuthenticated, UpdateAPIView):
         return Response(serializer.errors, status=403)
 
 
-class DashboardaAPI(BaseInfluencerAuthenticated, APIView):
+class DashboardAPI(BaseInfluencerAuthenticated, APIView):
 
     def get(self, request, format=None):
         locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
@@ -274,5 +274,44 @@ class DashboardaAPI(BaseInfluencerAuthenticated, APIView):
         data = {
             'mes_anio': list_mes_anio,
             'sum_total': list_sum_total
+        }
+        return Response(data)
+
+
+class DashboardOrderCountAPI(BaseInfluencerAuthenticated, APIView):
+
+    def get(self, request, format=None):
+        locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+        user = self.request.user
+        user_influencer = user.user_user_influencer
+        list_reporte_mes = []
+        status = [
+            {
+                'value': 'AL',
+                'name': 'En Almacén'
+            },
+            {
+                'value': 'DS',
+                'name': 'En Despacho'
+            },
+            {
+                'value': 'EG',
+                'name': 'Entregado'
+            }
+        ]
+        queryset = Order.objects.filter(
+            type_status=PAGADO,
+            order_orderdetail__productdetail__product_class__influencer__id=user_influencer.influencer_id)
+        queryset = queryset.distinct('id')
+        for st in status:
+            queryset_status = queryset.filter(type_status_shipping=st.get('value')).count()
+            list_reporte_mes.append({
+                'name': st.get('name'),
+                'total': queryset_status
+            })
+        month_start, month_end = range_start_end()
+        data = {
+            'mes_anio': month_start.strftime("%b %y").title() + " - " + month_end.strftime("%b %y").title(),
+            'reporte': list_reporte_mes
         }
         return Response(data)

@@ -70,6 +70,7 @@ class OrderSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     details = serializers.SerializerMethodField()
     influencer_extra = serializers.SerializerMethodField()
     full_name = serializers.CharField(max_length=120, allow_blank=True, required=False)
+
     class Meta:
         model = Order
         fields = ['code', 'order_order_customer',

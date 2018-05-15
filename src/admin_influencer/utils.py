@@ -26,3 +26,9 @@ def range_month():
 
 def format_date(my_date):
     return datetime.strptime(my_date, '%d/%m/%Y')
+
+def range_start_end():
+    anio_hoy = datetime.now().year
+    mes_end = datetime.now()
+    mes_start = (datetime.now() - timedelta(days=5*30))
+    return mes_end, mes_start
