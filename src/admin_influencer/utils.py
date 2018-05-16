@@ -32,3 +32,12 @@ def range_start_end():
     mes_end = datetime.now()
     mes_start = (datetime.now() - timedelta(days=5*30))
     return mes_end, mes_start
+
+def month_initial():
+    today = datetime.now()
+    today_month = date(today.year, today.month, 1)
+    return today_month
+
+def today_date():
+    today = datetime.now()
+    return today.date()

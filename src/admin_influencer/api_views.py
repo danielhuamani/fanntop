@@ -16,7 +16,8 @@ from apps_base.product.models import Product, ProductClass
 from apps_base.order.models import Order
 from apps_base.order.constants import PAGADO
 from rest_framework_jwt.views import JSONWebTokenAPIView
-from .utils import range_month, format_date, range_start_end
+from datetime import datetime
+from .utils import range_month, format_date, range_start_end, month_initial, today_date
 import locale
 import json
 
@@ -240,6 +241,42 @@ class UserChangePassAPI(BaseInfluencerAuthenticated, UpdateAPIView):
 
 
 class DashboardAPI(BaseInfluencerAuthenticated, APIView):
+    def get(self, request, format=None):
+        locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+        user = self.request.user
+        user_influencer = user.user_user_influencer
+        today = today_date()
+        month = month_initial()
+        shipping_influencer = str(user_influencer.influencer_id)
+        queryset_product = ProductClass.objects.filter(influencer__id=user_influencer.influencer_id)
+        queryset_order = Order.objects.filter(
+            type_status=PAGADO,
+            order_orderdetail__productdetail__product_class__influencer__id=user_influencer.influencer_id)
+        queryset = queryset_order.annotate(influencer_json=RawSQL(
+                "(shipping_influencer->%s->%s)::text",
+                (shipping_influencer, 'total'))).annotate(
+                influencer_total=Cast('influencer_json', FloatField()))
+        total_sales_month = queryset.filter(created__date__gte=month).aggregate(total_sales_month=Sum('influencer_total'))
+        total_sales_month = total_sales_month.get('total_sales_month')
+        if not total_sales_month:
+            total_sales_month = 0
+        total_sales_date = queryset.filter(created__date__gte=today).aggregate(total_sales_date=Sum('influencer_total'))
+        total_sales_date = total_sales_date.get('total_sales_date', 0)
+        if not total_sales_date:
+            total_sales_date = 0
+        data = {
+            'month': month.strftime("%B %Y").title(),
+            'day': month.strftime("%d %B %Y").title(),
+            'total_sales_month': total_sales_month,
+            'total_sales_date': total_sales_date,
+            'total_order_month': queryset_order.filter(created__date__gte=month).count(),
+            'total_product': queryset_product.count()
+        }
+        return Response(data)
+
+
+
+class DashboardSalesAPI(BaseInfluencerAuthenticated, APIView):
 
     def get(self, request, format=None):
         locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
