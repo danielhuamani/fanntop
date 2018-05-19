@@ -1,7 +1,8 @@
 from datetime import datetime, date, timedelta
+import math
 
 def range_month():
-    anio_hoy = datetime.now().year
+    anio_hoy = create_from.year
     mes_initial = (datetime.now() - timedelta(days=5*30)).month
     anio_actual = (datetime.now() - timedelta(days=5*30)).year
     anio_today = anio_actual
@@ -41,3 +42,49 @@ def month_initial():
 def today_date():
     today = datetime.now()
     return today.date()
+
+def daterange(start_initial_date, end_initial_date):
+    start_initial_date = format_date(start_initial_date)
+    end_initial_date = format_date(end_initial_date)
+    rest_date = end_initial_date - start_initial_date
+    month = int(math.ceil(rest_date.days / 30))
+    for n in range(1, month + 2):
+        if n == 1:
+            print('entroooo', start_initial_date)
+            start_date = start_initial_date
+            end_date = start_date + timedelta(31*n)
+            print(end_date)
+            yield {
+                'mes_start': start_date,
+                'mes_end':  datetime(end_date.year, end_date.month, 1)
+            }
+        elif n == (month):
+            start_date = start_initial_date + timedelta(31*(n-1))
+            start_date = datetime(start_date.year, start_date.month, 1)
+            end_date = start_initial_date + timedelta(31*n)
+            end_date = datetime(end_date.year, end_date.month, 1)
+            yield {
+                'mes_start': start_date,
+                'mes_end':  end_initial_date
+            }
+        elif n == (month + 1):
+            start_date = start_initial_date + timedelta(31*(n-1))
+            end_date = end_initial_date
+            yield {
+                'mes_start': end_date,
+                'mes_end':  ''
+            }
+        else:
+            start_date = start_initial_date + timedelta(31*(n-1))
+            end_date = start_initial_date + timedelta(31*n)
+            start_date = datetime(start_date.year, start_date.month, 1)
+            end_date = datetime(end_date.year, end_date.month, 1)
+            yield {
+                'mes_start': start_date,
+                'mes_end': end_date
+            }
+
+# start_date = date(2013, 1, 1)
+# end_date = date(2015, 6, 2)
+# for single_date in daterange(start_date, end_date):
+#     print single_date.strftime("%Y-%m-%d")

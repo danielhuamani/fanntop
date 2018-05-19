@@ -17,7 +17,7 @@ from apps_base.order.models import Order
 from apps_base.order.constants import PAGADO
 from rest_framework_jwt.views import JSONWebTokenAPIView
 from datetime import datetime
-from .utils import range_month, format_date, range_start_end, month_initial, today_date
+from .utils import range_month, format_date, range_start_end, month_initial, today_date, daterange
 import locale
 import json
 
@@ -285,6 +285,8 @@ class DashboardSalesAPI(BaseInfluencerAuthenticated, APIView):
         shipping_influencer = str(user_influencer.influencer_id)
         list_sum_total = []
         list_mes_anio = []
+        create_from = self.request.query_params.get('create_from')
+        create_to = self.request.query_params.get('create_to')
         queryset = Order.objects.filter(
             type_status=PAGADO,
             order_orderdetail__productdetail__product_class__influencer__id=user_influencer.influencer_id).annotate(influencer_json=RawSQL(
@@ -296,13 +298,15 @@ class DashboardSalesAPI(BaseInfluencerAuthenticated, APIView):
             #     (shipping_influencer, 'total_influencer'))).annotate(
             #     influencer_total=Cast('influencer_json', FloatField())).prefetch_related(
             #     'order_order_customer', 'order_ordershipping', 'order_orderdetail').distinct('id')
-        for day in range_month():
+        for day in daterange(create_from, create_to):
             order_day = queryset.filter(
-                created__date__gte=day.get('mes_start'),
-                created__date__lt=day.get('mes_end')
-
-            ).aggregate(total_fecha=Sum('influencer_total'))
-            mes_anio = day.get('mes_start').strftime("%b %y").title()
+                created__date__gte=day.get('mes_start')
+            )
+            if day.get('mes_end'):
+                order_day = order_day.filter(created__date__lt=day.get('mes_end'))
+            order_day = order_day.aggregate(total_fecha=Sum('influencer_total'))
+            mes_anio = day.get('mes_start').strftime("%d %b %y").title()
+            # mes_anio_end = day.get('mes_end').strftime("%d %b %y").title()
             sum_anio = order_day.get('total_fecha')
             if not sum_anio:
                 sum_anio = 0
@@ -322,6 +326,10 @@ class DashboardOrderCountAPI(BaseInfluencerAuthenticated, APIView):
         user = self.request.user
         user_influencer = user.user_user_influencer
         list_reporte_mes = []
+        create_from = self.request.query_params.get('create_from')
+        create_to = self.request.query_params.get('create_to')
+        create_from = format_date(create_from)
+        create_to = format_date(create_to)
         status = [
             {
                 'value': 'AL',
@@ -341,14 +349,18 @@ class DashboardOrderCountAPI(BaseInfluencerAuthenticated, APIView):
             order_orderdetail__productdetail__product_class__influencer__id=user_influencer.influencer_id)
         queryset = queryset.distinct('id')
         for st in status:
-            queryset_status = queryset.filter(type_status_shipping=st.get('value')).count()
+            queryset_status = queryset.filter(
+                type_status_shipping=st.get('value'),
+                created__date__lte=create_to,
+                created__date__gte=create_from
+            ).count()
             list_reporte_mes.append({
                 'name': st.get('name'),
                 'total': queryset_status
             })
-        month_start, month_end = range_start_end()
+        # month_start, month_end = range_start_end()
         data = {
-            'mes_anio': month_start.strftime("%b %y").title() + " - " + month_end.strftime("%b %y").title(),
+            'mes_anio': create_from.strftime("%d %b %y").title() + " - " + create_to.strftime("%d %b %y").title(),
             'reporte': list_reporte_mes
         }
         return Response(data)
