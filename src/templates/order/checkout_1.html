@@ -264,22 +264,24 @@
       var provincia = $(this).val();
       var distrito = $('#id_shipping-ubigeo')
       distrito.html('');
-      $.ajax({
-            'url': '{% url "ubigeo:api_distritos" %}' + '?provincia=' + provincia,
-            'method': 'GET',
-            'success': function (data) {
-                distrito.append('<option value="" selected="selected">Seleccione Distrito</option>');
-                for (var i = 0; i < data.distritos.length; i++) {
-                  if (code_distrito == data.distritos[i].pk) {
-                    distrito.append('<option selected="selected" value="' + data.distritos[i].pk + '">' + data.distritos[i].descripcion + '</option>');
-                  } else {
-                    distrito.append('<option value="' + data.distritos[i].pk + '">' + data.distritos[i].descripcion + '</option>');
+      if (provincia) {
+        $.ajax({
+              'url': '{% url "ubigeo:api_distritos" %}' + '?provincia=' + provincia,
+              'method': 'GET',
+              'success': function (data) {
+                  distrito.append('<option value="" selected="selected">Seleccione Distrito</option>');
+                  for (var i = 0; i < data.distritos.length; i++) {
+                    if (code_distrito == data.distritos[i].pk) {
+                      distrito.append('<option selected="selected" value="' + data.distritos[i].pk + '">' + data.distritos[i].descripcion + '</option>');
+                    } else {
+                      distrito.append('<option value="' + data.distritos[i].pk + '">' + data.distritos[i].descripcion + '</option>');
+                    }
                   }
-                }
-                code_distrito = ''
-                // provincia.change();
-            }
-        })
+                  code_distrito = ''
+                  // provincia.change();
+              }
+          })
+      }
 
 
     });

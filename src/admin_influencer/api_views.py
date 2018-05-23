@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.db.models.expressions import RawSQL
 from rest_framework.generics import RetrieveUpdateAPIView, UpdateAPIView
-from django.db.models import Count, Sum, Case, Q, F, Subquery, Value, When, FloatField, CharField, Value as V
+from django.db.models import Count, Sum, Q, F, Subquery, FloatField, CharField, Value as V
 from django.db.models.functions import Cast, Concat
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, RetrieveAPIView
