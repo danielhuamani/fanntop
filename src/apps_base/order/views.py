@@ -1,11 +1,15 @@
 from django.shortcuts import render
 from django.db.models import Count, Sum, Q, F, Subquery, FloatField, CharField, Value as V
+from django.db.models.functions import Concat
 from rest_framework import viewsets
 from apps_base.core.mixins import BaseAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Order
+from .models import Order, OrderDetail
 from .serializers import OrderSerializer
+from apps_base.core.mixins import StandardPagination
+from apps_base.product.models import Product
+from apps_base.promotion.models import Coupon
 from apps_base.order.constants import PAGADO
 from apps_base.core.utils import range_month, format_date, range_start_end, month_initial, today_date, daterange
 import locale
@@ -15,13 +19,51 @@ class OrderViewSet(BaseAuthenticated, viewsets.ModelViewSet):
     """
     A simple ViewSet for viewing and editing accounts.
     """
-    queryset = Order.objects.all().prefetch_related('order_ordershipping',
+    queryset = Order.objects.all().annotate(full_name=Concat(
+        'order_order_customer__first_name', V(' '), 'order_order_customer__last_name',
+        output_field=CharField())).annotate(email=F(
+        'order_order_customer__email')).prefetch_related('order_ordershipping',
         'order_ordershipping__ubigeo', 'order_orderdetail', 'order_order_customer',
         'order_orderdetail__productdetail',
         'order_orderdetail__productdetail__product_product_images__product_image'
         ).order_by('-created')
     serializer_class = OrderSerializer
+    pagination_class = StandardPagination
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query_data = self.request.query_params
+        search = query_data.get('search', None)
+        field = query_data.get('field', None)
+        orderBy = query_data.get('orderBy', None)
+        total_to = query_data.get('total_to')
+        total_from = query_data.get('total_from')
+        create_from = query_data.get('create_from')
+        create_to = query_data.get('create_to')
+        status = query_data.get('status')
+        if search:
+            queryset = queryset.filter(
+                Q(order_order_customer__first_name__icontains=search) |
+                Q(order_order_customer__last_name__icontains=search) |
+                Q(order_order_customer__email__icontains=search))
+        if total_to:
+            queryset = queryset.filter(total__lte=float(total_to))
+        if total_from:
+            queryset = queryset.filter(total__gte=float(total_from))
+        if create_to:
+            queryset = queryset.filter(created__lte=format_date(create_to))
+        if create_from:
+            queryset = queryset.filter(created__gte=format_date(create_from))
+        if status:
+            queryset = queryset.filter(type_status_shipping=status)
+        if field:
+            if orderBy == 'desc':
+                ordering = '{0}{1}'.format('-', field)
+                queryset = queryset.order_by(ordering)
+            else:
+                queryset = queryset.order_by(field)
+
+        return queryset
 
 class OrderDashboardHeaderAPI(BaseAuthenticated, APIView):
     def get(self, request, format=None):
@@ -36,6 +78,7 @@ class OrderDashboardHeaderAPI(BaseAuthenticated, APIView):
             total_sales_month = 0
         total_sales_date = queryset_order.filter(created__date__gte=today).aggregate(total_sales_date=Sum('total'))
         total_sales_date = total_sales_date.get('total_sales_date', 0)
+        total_product = OrderDetail.objects.filter(id__in=queryset_order.values_list('id', flat=True)).count()
         if not total_sales_date:
             total_sales_date = 0
         data = {
@@ -44,6 +87,20 @@ class OrderDashboardHeaderAPI(BaseAuthenticated, APIView):
             'total_sales_month': total_sales_month,
             'total_sales_date': total_sales_date,
             'total_order_month': queryset_order.filter(created__date__gte=month).count(),
+            'total_product': total_product
+            # 'total_product': queryset_product.count()
+        }
+        return Response(data)
+
+
+class OrderDashboardFooterAPI(BaseAuthenticated, APIView):
+    def get(self, request, format=None):
+        skus = Product.objects.filter(is_active=True).count()
+        coupon = Coupon.objects.filter(is_active=True).count()
+        data = {
+            'skus': skus,
+            'coupon': coupon
+
             # 'total_product': queryset_product.count()
         }
         return Response(data)

@@ -75,14 +75,17 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     product_class_products = ProductSerializer(many=True)
     product_class_product_attr_value = ProductAttributeValueSerializer(many=True)
     family_name = serializers.SerializerMethodField()
+    influencer_name = serializers.SerializerMethodField()
 
     class Meta:
         model = ProductClass
         fields = ['id', 'influencer', 'category', 'name',  'description', 'is_variation',
              'title', 'slug', 'meta_description', 'product_class_product_attr_value',
              'product_class_products', 'family', 'attribute', 'characteristics', 'family_name',
-             'is_published']
+             'is_published', 'price', 'influencer_name']
 
+    def get_influencer_name(self, obj):
+        return obj.influencer.name
 
     def get_family_name(self, obj):
         return obj.family.name

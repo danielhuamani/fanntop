@@ -77,7 +77,6 @@ class UserChangePassSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         new_password = attrs['new_password']
         confirm_password = attrs['confirm_password']
-        print(new_password, confirm_password)
         if new_password != confirm_password:
             msg = _('Passwords do not match')
             raise serializers.ValidationError(msg)

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import BasePermission
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -41,3 +42,9 @@ class BaseAuthenticated:
 class BaseInfluencerAuthenticated:
     authentication_classes = (JSONWebTokenAuthentication, )
     permission_classes = (PermissionInfluencer,)
+
+
+class StandardPagination(PageNumberPagination):
+    page_size = 20
+    page_size_query_param = 'page_size'
+    max_page_size = 1000

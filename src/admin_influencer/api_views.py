@@ -68,8 +68,6 @@ class ProductListAPI(BaseInfluencerAuthenticated, ListAPIView):
                 queryset_initial = queryset_initial.filter(product_class_products__stock__gte=format_date(stock_from))
             if stock_to:
                 queryset_initial = queryset_initial.filter(product_class_products__stock__lte=format_date(create_from))
-            print('is_published', is_published)
-
         product_ids = queryset_initial.distinct('id').values_list('id', flat=True)
         queryset = ProductClass.objects.filter(
             id__in=product_ids,

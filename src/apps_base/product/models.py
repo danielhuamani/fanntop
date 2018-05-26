@@ -18,7 +18,7 @@ class ProductClass(CoreSeoSlugModel, CoreActiveModel):
     attribute = models.ManyToManyField('attribute.Attribute', related_name='attribute_product_class', blank=True)
     is_published = models.BooleanField(default=False)
     data_sheet = JSONField(default={})
-
+    price = models.DecimalField(_('price'), default=0, decimal_places=2, max_digits=5)
     class Meta:
         verbose_name = "Product"
         verbose_name_plural = "Products Class"

@@ -3,6 +3,7 @@ from drf_queryfields import QueryFieldsMixin
 from apps_base.product.models import Product, ProductImage
 from sorl.thumbnail import get_thumbnail
 from .models import Order, OrderCustomer, OrderDetail, OrderShippingAddress
+from django.utils import timezone
 
 
 class OrderProductSerializer(serializers.ModelSerializer):
@@ -60,13 +61,16 @@ class OrderSerializer(QueryFieldsMixin, serializers.ModelSerializer):
     order_order_customer = OrderCustomerSerializer()
     order_ordershipping = OrderShippingAddressSerializer()
     order_orderdetail = OrderDetailSerializer(many=True)
+    full_name = serializers.CharField(max_length=120, allow_blank=True, required=False)
+    email = serializers.CharField(max_length=120, allow_blank=True, required=False)
+    fecha = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
         fields = ['code', 'total', 'type_status', 'order_order_customer', 'status',
             'order_ordershipping', 'order_orderdetail', 'id', 'is_send_email',
             'shipping_influencer', 'type_status_shipping', 'extra_data', 'discount',
-            'shipping_price', 'sub_total']
+            'shipping_price', 'sub_total', 'full_name', 'fecha', 'email']
 
     def update(self, instance, validated_data):
         order_order_customer = validated_data.pop('order_order_customer')
@@ -74,6 +78,9 @@ class OrderSerializer(QueryFieldsMixin, serializers.ModelSerializer):
         order_orderdetail = validated_data.pop('order_orderdetail')
         instance = super(OrderSerializer, self).update(instance, validated_data)
         return instance
+
+    def get_fecha(self, obj):
+        return timezone.localtime(obj.created).strftime("%I:%M %p %d/%m/%Y ")
 
     def get_status(self, obj):
         return obj.get_type_status_display()
