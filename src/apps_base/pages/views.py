@@ -13,6 +13,20 @@ class PagesViewSet(BaseAuthenticated, viewsets.ModelViewSet):
     serializer_class = PagesSerializer
     queryset = Pages.objects.filter(is_trash=False)
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        field = self.request.query_params.get('field', None)
+        order_by = self.request.query_params.get('orderBy', None)
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(name__icontains=search)
+        if field:
+            if order_by == 'asc':
+                queryset = queryset.order_by(field)
+            elif order_by == 'desc':
+                queryset = queryset.order_by('-'+field)
+        return queryset
+
 
 class HomeBannerViewSet(BaseAuthenticated, viewsets.ModelViewSet):
 
@@ -20,10 +34,38 @@ class HomeBannerViewSet(BaseAuthenticated, viewsets.ModelViewSet):
     queryset = HomeBanner.objects.filter(is_trash=False)
     parser_classes = (MultiPartParser, FormParser, FileUploadParser)
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        field = self.request.query_params.get('field', None)
+        order_by = self.request.query_params.get('orderBy', None)
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(name__icontains=search)
+        if field:
+            if order_by == 'asc':
+                queryset = queryset.order_by(field)
+            elif order_by == 'desc':
+                queryset = queryset.order_by('-'+field)
+        return queryset
+
 class FrequentQuestionResponseSet(BaseAuthenticated, viewsets.ModelViewSet):
 
     serializer_class = FrequentQuestionResponseSerializer
     queryset = FrequentQuestionResponse.objects.all()
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        field = self.request.query_params.get('field', None)
+        order_by = self.request.query_params.get('orderBy', None)
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(question__icontains=search)
+        if field:
+            if order_by == 'asc':
+                queryset = queryset.order_by(field)
+            elif order_by == 'desc':
+                queryset = queryset.order_by('-'+field)
+        return queryset
     """
     List all snippets, or create a new snippet.
     """

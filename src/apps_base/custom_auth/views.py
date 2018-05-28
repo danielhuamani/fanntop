@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework.generics import UpdateAPIView
 from apps_base.core.mixins import BaseAuthenticated
+from apps_base.core.mixins import StandardPagination
 from .models import User
 from .serializers import UserSerializer, UserCreateSerializer, UserPasswordSerializer
 
@@ -13,6 +14,25 @@ class UserViewSet(BaseAuthenticated, viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserCreateSerializer
+    pagination_class = StandardPagination
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        field = self.request.query_params.get('field', None)
+        order_by = self.request.query_params.get('orderBy', None)
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(
+                Q(first_name__icontains=search) |
+                Q(last_name__icontains=search) |
+                Q(email__icontains=search)
+            )
+        if field:
+            if order_by == 'asc':
+                queryset = queryset.order_by(field)
+            elif order_by == 'desc':
+                queryset = queryset.order_by('-'+field)
+        return queryset
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
