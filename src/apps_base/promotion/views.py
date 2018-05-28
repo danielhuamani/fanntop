@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from apps_base.core.mixins import BaseAuthenticated
 from .models import Coupon, CouponGenerate
+from apps_base.core.mixins import StandardPagination
 from .serializers import CouponSerializer, CouponGenerateSerializer
 
 
@@ -11,8 +12,21 @@ class CouponViewSet(BaseAuthenticated, viewsets.ModelViewSet):
     """
     queryset = Coupon.objects.all()
     serializer_class = CouponSerializer
+    pagination_class = StandardPagination
 
-
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        field = self.request.query_params.get('field', None)
+        order_by = self.request.query_params.get('orderBy', None)
+        search = self.request.query_params.get('search', None)
+        if search:
+            queryset = queryset.filter(name__icontains=search)
+        if field:
+            if order_by == 'asc':
+                queryset = queryset.order_by(field)
+            elif order_by == 'desc':
+                queryset = queryset.order_by('-'+field)
+        return queryset
 
 class CouponGenerateViewSet(BaseAuthenticated, viewsets.ModelViewSet):
     """
