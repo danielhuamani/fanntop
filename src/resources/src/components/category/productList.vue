@@ -31,7 +31,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row" v-if='products.results.length > 0'>
           <div class="col-md-4"  v-for='product in products.results' >
             <a :href='"/producto/" + product.slug' class="box item-result">
               <div class="image"> <img :src="product.product_variant.product_image.image"/></div>
@@ -39,7 +39,7 @@
                 <h3 class="title">{{product.name}}</h3>
                 <!-- <h4 class="subtitle">subtitle</h4> -->
                 <div class="price">
-                  <span class="offer">S/. {{product.product_variant.price}}</span>
+                  <span class="offer">S/. {{product.price}}</span>
                   <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
                 </div>
               </div>
@@ -47,17 +47,26 @@
             </a>
           </div>
         </div>
-        <div class="row">
+        <div class="row mt-20" v-else>
+          <h2 class='notfound'>No se encontraron productos</h2>
+        </div>
+
+  <!--       <div class="row">
           <div class="result-paginator result-paginator-top">
             <div class="paginator"><span class="item disabled"><i class="fa fa-angle-double-left"></i></span><span class="item disabled"><i class="fa fa-angle-left"></i></span>
               <div class="text">1 De 8</div><a href="#" class="item"><i class="fa fa-angle-right"></i></a><a href="#" class="item"><i class="fa fa-angle-double-right"></i></a>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
 </template>
+<style>
+  .notfound{
+    margin-top: 30px;
+  }
+</style>
 <script>
   import productItem from '@/components/category/productItem'
   export default {

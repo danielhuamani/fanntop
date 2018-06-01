@@ -1,18 +1,25 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets
 from django.db.models import Q
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, RetrieveUpdateAPIView
 from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework import mixins
 from .models import ProductClass, Product, ProductGaleryImage, ProductImage
 from apps_base.core.mixins import BaseAuthenticated
-from .serializers import ProductClassSerializer, ProductSerializer, ProductGaleryImageSerializer, ProductImageSerializer, ProductClassAttributeSerializer
+from .serializers import ProductClassSerializer, ProductSerializer, ProductClassPaso1Serializer, ProductGaleryImageSerializer, ProductImageSerializer, ProductClassAttributeSerializer
 from apps_base.attribute.serializers import AttributeSerializer
 from apps_base.attribute.models import Attribute
 from apps_base.family.serializers import FamilyGroupSerializer
 from apps_base.family.models import Family, FamilyGroup, FamilyAttribute
 from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
 from apps_base.core.mixins import StandardPagination
+from django.db import transaction
+
+
+class ProductClassPaso1API(BaseAuthenticated, CreateAPIView, RetrieveUpdateAPIView):
+    queryset = ProductClass.objects.all()
+    serializer_class = ProductClassPaso1Serializer
 
 
 class ProductClassViewSet(BaseAuthenticated, viewsets.ModelViewSet):
@@ -134,6 +141,29 @@ class ProductClassAttributeAPI(BaseAuthenticated, RetrieveAPIView):
     queryset = ProductClass.objects.all()
     serializer_class = ProductClassAttributeSerializer
 
+
+class ProductClassCreateAPI(BaseAuthenticated, APIView):
+
+    def get_object(self):
+        return get_object_or_404(ProductClass, pk=self.kwargs.get('pk'))
+
+    @transaction.atomic()
+    def post(self, request, *args, **kwargs):
+        print(self.request.data)
+        product_class = self.get_object()
+        data = self.request.data.get('data')
+        for attr in data:
+            product_create = Product.objects.create(
+                product_class=product_class,
+                sku=attr.get('sku'),
+                stock=attr.get('stock'),
+                price=attr.get('price'),
+                is_featured=False,
+                is_variation=True,
+                is_active=False
+            )
+            product_create.attribute_option.add(*attr.get('attribute_option'))
+        return Response({})
     # def get_queryset(self):
     #     queryset = super().get_queryset()
     #     family_id = self.request.query_params.get('family', None)

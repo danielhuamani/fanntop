@@ -87,7 +87,7 @@
 
             </div>
           </div>
-          <productList v-if="load_products" :products='products'></productList>
+          <productList v-on:orderBy='orderBy' v-if="load_products" :products='products'></productList>
           <!--<productList v-if="products.results.length > 0" :products='products'></productList>-->
           <div  v-else  class="col-md-9 product-list-mask">
             <div class="content">
@@ -150,14 +150,16 @@
   import productList from '@/components/category/productList'
   import productListMask from '@/components/category/productListMask'
   export default {
-    name: 'categoryList',
+    name: 'influencerList',
     data () {
       return {
         products: {
           results: []
         },
         productsFilters: {},
-        query: {},
+        query: {
+          orderBy: 'name_asc'
+        },
         productsMask: [1,2,3],
         load_products: false,
         load_product_filter: false
@@ -205,6 +207,11 @@
       this.getProductsFilters(this.query)
     },
     methods: {
+      orderBy (order) {
+        this.query['orderBy'] = order
+        this.setRouter(this.query)
+        this.getProducts(this.query)
+      },
       getProducts (params) {
         const self = this
         this.axios({

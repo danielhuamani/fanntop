@@ -15,7 +15,8 @@ from decimal import Decimal
 
 
 class ProductClassCategoryListAPI(ListAPIView):
-    queryset = ProductClass.objects.active().filter(is_published=True).select_related('influencer').prefetch_related(
+    queryset = ProductClass.objects.active().filter(
+        is_published=True).select_related('influencer').prefetch_related(
         'product_class_products', 'category')
     serializer_class = ProductClassSerializer
     pagination_class = ProductPagination
@@ -35,23 +36,26 @@ class ProductClassCategoryListAPI(ListAPIView):
         if filter_influencer:
             queryset = queryset.filter(influencer__slug__in=filter_influencer)
         if filter_prices:
-            queryset = queryset.filter(product_class_products__price__lte=Decimal(filter_prices[1]),
-                product_class_products__price__gte=Decimal(filter_prices[0])).distinct('id')
+            queryset = queryset.filter(price__lte=Decimal(filter_prices[1]),
+                price__gte=Decimal(filter_prices[0]))
         for attr in filter_attribute:
             str_attr = '{0}{1}'.format(attr, '[]')
             attr_slug = self.request.query_params.getlist(str_attr, None)
             attr_list += attr_slug
+        if attr_list:
+            queryset_product_class = Product.objects.filter(
+                attribute_option__slug__in=attr_list).distinct('product_class_id')
             queryset = queryset.filter(
-                product_class_products__attribute_option__slug__in=attr_list).distinct('id')
-        # if orderBy:
-        #     if orderBy == 'name_asc':
-        #         queryset = queryset.order_by("id", 'name')
-        #     elif orderBy == 'name_desc':
-        #         queryset = queryset.order_by("id", '-name')
-        #     elif orderBy == 'price_asc':
-        #         queryset = queryset.order_by("id", 'product_class_products__price')
-        #     elif orderBy == 'price_desc':
-        #         queryset = queryset.order_by("id", '-product_class_products__price')
+                id__in=queryset_product_class.values_list('product_class_id', flat=True))
+        if orderBy:
+            if orderBy == 'name_asc':
+                queryset = queryset.order_by('name')
+            elif orderBy == 'name_desc':
+                queryset = queryset.order_by('-name')
+            elif orderBy == 'price_asc':
+                queryset = queryset.order_by('price')
+            elif orderBy == 'price_desc':
+                queryset = queryset.order_by('-price')
 
         return queryset
 
@@ -199,16 +203,30 @@ class ProductClassInfluencerListAPI(ListAPIView):
         # filter_influencer = self.request.query_params.getlist('influencer[]', None)
         filter_attribute = self.request.query_params.getlist('attr[]', None)
         filter_prices = self.request.query_params.getlist('prices[]', [])
+        orderBy = self.request.query_params.get('orderBy')
         attr_list = []
         for attr in filter_attribute:
             str_attr = '{0}{1}'.format(attr, '[]')
             attr_slug = self.request.query_params.getlist(str_attr, None)
             attr_list += attr_slug
         if attr_list:
-            queryset = queryset.filter(product_class_products__attribute_option__slug__in=attr_list).distinct('id')
+            queryset_product_class = Product.objects.filter(
+                attribute_option__slug__in=attr_list).distinct('product_class_id')
+            queryset = queryset.filter(
+                id__in=queryset_product_class.values_list('product_class_id', flat=True))
         if filter_prices:
-            queryset = queryset.filter(product_class_products__price__lte=Decimal(filter_prices[1]),
-                product_class_products__price__gte=Decimal(filter_prices[0])).distinct('id')
+            queryset = queryset.filter(price__lte=Decimal(filter_prices[1]),
+                price__gte=Decimal(filter_prices[0]))
+        if orderBy:
+            if orderBy == 'name_asc':
+                queryset = queryset.order_by('name')
+            elif orderBy == 'name_desc':
+                queryset = queryset.order_by('-name')
+            elif orderBy == 'price_asc':
+                queryset = queryset.order_by('price')
+            elif orderBy == 'price_desc':
+                queryset = queryset.order_by('-price')
+
         return queryset
 
     def get_serializer_context(self):
@@ -237,7 +255,7 @@ class InfluencerFilterAPI(APIView):
         filter_influencer = self.request.query_params.getlist('influencer[]', None)
         if filter_influencer:
             queryset = product_class.filter(influencer__slug__in=filter_influencer)
-        prices = queryset.aggregate(Max('product_class_products__price'), Min('product_class_products__price'))
+        prices = queryset.aggregate(Max('price'), Min('price'))
         product_ids = Product.objects.filter(
             product_class_id__in=product_class_ids, attribute_option__id__isnull=False)
 
@@ -254,8 +272,8 @@ class InfluencerFilterAPI(APIView):
         data = {
             'attributes': serializer_attribute,
             'prices': [
-                prices.get('product_class_products__price__min', 0),
-                prices.get('product_class_products__price__max', 0)
+                prices.get('price__min', 0),
+                prices.get('price__max', 0)
             ]
         }
         return Response(data)

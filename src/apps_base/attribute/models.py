@@ -18,7 +18,7 @@ class Attribute(CoreTimeModel, CoreActiveModel):
     slug = models.CharField(max_length=120, blank=True)
 
     def save(self, *args, **kwargs):
-        self.slug = uuslug(self.name, instance=self, slug_field='slug', filter_dict=None)
+        self.slug = uuslug(self.name, instance=self)
         super(Attribute, self).save(*args, **kwargs)
 
     class Meta:

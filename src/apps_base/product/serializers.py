@@ -5,7 +5,7 @@ from apps_base.attribute.serializers import AttributeOptionSerializer, Attribute
 from sorl.thumbnail import get_thumbnail
 from .models import ProductClass, Product, ProductAttributeValue, ProductGaleryImage, ProductImage
 from .utils import generate_sku
-
+from .contants import PASO1
 
 class ProductSerializer(serializers.ModelSerializer):
     sku = serializers.CharField(required=False, max_length=100, allow_blank=True)
@@ -52,7 +52,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductImage
-        fields = ['is_featured', 'product_image', 'product', 'image_crop']
+        fields = ['is_featured', 'product_image', 'product', 'image_crop', 'id']
 
 
     def get_image_crop(self, obj):
@@ -69,6 +69,14 @@ class ProductAttributeValueSerializer(serializers.ModelSerializer):
             'attribute', 'value_text','value_boolean',
             'value_input','value_multi_option','value_option', 'id'
         ]
+
+
+# class ProductClassAttrSerializer(QueryFieldsMixin, serializers.ModelSerializer):
+#     product_class_products = ProductSerializer(many=True)
+
+#     class Meta:
+#         model = ProductClass
+#         fields = ['id', 'product_class_products']
 
 
 class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
@@ -95,6 +103,7 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
         product_class_product_attr_value = validated_data.pop('product_class_product_attr_value')
         product_class_products = validated_data.pop('product_class_products')
         product_class = super(ProductClassSerializer, self).create(validated_data)
+
         if product_class.is_variation and product_class_products:
             for product in product_class_products:
                 product_create = Product.objects.create(
@@ -179,3 +188,19 @@ class ProductClassAttributeSerializer(QueryFieldsMixin, serializers.ModelSeriali
     class Meta:
         model = ProductClass
         fields = ['is_variation', 'attribute']
+
+
+class ProductClassPaso1Serializer(QueryFieldsMixin, serializers.ModelSerializer):
+
+    class Meta:
+        model = ProductClass
+        fields = ['id', 'influencer', 'category', 'name',  'description',
+            'characteristics']
+
+    @transaction.atomic
+    def create(self, validated_data):
+        product_class = super(ProductClassPaso1Serializer, self).create(validated_data)
+        product_class.process = PASO1
+        product_class.save()
+        return product_class
+

@@ -81,7 +81,7 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
 
     class Meta:
         model = ProductClass
-        fields = ['name', 'slug', 'id', 'product_variant']
+        fields = ['name', 'slug', 'id', 'product_variant', 'price']
 
 
     def get_product_variant(self, obj):

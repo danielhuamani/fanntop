@@ -4,13 +4,14 @@ from django.utils.translation import ugettext_lazy as _
 from apps_base.attribute.constants import INPUT, SELECT_SINGLE
 from apps_base.core.models import (CoreTimeModel, CoreSeoSlugModel, CoreActiveModel, CorePositionModel)
 from .utils import generate_sku
+from .contants import PROCESS_CHOICES
 
 
 class ProductClass(CoreSeoSlugModel, CoreActiveModel):
     influencer = models.ForeignKey(
         "influencer.Influencer", related_name='influencer_product_class')
     category = models.ManyToManyField('category.Category', related_name='category_product_class')
-    family = models.ForeignKey('family.Family', related_name='family_fk_product_class')
+    family = models.ForeignKey('family.Family', related_name='family_fk_product_class', null=True)
     name = models.CharField(_('title'), max_length=255)
     description = models.TextField(_('description'), blank=True)
     characteristics = models.TextField(_('characteristics'))
@@ -19,6 +20,8 @@ class ProductClass(CoreSeoSlugModel, CoreActiveModel):
     is_published = models.BooleanField(default=False)
     data_sheet = JSONField(default={})
     price = models.DecimalField(_('price'), default=0, decimal_places=2, max_digits=5)
+    process = models.CharField(max_length=120, choices=PROCESS_CHOICES)
+
     class Meta:
         verbose_name = "Product"
         verbose_name_plural = "Products Class"

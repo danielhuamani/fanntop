@@ -208,7 +208,6 @@
     },
     methods: {
       orderBy (order) {
-
         this.query['orderBy'] = order
         this.setRouter(this.query)
         this.getProducts(this.query)
