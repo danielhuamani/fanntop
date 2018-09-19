@@ -1,0 +1,170 @@
+* {
+  box-sizing: border-box;
+
+  //transition: width 0.15s linear 0s;
+}    
+
+html {
+  font-family: $f-main;
+  font-size: $fz-main;
+  text-rendering: optimizeLegibility;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: $bg-site-color;
+  color: $f-color;
+  margin: 0;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+  display: block;
+}
+
+audio, canvas, progress, video {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+audio {
+  width: 100%;
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+[hidden], template {
+  display: none;
+}
+
+a {
+  color: $black;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:active, &:hover, &:focus {
+    outline: 0;
+  }
+}
+
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+b, strong {
+  font-weight: bold;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  margin: 0;
+}
+
+img {
+  border: 0;
+
+  //width: 100%
+}
+
+figure {
+  line-height: 0.7;
+  margin: 0;
+  position: relative;
+}
+
+figcaption {
+  line-height: 1.2;
+}
+
+button, input, optgroup, select, textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  cursor: pointer;
+
+  &[disabled] {
+    cursor: default;
+  }
+}
+
+html input[disabled] {
+  cursor: default;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+input {
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+    line-height: normal;
+  }
+
+  &[type="checkbox"], &[type="radio"] {
+    padding: 0;
+  }
+
+  &[type="number"] {
+    &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+      height: auto;
+    }
+  }
+}
+
+fieldset {
+  //border: 1px solid #c0c0c0
+  //margin: 0 2px
+  //padding: 0.35em 0.625em 0.75em
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  border: 0;
+  padding: 0;
+}
+
+optgroup {
+  font-weight: bold;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td, th {
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.clear {
+  clear: both;
+}
+
+.hide {
+  display: none;
+}
+
+.last {
+  margin-right: 0 !important;
+}

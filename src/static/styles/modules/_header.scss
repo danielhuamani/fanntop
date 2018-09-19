@@ -1,0 +1,232 @@
+.header{
+    &__top{
+      padding: 10px 0;
+      display: flex;
+      justify-content: flex-end;
+      &__search{
+        width: 240px;
+      }
+      &__bag{
+        color: $white;
+        font-size: 20px;
+        font-weight: 700;
+        &:hover{
+          color: $white;
+        }
+      }
+      &__icons{
+        display: flex;
+        align-items: center;
+        a{
+          margin-left: 10px;
+          margin-right: 10px;
+          i{
+            font-size: 20px;
+            color:$white;
+          }
+        }
+      }
+    }
+    &__bot{
+      background: $white;
+      padding: 20px 0;
+      text-align: center;
+      a{
+        margin: auto;
+        display: inline-block;
+      }
+    }
+}
+#header{
+  background: $header;
+  .container{
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+
+  .logo{
+    margin: 0;
+    a{
+      width: 150px;
+      height: 66px;
+      display: block;
+      background: url("../img/logo_fanntop.png") no-repeat;
+      background-size: contain;
+      text-indent: -9999em;
+    }
+  }
+  .wrap-search{
+    input{
+      background: transparent;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      padding: 0.35em 0.5em;
+      color: #fff;
+      text-align: center;
+      font-size: 12px;
+      outline: none;
+      width: 100%;
+      &::-webkit-input-placeholder{
+        color: #fff;
+        opacity: 0.75;
+      }
+      &::input-placeholder{
+        color: #fff;
+      }
+
+    }
+  }
+  .list-options{
+    margin: 1em 0;
+    text-align: right;
+    li{
+      display: inline-block;
+      a{
+        padding: 0 0 0 25px;
+        color: #fff;
+        font-size: 13px;
+        i{
+          margin: 0 5px 0 0;
+        }
+      }
+    }
+  }
+}
+
+#nav{
+  position: relative;
+  &:after{
+    content: "";
+    background: #ccc;
+    height: 2px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+}
+
+nav{
+
+   ul {
+    margin: 0;
+    li{
+      display: inline-block;
+      a{
+        color: #000;
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 0.75em 0;
+        margin: 0 1em;
+        display: block;
+        border-bottom: 2px solid #ccc;
+        position: relative;
+        z-index: 2;
+      }
+      span{
+        color: #000;
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 0.75em 0;
+        margin: 0 1em;
+        display: block;
+        border-bottom: 2px solid #ccc;
+      }
+
+      &:hover{
+        a{
+          border-bottom: 2px solid $primary;
+          text-decoration: none;
+
+        }
+        .submenu{
+          display: block;
+        }
+      }
+      .submenu{
+        position: absolute;
+        left: 0;
+        top: 42px;
+        width: 100%;
+        z-index: 10;
+        background: #fff;
+        display: none;
+        padding: 1em;
+        h3{
+          margin: 0 0 0.5em;
+          display: block;
+        }
+      }
+      ul{
+        -moz-column-count: 4;
+        -moz-column-gap: 20px;
+        -webkit-column-count: 4;
+        -webkit-column-gap: 20px;
+        column-count: 4;
+        column-gap: 20px;
+        li{
+          display: block;
+          margin: 1em 0;
+          a{
+            display: block;
+            border-bottom: none !important;
+            position: static;
+            padding: 0.75em 0;
+            margin: 0;
+
+          }
+          &:hover{
+            a{
+              border-bottom: none !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.navbar-toggle {
+  position: relative;
+  float: left;
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  font-size: 22px;
+  margin-top: 8px;
+  margin-right: 0;
+  margin-bottom: 0;
+  padding: 5px 5px;
+  color: #fff;
+  line-height: 1;
+  display: none;
+  &:hover, &:focus{
+    color: #fff;
+  }
+}
+
+body .mm-menu{
+  background: #fff;
+  .mm-navbar a, .mm-menu .mm-navbar>*{
+    color: #000;
+  }
+  .mm-listitem>a, .mm-listitem>span{
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+.featured{
+  .slider-slick{
+    .slider-item{
+      .slider-item-image{
+        box-sizing: border-box;
+        padding-bottom: 28%;
+        position: relative;
+        background: url("") no-repeat center / cover;
+      }
+    }
+  }
+}

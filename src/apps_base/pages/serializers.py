@@ -9,7 +9,7 @@ class HomeBannerSerializer(serializers.ModelSerializer):
     class Meta:
         model = HomeBanner
         fields = ['id', 'name',  'position', 'image',
-             'is_active', 'image_crop']
+             'is_active', 'image_crop', 'url']
 
     def get_image_crop(self, obj):
         crop = get_thumbnail(obj.image, '180x60', crop='center', quality=99)

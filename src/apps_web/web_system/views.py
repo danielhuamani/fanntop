@@ -17,7 +17,7 @@ from .utils import send_mail_customer_welcome
 from apps_web.web_order.utils import send_mail_order_success
 
 def home(request):
-    home_banners = HomeBanner.objects.active()
+    home_banners = HomeBanner.objects.active().order_by('position')[:5]
     influencers = Influencer.objects.active().order_by('position')
     ctx = {
         'home_banners': home_banners,

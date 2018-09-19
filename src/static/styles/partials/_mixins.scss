@@ -1,0 +1,33 @@
+@mixin excerpt($font-size: $paragraph-font-size, $line-height: 1.4, $lines-to-show: 3) {
+  display: block;
+  display: -webkit-box;
+  max-height: $font-size * $line-height * $lines-to-show;
+  font-size: $font-size;
+  line-height: $line-height;
+  -webkit-line-clamp: $lines-to-show;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  @-moz-document url-prefix() {
+    overflow: hidden;
+    position: relative;
+
+    &:before {
+      bottom: 0;
+      position: absolute;
+      right: 0;
+      float: right;
+      content: "";
+      margin-left: -3rem;
+      width: 3rem;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      height: 50px;
+      width: 100%;
+      z-index: 1;
+    }
+  }
+}

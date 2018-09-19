@@ -324,6 +324,14 @@ border-radius8px
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  display: block;
+}
+.home-slick__block {
+  height: 360px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: block;
 }
 @media (max-width: 768px) {
   .home-slick__item {

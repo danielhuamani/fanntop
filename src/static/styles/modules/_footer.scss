@@ -1,0 +1,74 @@
+#footer{
+  background: #2c2c2c; 
+  padding: 1em 0; 
+  .block-list {
+    margin: 0 0 2em;
+    .logo{
+      width: 120px;
+      margin: 0 0 0;
+      img{
+
+      }
+    }
+
+    h3{
+      color: #fff;
+      font-size: 16px;
+      margin: 0 0 0.5em;
+    }
+    ul{
+      li{
+        a{
+          color: #fff;
+          font-size: 12px;
+        }
+      }
+    }
+    ul.social{
+      li{
+        display: inline-block;
+        a{
+          height: 24px;
+          width: 24px;
+          display: block;
+          border-radius: 100%;
+          background: #fff;
+          color: #000;
+          text-align: center;
+          line-height: 24px;
+        }
+      }
+    }
+    p{
+      color: #fff;
+      font-size: 12px;
+    }
+    p.copy{
+      padding: 0 0 0 1em;
+      margin: 0;
+    }
+    .w-form{
+      position: relative;
+      max-width: 300px;
+      input.text{
+        border: 1px solid #fff;
+        padding: 0.4em 3.2em 0.4em 0.4em;
+        float: left;
+        width: 100%;
+      }
+      button.btn{
+        vertical-align: top;
+        padding: 6px  1em 7px;
+        border-radius: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        i{
+          margin: 0;
+        }
+      }
+    }
+  }
+    
+}
+

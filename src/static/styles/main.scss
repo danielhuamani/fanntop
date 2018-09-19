@@ -1,0 +1,31 @@
+// Este archivo contiene variables e importaciones
+// de los archivos SASS que se trabajen en el site
+
+// BOOTSTRAP
+//@import "bootstrap";
+// VARIABLES
+@import "partials/variables";
+
+// BASE
+@import "partials/normalize";
+@import "partials/font-face";
+//@import "partials/icon-fonts";
+@import "fontawesome/fontawesome";
+
+// MIXINS
+@import "bootstrap";
+@import "partials/mixins";
+
+@import "partials/base";
+
+// Parts Modules
+@import "modules/header";
+@import "modules/footer";
+@import "modules/sidebar";
+@import "modules/ads";
+
+@import "modules/product_detail";
+@import "modules/car";
+@import "modules/checkout";
+
+@import "partials/responsive";

@@ -6,35 +6,27 @@
 {% block content %}
 
 <section class="featured">
-  <div class="media-content">
-    <div class="home-slick">
-      {% for home_banner in home_banners %}
-        {% thumbnail home_banner.image "x360" crop="center" as im %}
-        <div class="home-slick__item" style='background-image:url({{ im.url }})'>
-
-        </div>
-        {% endthumbnail %}
-      {% endfor %}
-    </div>
-  </div>
-</section>
-<section class="main">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      {% for influencer in influencers %}
-        <div class="col-md-3 col-sm-6 col-xs-6 col-mv">
-          <a href="{% url 'web_product:influencer_products' influencer.slug %}" class="box item-influencer">
-            <div class="image">
-              {% thumbnail influencer.image "350x350" crop="center" as im %}
-                <img src="{{ im.url }}"  height="{{ im.height }}">
-              {% endthumbnail %}
-            </div>
-            <div class="detail">
-              <h3 class="title">{{influencer.name}}</h3>
-            </div>
+        <div class="home-slick">
+          <a {% if home_banners.0.url %}href='{{home_banners.0.url}}'{% endif %} class="home-slick__item" style='background-image:url({{ home_banners.0.image.url }})'>
+          </a>
+          <a {% if home_banners.1.url %}href='{{home_banners.1.url}}'{% endif %} class="home-slick__item" style='background-image:url({{ home_banners.1.image.url }})'></a>
+          <a {% if home_banners.2.url %}href='{{home_banners.2.url}}'{% endif %} class="home-slick__item" style='background-image:url({{ home_banners.2.image.url }})'>
           </a>
         </div>
-      {% endfor %}
+        <a {% if home_banners.2.url %}href='{{home_banners.3.url}}'{% endif %} class="col-md-6 col-xs-6 mt-20 home-slick__block" style='background-image:url({{ home_banners.2.image.url }})'>
+        </a>
+        <a {% if home_banners.1.url %}href='{{home_banners.4.url}}'{% endif %} class=" col-md-6 col-xs-6 mt-20 home-slick__block" style='background-image:url({{ home_banners.1.image.url }})'>
+        </a>
+    </div>
+</section>
+<section class="home_influencer">
+  <div class="home_influencer__content">
+    <div class="home_influencer__slick">
+      <div class="home_influencer__slick__item">
+
+      </div>
     </div>
   </div>
 </section>
@@ -45,7 +37,9 @@ jQuery(document).ready(function($) {
     $(".home-slick").slick({
       infinite: true,
       slidesToShow: 1,
-      slidesToScroll: 1
+      slidesToScroll: 1,
+      prevArrow: '<i class="slick-prev fas fa-angle-left"></i>',
+      nextArrow: '<i class="slick-next fas fa-angle-right"></i>'
     });
 });
 </script>

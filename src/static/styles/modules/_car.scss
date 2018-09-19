@@ -1,0 +1,102 @@
+.box-car{
+  .inner{
+    padding: 0.5em;
+  }
+  .item-car{
+    .detail-car{
+      .image{
+        display: inline-block;
+        margin: 0 0.5em 0;
+      }
+      .detail{
+        display: inline-block;
+        vertical-align: top;
+        h3{
+          font-size: 1em;
+          font-weight: 700;
+          margin: 0 0 0.5em;
+        }
+        .sku{
+          font-size: 0.75em,
+        }
+      }
+    }
+
+    .w-price{
+      .price-promo {
+        font-weight: 500;
+        color: #ff4338;
+        font-size: 0.95em;
+        margin-bottom: 5px;
+      }
+      .price-normal{
+        color: #5d5d5d;
+        font-size: 0.8em;
+        .trought {
+          text-decoration: line-through;
+        }
+        .precio-percentage{
+          display: inline-block;
+          background: #fc4338;
+          color: #fff;
+          line-height: 1;
+          padding: 5px 7px 3px;
+          font-size: 0.8em;
+          font-weight: 500;
+          margin-left: 10px;
+          border-radius: 2px;
+        }
+      }
+    }
+    .w-quantity{}
+    .w-subtotal{}
+    .w-delete{
+      a{
+        color: $red;
+      }
+    }
+    
+  }
+  .w-total{
+    font-size: 1.5em;
+  }
+}
+
+.w-btn-car{
+  text-align: center;
+  padding: 1em 0;
+}
+
+.w-resume-car{
+  padding: 0.5em;
+  h3{
+    text-align: center;
+    font-size: 1.25em;
+    margin-bottom: 1em;
+  }
+  .coupon{
+    margin-bottom: 1.5em;
+    label{
+      margin: 0 0 0.5em;
+      display: block;
+    }
+    .w-form{
+      .inp_text{
+        line-height: 29px;
+        vertical-align: middle;
+      }
+    }
+  }
+  .subtotal{
+    padding: 0.5em;
+  }
+  .total{
+    background: #eee;
+    padding: 0.5em;
+    margin: 0.25em 0 0;
+  }
+  .w-btn{
+    text-align: center;
+    padding: 1em 0;
+  }
+}
