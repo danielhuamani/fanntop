@@ -4,32 +4,29 @@
 
 {% endblock css %}
 {% block content %}
-<section class="main checkout">
-  <div class="container">
-    <div class="row ">
-      <div class="col-md-3">
-        <div class="boxw ">
-          <div class="w-body">
-            <div class="sidebar sidebar_account">
-            <h3>Pregunta Frecuentes</h3>
-            <ul class='sidebar_account__info'>
-              {% for question_response in question_responses %}
-                <li><a href="{% url 'web_page:question_response_question' question_response.slug %}">{{question_response.question}}
-                   </a></li>
-              {% endfor %}
-            </ul>
-          </div>
-          </div>
+
+<section class='paginas'>
+  <div class="content">
+    <div class="paginas__block">
+      <h2 class="paginas__title">
+         {{question_response_first.question}}
+      </h2>
+      <div class="paginas__description">
+        <div class="paginas__menu">
+          <ul>
+            {% for question_response in question_responses %}
+              <li>
+                <a class='paginas__menu__link {% if slug == question_response.slug %}paginas__menu__link--active{% endif %} '  href='{% url 'web_page:question_response_question' question_response.slug %}'>{{question_response.question}}
+                {% if slug == question_response.slug %}
+                  <i class="fas fa-angle-right"></i>
+                {% endif %}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
         </div>
-      </div>
-      <div class="col-md-9">
-        <div class="boxw ">
-          <div class="w-body">
-            <h2 class='pages__title'>{{question_response_first.question}}</h2>
-            <div class="pages__content">
-              {{question_response_first.content|safe}}
-            </div>
-          </div>
+        <div class="paginas__content">
+          {{question_response_first.content|safe}}
         </div>
       </div>
     </div>

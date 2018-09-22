@@ -5,6 +5,7 @@ import influencer from '@/pages/influencer'
 import influencerNew from '@/pages/influencerNew'
 import productDetail from '@/pages/productDetail'
 import productFavorites from '@/pages/productFavorites'
+import home from '@/pages/home'
 import cart from '@/pages/cart'
 // import cartView from '@/common/cartView'
 Vue.use(Router)
@@ -12,6 +13,11 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: home
+    },
     {
       path: '/categoria/:slug_parent_category/:slug_category/',
       name: 'category_list',

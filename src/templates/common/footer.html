@@ -1,13 +1,7 @@
 {% load static %}
 <div id="footer">
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
-      <div class="col-md-3 col-sm-3 col-xs-6 col-mv">
-        <div class="block-list">
-          <div class="logo"><img src="{% static 'img/logo_fanntop.png' %}" alt=""/></div>
-          <p class="copy">Fanntop | Todos los derechos reservados.</p>
-        </div>
-      </div>
       <div class="col-md-3 col-sm-3 col-xs-6 col-mv">
         <div class="block-list">
           <h3>Servicio al cliente</h3>
@@ -31,24 +25,7 @@
             <li><a href='{% url "web_system:my_order" %}'>Mis Ordenes</a></li>
           </ul>
         </div>
-        <div class="block-list">
-          <h3>Redes Sociales</h3>
-          <ul class="social">
-            {% if configuration_processors.facebook %}
-              <li><a target="_blank" href="{{configuration_processors.facebook}}"><i class="fa fa-facebook"></i></a></li>
-            {% endif %}
 
-            {% if configuration_processors.twitter %}
-              <li><a target="_blank" href="{{configuration_processors.twitter}}"><i class="fa fa-twitter"></i></a></li>
-            {% endif %}
-            {% if configuration_processors.youtube %}
-              <li><a target="_blank" href="{{configuration_processors.youtube}}"><i class="fa fa-youtube"></i></a></li>
-            {% endif %}
-            {% if configuration_processors.instagram %}
-              <li><a target="_blank" href="{{configuration_processors.instagram}}"><i class="fa fa-instagram"></i></a></li>
-            {% endif %}
-          </ul>
-        </div>
       </div>
       <div class="col-md-3 col-sm-3 col-xs-6 col-mv">
         <div class="block-list">
@@ -58,11 +35,21 @@
               <input type="text" v-model='emailSuscription' class="text" placeholder="Ingresa tu email" />
               <button type="submit"  class="btn"><i class="fa fa-chevron-right"></i></button>
               <br></br>
-              #{!showEmailSuscription}
               <p v-if='showEmailSuscription'>#{messageEmailSuscription}</p>
-
             </form>
           </div>
+        </div>
+        <div class="block-list">
+          <h3>Redes Sociales</h3>
+          <ul class="social">
+            {% if configuration_processors.facebook %}
+              <li><a target="_blank" href="{{configuration_processors.facebook}}"><i class="fab fa-facebook-f"></i></a></li>
+            {% endif %}
+            {% if configuration_processors.youtube %}
+              <li><a target="_blank" href="{{configuration_processors.youtube}}"><i class="fab fa-youtube"></i></a></li>
+            {% endif %}
+
+          </ul>
         </div>
       </div>
     </div>

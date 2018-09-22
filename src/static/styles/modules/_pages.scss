@@ -1,0 +1,40 @@
+.paginas{
+    margin-bottom: 60px;
+    .paginas__block{
+        border: 1px solid $border;
+    }
+    &__description{
+        display: flex;
+    }
+    &__content{
+        padding: 35px;
+        width: calc(100% - 260px);
+    }
+    &__title{
+        margin: 0;
+        padding: 25px 30px;
+        font-size: 26px;
+        border-bottom: 1px solid $border;
+    }
+    &__menu{
+        border-right: 1px solid $border;
+        padding: 25px;
+        width: 260px;
+        li{
+            margin-bottom: 15px;
+        }
+        &__link{
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+            color: $border;
+            &--active{
+                color: $black;
+            }
+            &:hover{
+                color: $black;
+            }
+        }
+    }
+}

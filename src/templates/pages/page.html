@@ -4,15 +4,50 @@
 
 {% endblock css %}
 {% block content %}
-<section class="main checkout">
+{% comment %}
+  <section class="main checkout">
   <div class="container">
     <div class="row ">
-      <div class="boxw pages">
+      <div class="boxw paginas">
         <div class="w-body">
-          <h2 class='pages__title'>{{page.name|safe}}</h2>
-          <div class="pages__content">
+          <h2 class='paginas__title'>{{page.name|safe}}</h2>
+          <div class="paginas__content">
             {{page.description|safe}}
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endcomment %}
+<section class='paginas'>
+  <div class="content">
+    <div class="paginas__block">
+      <h2 class="paginas__title">
+        {{page.name|safe}}
+      </h2>
+      <div class="paginas__description">
+        <div class="paginas__menu">
+          <ul>
+            {% for page_pro in pages_processors %}
+              <li><a class='paginas__menu__link {% if slug == page_pro.slug %}paginas__menu__link--active{% endif %} '  href='{% url "web_page:pages" page_pro.slug %}'>{{page_pro.name}}
+              {% if slug == page_pro.slug %}
+                <i class="fas fa-angle-right"></i>
+              {% endif %}
+              </a>
+              </li>
+            {% endfor %}
+              <li><a class='paginas__menu__link '  href='{% url "web_page:question_response" %}'>Preguntas Frecuentes
+
+              </a>
+              </li>
+              <li><a class='paginas__menu__link' href='{% url "web_system:follow_orders" %}'>Sigue tu orden</a></li>
+              <li><a class='paginas__menu__link' href="{% url 'web_page:contact' %}">Soporte al cliente</a></li>
+              <li><a class='paginas__menu__link' href="{% url 'web_page:complaints_book' %}">Libro de reclamaciones</a></li>
+          </ul>
+        </div>
+        <div class="paginas__content">
+          {{page.description|safe}}
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 {% extends "common/base.html" %}
-{% load static thumbnail %}
+{% load static thumbnail product_tags %}
 {% block css %}
 
 {% endblock css %}
@@ -21,12 +21,24 @@
         </a>
     </div>
 </section>
-<section class="home_influencer">
-  <div class="home_influencer__content">
+<section class="home_influencer ">
+  <div class="home_influencer__content ">
+    <router-view ></router-view>
     <div class="home_influencer__slick">
+      {% for influencer_chunks in influencers|chunks %}
+
       <div class="home_influencer__slick__item">
+        {% for inf in influencer_chunks %}
+          <a href="" class='home_influencer__item'>
+            {% thumbnail inf.image "242x315" crop="center" as im %}
+                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+            {% endthumbnail %}
+            <h3 class='home_influencer__item__name'>{{inf.name}}</h3>
+          </a>
+        {% endfor %}
 
       </div>
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -41,6 +53,13 @@ jQuery(document).ready(function($) {
       prevArrow: '<i class="slick-prev fas fa-angle-left"></i>',
       nextArrow: '<i class="slick-next fas fa-angle-right"></i>'
     });
+    $(".home_influencer__slick").slick({
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      prevArrow: '<i class="slick-prev home_influencer__prev fas fa-angle-left"></i>',
+      nextArrow: '<i class="slick-next home_influencer__next fas fa-angle-right"></i>'
+    });
+
 });
 </script>
 

@@ -5871,8 +5871,7 @@ html {
   box-sizing: inherit; }
 
 body {
-  font-family: "Open Sans", sans-serif;
-  background: #fffaf4; }
+  font-family: "Open Sans", sans-serif; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Lato", sans-serif;
@@ -5904,11 +5903,11 @@ img {
   font-weight: 500; }
   .btn i {
     margin-left: 10px; }
-  .btn.btn-primary {
-    background: #ff7e00;
-    color: #fff; }
   .btn.btn-min {
     padding: 0.5em 1em; }
+  .btn--main {
+    background-color: #512DE7;
+    color: #fff; }
 
 .cf:before,
 .cf:after {
@@ -6450,7 +6449,7 @@ body .mm-menu {
   background: url("") no-repeat center/cover; }
 
 #footer {
-  background: #2c2c2c;
+  background: #512DE7;
   padding: 1em 0; }
   #footer .block-list {
     margin: 0 0 2em; }
@@ -6467,14 +6466,13 @@ body .mm-menu {
     #footer .block-list ul.social li {
       display: inline-block; }
       #footer .block-list ul.social li a {
-        height: 24px;
-        width: 24px;
         display: block;
         border-radius: 100%;
-        background: #fff;
-        color: #000;
+        color: #fff;
         text-align: center;
-        line-height: 24px; }
+        font-size: 18px; }
+    #footer .block-list ul.social li:first-child a {
+      margin-right: 10px; }
     #footer .block-list p {
       color: #fff;
       font-size: 12px; }
@@ -6495,7 +6493,8 @@ body .mm-menu {
         border-radius: 0;
         position: absolute;
         right: 0;
-        top: 0; }
+        top: 0;
+        background: transparent; }
         #footer .block-list .w-form button.btn i {
           margin: 0; }
 
@@ -6611,6 +6610,110 @@ body .mm-menu {
     max-width: 100%; }
   [class^="ads-"] .container, [class*=" ads-"] .container {
     padding: 0; }
+
+.home_influencer__content {
+  max-width: 780px;
+  margin: auto;
+  margin-top: 30px; }
+.home_influencer .slick-prev:before, .home_influencer .slick-next:before {
+  font-size: 110px !important;
+  color: #B3B3B3; }
+.home_influencer .slick-prev, .home_influencer .slick-next {
+  width: 60px;
+  height: 100px;
+  top: 42%; }
+.home_influencer .slick-prev {
+  left: -90px; }
+.home_influencer .slick-next {
+  right: -60px; }
+.home_influencer__search {
+  max-width: 620px;
+  margin: auto;
+  margin-bottom: 80px;
+  position: relative; }
+  .home_influencer__search--active:before {
+    content: '';
+    width: 60px;
+    height: 33px;
+    background-image: url("../img/capa.png");
+    top: 58px;
+    background-position-x: center;
+    position: absolute;
+    left: 0px;
+    right: 0;
+    margin: auto; }
+  .home_influencer__search__api {
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-image: url("../img/capa.png");
+    background-position: center center;
+    max-height: 220px;
+    overflow-y: scroll; }
+    .home_influencer__search__api__influencer {
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid #666666; }
+      .home_influencer__search__api__influencer__img {
+        border-radius: 50%; }
+      .home_influencer__search__api__influencer__name {
+        margin-left: 20px;
+        font-size: 20px;
+        color: #000; }
+  .home_influencer__search__icon {
+    font-size: 22px;
+    position: absolute;
+    top: 8px;
+    left: 8px; }
+  .home_influencer__search__input {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #000;
+    height: 36px;
+    padding-left: 36px; }
+.home_influencer__item {
+  display: block;
+  margin-bottom: 80px; }
+  .home_influencer__item__name {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #000;
+    text-align: center; }
+
+.paginas {
+  margin-bottom: 60px; }
+  .paginas .paginas__block {
+    border: 1px solid #808080; }
+  .paginas__description {
+    display: flex; }
+  .paginas__content {
+    padding: 35px;
+    width: calc(100% - 260px); }
+  .paginas__title {
+    margin: 0;
+    padding: 25px 30px;
+    font-size: 26px;
+    border-bottom: 1px solid #808080; }
+  .paginas__menu {
+    border-right: 1px solid #808080;
+    padding: 25px;
+    width: 260px; }
+    .paginas__menu li {
+      margin-bottom: 15px; }
+    .paginas__menu__link {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      color: #808080; }
+      .paginas__menu__link--active {
+        color: #000; }
+      .paginas__menu__link:hover {
+        color: #000; }
 
 .wrap-gallery {
   overflow: hidden;

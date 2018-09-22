@@ -4,64 +4,80 @@
 
 {% endblock css %}
 {% block content %}
-<section class="main checkout">
-  <div class="container">
-    <div class="row ">
-      <div class="boxw pages">
-        <div class="w-body">
-          <h2 class='pages__title'>Contacto</h2>
-          <form class="pages__content" method="POST" action=".">
+
+<section class='paginas'>
+  <div class="content">
+    <div class="paginas__block">
+      <h2 class="paginas__title">
+        Contacto
+      </h2>
+      <div class="paginas__description">
+        <div class="paginas__menu">
+          <ul>
+            {% for page_pro in pages_processors %}
+              <li><a class='paginas__menu__link {% if slug == page_pro.slug %}paginas__menu__link--active{% endif %} '  href='{% url "web_page:pages" page_pro.slug %}'>{{page_pro.name}}
+              {% if slug == page_pro.slug %}
+                <i class="fas fa-angle-right"></i>
+              {% endif %}
+              </a>
+              </li>
+            {% endfor %}
+              <li><a class='paginas__menu__link '  href='{% url "web_page:question_response" %}'>Preguntas Frecuentes
+
+              </a>
+              </li>
+              <li><a class='paginas__menu__link' href='{% url "web_system:follow_orders" %}'>Sigue tu orden</a></li>
+              <li><a class='paginas__menu__link paginas__menu__link--active' href="{% url 'web_page:contact' %}">Soporte al cliente<i class="fas fa-angle-right"></i></a></li>
+              <li><a class='paginas__menu__link' href="{% url 'web_page:complaints_book' %}">Libro de reclamaciones</a></li>
+          </ul>
+        </div>
+        <div class="paginas__content">
+          <div class="row">
+            <div class="col-md-12">
+              <p>Si tienes alguna consulta, podras contactarnos mediante este formulario. </p>
+            </div>
+          </div>
+          <form class="" method="POST" action=".">
             {% csrf_token %}
             <div class="row">
-
-              <div class="col-md-8 col-md-offset-2">
-                <div class="row">
-                  <div class="col-md-12">
-                    <p>Si tienes alguna consulta, podras contactarnos mediante este formulario. </p>
-                  </div>
-                  <br></br>
+              <div class="col-md-6">
+                <div class="form-group">
+                  {{form.first_name.label_tag}}
+                  {{form.first_name|add_class:'form-control'}}
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      {{form.first_name.label_tag}}
-                      {{form.first_name|add_class:'form-control'}}
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      {{form.last_name.label_tag}}
-                      {{form.last_name|add_class:'form-control'}}
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      {{form.email.label_tag}}
-                      {{form.email|add_class:'form-control'}}
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      {{form.subject.label_tag}}
-                      {{form.subject|add_class:'form-control'}}
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      {{form.phone.label_tag}}
-                      {{form.phone|add_class:'form-control'}}
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      {{form.message.label_tag}}
-                      {{form.message|add_class:'form-control'}}
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <button class='btn btn-primary btn-lg'>Enviar</button>
-                  </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  {{form.last_name.label_tag}}
+                  {{form.last_name|add_class:'form-control'}}
                 </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  {{form.email.label_tag}}
+                  {{form.email|add_class:'form-control'}}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  {{form.subject.label_tag}}
+                  {{form.subject|add_class:'form-control'}}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  {{form.phone.label_tag}}
+                  {{form.phone|add_class:'form-control'}}
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  {{form.message.label_tag}}
+                  {{form.message|add_class:'form-control'}}
+                </div>
+              </div>
+              <div class="col-md-12">
+                <button class='btn btn-primary btn--main pull-right'>Enviar</button>
               </div>
             </div>
           </form>

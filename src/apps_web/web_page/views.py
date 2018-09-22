@@ -20,7 +20,8 @@ def question_response(request):
         question_response_first = question_responses.first()
     ctx = {
         'question_responses': question_responses,
-        'question_response_first': question_response_first
+        'question_response_first': question_response_first,
+        'slug': question_response_first.slug
     }
     return render(request, "pages/question_response.html", ctx)
 
@@ -32,6 +33,7 @@ def question_response_question(request, slug):
     ctx = {
         'question_response': question_response,
         'question_responses': question_responses,
+        'slug': slug
     }
     return render(request, "pages/question_response_question.html", ctx)
 
@@ -45,7 +47,8 @@ def payment_methods(request):
 def pages(request, slug):
     page = get_object_or_404(Pages, slug=slug)
     ctx = {
-        'page': page
+        'page': page,
+        'slug': slug
     }
     return render(request, "pages/page.html", ctx)
 

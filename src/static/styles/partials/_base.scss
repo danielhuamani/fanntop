@@ -8,7 +8,6 @@ html {
 
 body {
   font-family: $f-main;
-  background: #fffaf4;
 }
 
 
@@ -50,12 +49,16 @@ img{
   i{
     margin-left: 10px;
   }
-  &.btn-primary{
-    background: $primary;
-    color: #fff;
-  }
+  // &.btn-primary{
+  //   background: $primary;
+  //   color: #fff;
+  // }
   &.btn-min{
     padding: 0.5em 1em;
+  }
+  &--main{
+    background-color: $header;
+    color: $white;
   }
 }
 

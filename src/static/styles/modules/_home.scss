@@ -1,0 +1,106 @@
+.home_influencer{
+    &__content{
+        max-width: 780px;
+        margin: auto;
+        margin-top: 30px;
+    }
+    .slick-prev:before, .slick-next:before{
+        font-size: 110px !important;
+        color: #B3B3B3;
+    }
+    .slick-prev, .slick-next{
+        width: 60px;
+        height: 100px;
+        top: 42%;
+    }
+    .slick-prev{
+        left: -90px;
+    }
+    .slick-next{
+        right: -60px;
+    }
+    &__search{
+        max-width: 620px;
+        margin: auto;
+        margin-bottom: 80px;
+        position: relative;
+        &--active{
+            &:before{
+                content: '';
+                width: 60px;
+                height: 33px;
+                background-image: url('../img/capa.png');
+                top: 58px;
+                background-position-x: center;
+                position: absolute;
+                left: 0px;
+                right: 0;
+                margin: auto;
+            }
+        }
+        // &:after{
+        //     content: '';
+        //     width: 0px;
+        //     height: 0px;
+        //     border-right: 35px solid transparent;
+        //     border-left: 35px solid transparent;
+        //     border-bottom: 35px solid $white;
+        //     position: absolute;
+        //     left: 0px;
+        //     top: 55px;
+        //     right: 0;
+        //     margin: auto;
+        // }
+        &__api{
+            position: absolute;
+            top: 90px;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-image: url('../img/capa.png');
+            background-position: center center;
+            // box-shadow: 0px 0px 10px rgba(102, 102, 102, 0.5);
+            max-height: 220px;
+            overflow-y: scroll;
+
+            &__influencer{
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-bottom: 1px solid #666666;
+                &__img{
+                    border-radius: 50%;
+                }
+                &__name{
+                    margin-left: 20px;
+                    font-size: 20px;
+                    color: $black;
+                }
+            }
+        }
+        &__icon{
+            font-size: 22px;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+        }
+        &__input{
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid $black;
+            height: 36px;
+            padding-left: 36px;
+        }
+    }
+    &__item{
+        display: block;
+        margin-bottom: 80px;
+        &__name{
+            margin-top: 10px;
+            font-size: 18px;
+            color: $black;
+            text-align: center;
+        }
+    }
+}

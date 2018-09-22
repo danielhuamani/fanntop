@@ -4,16 +4,43 @@
 
 {% endblock css %}
 {% block content %}
-<section class="main checkout">
-  <div class="container">
-    <div class="row ">
-      <div class="boxw pages">
-        <div class="w-body">
-          <h2 class='pages__title'>Libro de reclamaciones</h2>
-          <form class="pages__content" method="POST" action=".">
+
+<section class='paginas'>
+  <div class="content">
+    <div class="paginas__block">
+      <h2 class="paginas__title">
+        Libro de Reclamaciones
+      </h2>
+      <div class="paginas__description">
+        <div class="paginas__menu">
+          <ul>
+            {% for page_pro in pages_processors %}
+              <li><a class='paginas__menu__link {% if slug == page_pro.slug %}paginas__menu__link--active{% endif %} '  href='{% url "web_page:pages" page_pro.slug %}'>{{page_pro.name}}
+              {% if slug == page_pro.slug %}
+                <i class="fas fa-angle-right"></i>
+              {% endif %}
+              </a>
+              </li>
+            {% endfor %}
+              <li><a class='paginas__menu__link '  href='{% url "web_page:question_response" %}'>Preguntas Frecuentes
+
+              </a>
+              </li>
+              <li><a class='paginas__menu__link' href='{% url "web_system:follow_orders" %}'>Sigue tu orden</a></li>
+              <li><a class='paginas__menu__link paginas__menu__link--active' href="{% url 'web_page:contact' %}">Soporte al cliente<i class="fas fa-angle-right"></i></a></li>
+              <li><a class='paginas__menu__link' href="{% url 'web_page:complaints_book' %}">Libro de reclamaciones</a></li>
+          </ul>
+        </div>
+        <div class="paginas__content">
+          <div class="row">
+            <div class="col-md-12">
+              <p>Si tienes alguna consulta, podras contactarnos mediante este formulario. </p>
+            </div>
+          </div>
+           <form class="pages__content" method="POST" action=".">
             {% csrf_token %}
             <div class="row">
-              <div class="col-md-10 col-md-offset-1">
+              <div class="col-md-12">
                 <h3 class="w-body__title">1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE</h3>
                 <div class="row">
                   <div class="col-md-6">
@@ -82,7 +109,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-10 col-md-offset-1">
+              <div class="col-md-12">
                 <br></br>
                 <h3 class="w-body__title">2. IDENTIFICACIÓN DEL BIEN CONTRATADO</h3>
                 <div class="row">
@@ -112,7 +139,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-10 col-md-offset-1">
+              <div class="col-md-12">
                 <br></br>
                 <h3 class="w-body__title">3. DETALLE DE LA RECLAMACIÓN Y PEDIDO DEL CONSUMIDOR</h3>
                 <div class="row">
@@ -142,7 +169,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-10 col-md-offset-1">
+              <div class="col-md-12">
                 <br></br>
                 <h3 class="w-body__title">4. OBSERVACIONES Y ACCIONES ADOPTADAS POR EL PROVEEDOR</h3>
                 <div class="row">
@@ -152,10 +179,10 @@
                       {{form.observation|add_class:'form-control'}}
                     </div>
                   </div>
-                  <div class="col-md-12">
-                    <button class='btn btn-primary btn-lg'>Enviar</button>
-                  </div>
                 </div>
+              </div>
+              <div class="col-md-12">
+                <button class='btn btn-primary btn--main pull-right'>Enviar</button>
               </div>
             </div>
 

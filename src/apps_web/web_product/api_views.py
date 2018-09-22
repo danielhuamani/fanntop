@@ -7,12 +7,21 @@ from apps_base.product.models import ProductClass, Product
 from apps_base.category.models import Category
 from apps_base.influencer.models import Influencer
 from apps_base.attribute.models import Attribute
-from .serializers import (ProductClassSerializer, InfluencerFilterSerializer,
+from .serializers import (ProductClassSerializer, InfluencerFilterSerializer, InfluencerSerializer,
     AttributeFilterSerializer, ProductClassDetailSerializer, ProductClassAttrSerializer, ProductDetailSerializer)
 from .utils import ProductPagination
 from apps_base.customers.models import CustomerProductFavorite
 from decimal import Decimal
 
+
+class InfluencerListAPI(ListAPIView):
+    queryset = Influencer.objects.active().order_by('name')
+    serializer_class = InfluencerSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search = self.request.query_params.get('search')
+        return queryset.filter(name__icontains=search)
 
 class ProductClassCategoryListAPI(ListAPIView):
     queryset = ProductClass.objects.active().filter(

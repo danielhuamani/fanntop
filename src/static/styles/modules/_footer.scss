@@ -1,6 +1,6 @@
 #footer{
-  background: #2c2c2c; 
-  padding: 1em 0; 
+  background: $header;
+  padding: 1em 0;
   .block-list {
     margin: 0 0 2em;
     .logo{
@@ -28,14 +28,17 @@
       li{
         display: inline-block;
         a{
-          height: 24px;
-          width: 24px;
+
           display: block;
           border-radius: 100%;
-          background: #fff;
-          color: #000;
+          color: $white;
           text-align: center;
-          line-height: 24px;
+          font-size: 18px;
+        }
+      }
+      li:first-child{
+        a{
+          margin-right: 10px;
         }
       }
     }
@@ -63,12 +66,13 @@
         position: absolute;
         right: 0;
         top: 0;
+        background: transparent;
         i{
           margin: 0;
         }
       }
     }
   }
-    
+
 }
 

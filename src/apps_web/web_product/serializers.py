@@ -181,3 +181,14 @@ class InfluencerFilterSerializer(serializers.ModelSerializer):
         model = Influencer
         fields = ['name', 'id', 'slug']
 
+
+class InfluencerSerializer(serializers.ModelSerializer):
+    image_crop = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Influencer
+        fields = ['name', 'slug', 'image_crop']
+
+    def get_image_crop(self, obj):
+        crop = get_thumbnail(obj.image, '50x50', crop='center', quality=99)
+        return crop.url
