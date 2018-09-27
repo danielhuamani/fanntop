@@ -15,9 +15,14 @@
           <a {% if home_banners.2.url %}href='{{home_banners.2.url}}'{% endif %} class="home-slick__item" style='background-image:url({{ home_banners.2.image.url }})'>
           </a>
         </div>
-        <a {% if home_banners.3.url %}href='{{home_banners.3.url}}'{% endif %} class="col-md-6 col-xs-6 mt-20 home-slick__block" style='background-image:url({{ home_banners.3.image.url }})'>
-        </a>
-        <a {% if home_banners.4.url %}href='{{home_banners.4.url}}'{% endif %} class=" col-md-6 col-xs-6 mt-20 home-slick__block" style='background-image:url({{ home_banners.4.image.url }})'>
+        {% if home_banners.3 %}
+          <a {% if home_banners.3.url %}href='{{home_banners.3.url}}'{% endif %} class="col-md-6 col-xs-6 mt-20 home-slick__block" style='background-image:url({{ home_banners.3.image.url }})'>
+          </a>
+        {% endif %}
+        {% if home_banners.4 %}
+          <a {% if home_banners.4.url %}href='{{home_banners.4.url}}'{% endif %} class=" col-md-6 col-xs-6 mt-20 home-slick__block" style='background-image:url({{ home_banners.4.image.url }})'>
+
+        {% endif %}
         </a>
     </div>
 </section>
