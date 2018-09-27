@@ -1,0 +1,17 @@
+.page_lr{
+    display: flex;
+    &__title{
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    &__login{
+        width: 50%;
+        padding-right: 40px;
+
+    }
+    &__register{
+        width: 50%;
+        padding-left: 40px;
+        border-left: 1px solid $border;
+    }
+}

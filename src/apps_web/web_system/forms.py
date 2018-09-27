@@ -22,7 +22,7 @@ class CustomerForm(forms.ModelForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name')
+        fields = ('email', 'first_name', 'last_name', 'avatar')
 
 
 
@@ -33,7 +33,7 @@ class CustomerShippingAddressForm(forms.ModelForm):
     class Meta:
         model = CustomerShippingAddress
         fields = ('first_name', 'last_name', 'type_document', 'document',
-            'phone', 'address', 'reference', 'ubigeo')
+            'phone', 'address', 'reference', 'ubigeo', 'type_address')
 
 
 class FollowOrdersForm(forms.Form):

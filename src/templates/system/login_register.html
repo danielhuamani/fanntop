@@ -6,11 +6,11 @@
 {% block content %}
 <section class="main">
         <div class="container">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="boxw box-login">
-                <div class="title-page">
-                  <h2>Ingresar</h2>
+          <div class="page_lr">
+            <div class="page_lr__login">
+              <div class="box-login">
+                <div class="page_lr__title">
+                  <h2>INGRESAR</h2>
                 </div>
                 <div class="w-body">
                   <form action="" method='POST'>
@@ -34,15 +34,15 @@
                     <div class="form-group form-group--errors">
                         {{form_login.non_field_errors.as_text}}
                     </div>
-                    <button type="submit" name="type_submit" value="{{LOGIN}}" class="btn btn-primary">Entrar</button>
+                    <button type="submit" name="type_submit" value="{{LOGIN}}" class="btn btn--grey btn-block">Entrar</button>
                   </form>
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="boxw box-registrate">
-                <div class="title-page">
-                  <h2>Crear una nueva cuenta</h2>
+            <div class="page_lr__register">
+              <div class=" box-registrate">
+                <div class="page_lr__title">
+                  <h2>CREAR UNA NUEVA CUENTA</h2>
                 </div>
                 <div class="w-body">
                   <form action="" method='POST'>
@@ -73,7 +73,7 @@
                           {{form_register.password2.help_text|safe}}
                       </div>
                     </div>
-                    <button type="submit" name="type_submit" value="{{REGISTER}}" class="btn btn-primary">Registrar</button>
+                    <button type="submit" name="type_submit" value="{{REGISTER}}" class="btn btn--grey btn-block">Registrar</button>
                   </form>
                 </div>
               </div>

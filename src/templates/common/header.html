@@ -14,11 +14,11 @@
               <i class="far fa-user"></i>
             </a>
           </div>
-          <a href="" class='header__top__bag'>Bag</a>
+          <a href="" class='header__top__bag' @click.prevent='changeStatusCartView()' >Bag</a>
       </div>
     </div>
     <div class="header__bot">
-      <a href="">
+      <a href="/">
         <img src="{% static 'img/logo_fanntop_2.png' %}" alt="">
       </a>
     </div>

@@ -55,7 +55,7 @@
         color: $red;
       }
     }
-    
+
   }
   .w-total{
     font-size: 1.5em;
@@ -98,5 +98,19 @@
   .w-btn{
     text-align: center;
     padding: 1em 0;
+  }
+}
+.page_car{
+  &__title{
+    font-size: 22px;
+    margin-bottom: 20px
+  }
+  &__continue_pay{
+    color:$black;
+    border-bottom: 1px solid transparent;
+    &:hover{
+      color:$black;
+      border-bottom: 1px solid $black;
+    }
   }
 }

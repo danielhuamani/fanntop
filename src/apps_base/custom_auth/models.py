@@ -19,6 +19,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=False,
         help_text=_('Designates whether the user can log into this admin site.'),
     )
+    avatar = models.ImageField(upload_to='avatar', blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 

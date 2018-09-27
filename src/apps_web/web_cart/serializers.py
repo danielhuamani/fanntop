@@ -9,16 +9,23 @@ class CartItemSerializer(serializers.ModelSerializer):
     product_price = serializers.SerializerMethodField()
     product_name = serializers.SerializerMethodField()
     product_sku = serializers.SerializerMethodField()
+    influencer_name = serializers.SerializerMethodField()
 
     class Meta:
         model = CartItem
         fields = [
             'quantity', 'cart_item_total', 'product_price', 'image', 'product_name',
-            'product_sku', 'extra_data'
+            'product_sku', 'extra_data', 'influencer_name'
         ]
 
     def get_product_price(self, obj):
         return obj.product.get_price
+
+    def get_influencer_name(self, obj):
+        return obj.product.product_class.influencer.name
+
+    def get_product_name(self, obj):
+        return obj.product.product_class.name
 
     def get_product_name(self, obj):
         return obj.product.product_class.name

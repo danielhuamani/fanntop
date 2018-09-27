@@ -42,7 +42,7 @@
 }
 .shipping-method-box{
   border: 1px solid #eee;
-  
+
   .content-box{
     display: block;
     padding: 0.75em 0.75em;
@@ -75,5 +75,24 @@
         float: right;
       }
     }
+  }
+}
+.checkout{
+  &__sidebar{
+    border: 1px solid $black;
+    border-radius: 5px;
+    padding: 15px;
+  }
+  &__continue{
+    color:$black;
+    border-bottom: 1px solid transparent;
+    &:hover{
+      color:$black;
+      border-bottom: 1px solid $black;
+    }
+
+  }
+  &__block{
+    margin-bottom: 25px;
   }
 }

@@ -19,6 +19,7 @@ from apps_web.web_order.utils import send_mail_order_success
 def home(request):
     home_banners = HomeBanner.objects.active().order_by('position')[:5]
     influencers = Influencer.objects.active().order_by('position')
+    print(influencers, 'influencers')
     ctx = {
         'home_banners': home_banners,
         'influencers': influencers
@@ -64,14 +65,18 @@ def login_register(request):
 
 @login_required(login_url=reverse_lazy("web_system:login_register"))
 def account(request):
+    ctx = {}
+    return render(request, "system/account.html", ctx)
+
+@login_required(login_url=reverse_lazy("web_system:login_register"))
+def edit_profle(request):
     user = request.user
     print(user, 'user')
     customer = user.user_customer
     if request.method == 'POST':
         form_customer = CustomerForm(request.POST, instance=customer)
-        form_user = UserUpdateForm(request.POST, instance=user)
+        form_user = UserUpdateForm(request.POST, request.FILES, instance=user)
         if form_customer.is_valid() and form_user.is_valid():
-            print('valid')
             form_customer.save()
             form_user.save()
             return redirect(reverse('web_system:account'))
@@ -83,7 +88,7 @@ def account(request):
         'form_customer': form_customer,
         'form_user': form_user
     }
-    return render(request, "system/account.html", ctx)
+    return render(request, "system/edit_profle.html", ctx)
 
 @login_required(login_url=reverse_lazy("web_system:login_register"))
 def my_order(request):

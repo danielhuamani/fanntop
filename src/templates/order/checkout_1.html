@@ -11,9 +11,9 @@
             <div class="col-md-7">
               <div class="row">
                 <div class="col-md-12">
-                  <div class="boxw">
+                  <div class="">
                     <div class="w-body">
-                      <h3 class="w-body__title">Información del contacto</h3>
+                      <h3 class="title_page">INFORMACIÓN DE CONTACTO</h3>
                       <div class="form-horizontal form-checkout form-checkout-1">
                         <div class="form-group">
                           <div class="col-xs-12 col-sm-6">
@@ -51,9 +51,9 @@
                 </div>
                 <div class="col-md-12">
 
-                  <div class="boxw">
+                  <div class="">
                     <div class="w-body">
-                      <h3 class="w-body__title">Dirección de Envío</h3>
+                      <h3 class="title_page">DIRECCIÓN DE ENVÍO</h3>
                       <div class="form-horizontal form-checkout form-checkout-1">
                         <div class="form-group">
                           <div class="col-xs-12">
@@ -129,14 +129,10 @@
 
                         <div class="form-group">
                           <div class="col-md-12">
-                            <div class="w-lnk-btn"><a href="{% url 'web_cart:cart' %}" class="lnk"><i class="fa fa-angle-left"></i>Regresar al carrito</a>
-                              <button type="submit" class="btn btn-primary">Continuar</button>
+                            <div class="w-lnk-btn">
+                              <a href="{% url 'web_cart:cart' %}" class="checkout__continue"><i class="fa fa-angle-left"></i> Regresar al carrito</a>
+                              <button type="submit" class="btn btn--main">Continuar</button>
                             </div>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="col-md-12">
-                            <p class="small">* Los pedidos realizados después de las 3:00 p.m. (hora del Reino Unido) no se enviarán hasta el día siguiente. Tenga en cuenta que no enviamos los fines de semana ni los días festivos, por ejemplo, pedidos realizados después de las 3:00 p.m. (hora del Reino Unido) de un viernes ganado. Se enviará hasta el lunes siguiente. Ofrecemos devoluciones GRATUITAS para clientes de EE. UU. Y Canadá. * </p>
                           </div>
                         </div>
                       </div>
@@ -146,7 +142,7 @@
               </div>
             </div>
             <div class="col-md-5">
-              <div class="boxw">
+              <div class="checkout__sidebar">
                 <div class="box-items">
                 {% for cart_item in cart.cart_items.all %}
 
@@ -160,7 +156,7 @@
                     </div>
                     <div class="detail">
                       <h3>{{cart_item.product.product_class.name}}</h3>
-                      <div class="sizes">Medium</div>
+                      <div class="sizes"></div>
                     </div>
                   </div>
                 {% endfor %}
@@ -171,7 +167,7 @@
                     <label for="">Ingrese Cupón</label>
                     <div class="form-group form-coupon">
                         <input type="text" class="form-control" id="coupon" placeholder="">
-                        <div class="btn btn-primary btn-coupon">Validar</div>
+                        <div class="btn btn--main btn-coupon">Validar</div>
                     </div>
                   </div>
                   <div class="msj-coupon">

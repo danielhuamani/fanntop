@@ -59,6 +59,17 @@ img{
   &--main{
     background-color: $header;
     color: $white;
+    &:hover{
+      color: $white;
+    }
+  }
+  &--grey{
+    background-color: $border;
+    color: $white;
+    &:hover{
+      background: $black;
+      color: $white;
+    }
   }
 }
 
@@ -159,7 +170,11 @@ section.main{
     }
   }
 }
-
+.title_page{
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: $black;
+}
 .item-influencer{
   margin: 2.5em auto;
   text-decoration: none;

@@ -1,0 +1,97 @@
+{% extends "common/base.html" %}
+{% load static thumbnail widget_tweaks %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+<section class="main page-account">
+  <div class="content">
+    <div class="page-account__avatar">
+      {% if request.user.avatar %}
+        {% thumbnail request.user.avatar "150x150" crop="center" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+        {% endthumbnail %}
+      {% else %}
+        <img src="{% static 'img/avatar.png' %}" class='img-responsive' width='150' alt="">
+      {% endif %}
+    </div>
+    <div class="page-account__ctn_edit_profile">
+      <a href="{% url 'web_system:edit_profle' %}" class='btn btn--main page-account__btn_edit_profile'> EDITAR PERFIL</a>
+    </div>
+    <div class="page-account__links">
+      <ul class=''>
+        <li><a href="{% url 'web_system:my_order' %}">Mis Compras
+           </a></li>
+        <li><a href="{% url 'web_system:my_address' %}">Mis direcciones</a></li>
+
+      </ul>
+    </div>
+    <div class="row page-account__row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="">
+          <h2  class="page-account__title">INFORMACIÓN PERSONAL</h2>
+          <div class="w-body">
+            <div class="row">
+              <div class="col-md-12">
+                <form action="" method='POST' class='page-account__form' enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="row form-group">
+                    <div class="col-md-6">
+                      {{form_user.first_name.label_tag}}
+                      {{form_user.first_name|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.first_name.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      {{form_user.last_name.label_tag}}
+                      {{form_user.last_name|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.last_name.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                     {{form_user.email.label_tag}}
+                      {{form_user.email|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.email.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      {{form_customer.type_document.label_tag}}
+                      {{form_customer.type_document|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.type_document.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      {{form_customer.document.label_tag}}
+                      {{form_customer.document|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.document.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      {{form_customer.gender.label_tag}}
+                      {{form_customer.gender|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.gender.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      {{form_customer.phone.label_tag}}
+                      {{form_customer.phone|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.phone.errors}}</p>
+                    </div>
+                    <div class="col-md-6">
+                      {{form_user.avatar.label_tag}}
+                      {{form_user.avatar|add_class:'form-control'}}
+                      <p class='text-danger'>{{form_user.avatar.errors}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                        <button class='btn btn--main pull-right'>Guardar</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   </div>
+</section>
+{% endblock content %}
+{% block js %}
+
+{% endblock js %}

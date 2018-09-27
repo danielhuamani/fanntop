@@ -5,48 +5,45 @@
 {% endblock css %}
 {% block content %}
 <section class="main page-account">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 boxw">
-        <div class="w-body">
-          <div class="sidebar sidebar_account">
-            <h3>Bienvenido</h3>
-            <ul class='sidebar_account__info'>
-              <li><a href="{% url 'web_system:account' %}">Información Personal
-                 </a></li>
-              <li><a href="{% url 'web_system:my_address' %}">Mis direcciones</a></li>
-              <li><a href="{% url 'web_system:my_order' %}">Mis Ordenes</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-9">
-        <div class="boxw">
-          <div class="title-page">
-            <h2>Mis Ordenes</h2>
-          </div>
-          <div class="w-body">
-            <div class="row">
+  <div class="content">
+    <div class="page-account__avatar">
+      {% if request.user.avatar %}
+        {% thumbnail request.user.avatar "150x150" crop="center" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+        {% endthumbnail %}
+      {% else %}
+        <img src="{% static 'img/avatar.png' %}" class='img-responsive' width='150' alt="">
+      {% endif %}
+    </div>
+    <div class="page-account__ctn_edit_profile">
+      <a href="{% url 'web_system:edit_profle' %}" class='btn btn--main page-account__btn_edit_profile'> EDITAR PERFIL</a>
+    </div>
+    <div class="page-account__links">
+      <ul class=''>
+        <li><a class='active' href="{% url 'web_system:my_order' %}">Mis Compras
+           </a></li>
+        <li><a  href="{% url 'web_system:my_address' %}">Mis direcciones</a></li>
 
-              <div class="col-md-12">
-                {% for order in orders %}
-                    <div class="col-md-4">
-                      <a href='{% url "web_system:my_order_detail" order.pk %}' class="content_address">
-                        <strong>{{order.get_type_status_display}}</strong>
-                        <p>total: {{order.total}}</p>
-                        <p>Costo envio: {{order.shipping_price}}</p>
-                      </a>
-                    </div>
-                  {% endfor %}
+      </ul>
+    </div>
+    <div class="row page-account__row">
+      <div class="col-md-8 col-md-offset-2">
+      {% for order in orders %}
+        <div class="page-account__address">
+          <a href='{% url "web_system:my_order_detail" order.pk %}'>
+            <strong>{{order.get_type_status_display}}</strong>
+            <p>total: {{order.total}}</p>
+          </a>
 
-              </div>
-            </div>
-          </div>
         </div>
+        {% empty %}
+            <h4>Aún no ha realizado su compra</h4>
+        {% endfor %}
       </div>
     </div>
   </div>
 </section>
+
 {% endblock content %}
 {% block js %}
 

@@ -5,52 +5,44 @@
 {% endblock css %}
 {% block content %}
 <section class="main page-account">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 boxw">
-        <div class="w-body">
-          <div class="sidebar sidebar_account">
-            <h3>Bienvenido</h3>
-            <ul class='sidebar_account__info'>
-              <li><a href="{% url 'web_system:account' %}">Información Personal
-                 </a></li>
-              <li><a href="{% url 'web_system:my_address' %}">Mis direcciones</a></li>
-              <li><a href="{% url 'web_system:my_order' %}">Mis Ordenes</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-9">
-        <div class="boxw">
-          <div class="title-page">
-            <h2>Mis direcciones de envio</h2>
-          </div>
-          <div class="w-body">
-            <div class="row">
+  <div class="content">
+    <div class="page-account__avatar">
+      {% if request.user.avatar %}
+        {% thumbnail request.user.avatar "150x150" crop="center" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+        {% endthumbnail %}
+      {% else %}
+        <img src="{% static 'img/avatar.png' %}" class='img-responsive' width='150' alt="">
+      {% endif %}
+    </div>
+    <div class="page-account__ctn_edit_profile">
+      <a href="{% url 'web_system:edit_profle' %}" class='btn btn--main page-account__btn_edit_profile'> EDITAR PERFIL</a>
+    </div>
+    <div class="page-account__links">
+      <ul class=''>
+        <li><a href="{% url 'web_system:my_order' %}">Mis Compras
+           </a></li>
+        <li><a class='active' href="{% url 'web_system:my_address' %}">Mis direcciones</a></li>
 
-              <div class="col-md-12">
-                <div class="row">
-                  {% for add in address %}
-                    <div class="col-md-4">
-                      <a href='{% url "web_system:my_address_edit" add.pk %}' class="content_address">
-                        <strong>{{add.address}}</strong>
-                        <p>{{add.ubigeo.full_ubigeo}}</p>
-                      </a>
-                    </div>
-                  {% endfor %}
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <a href='{% url "web_system:my_address_create" %}' class="btn btn-primary">Agregar Dirección</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      </ul>
+    </div>
+    <div class="row page-account__row">
+      <div class="col-md-8 col-md-offset-2">
+        {% for addr in address %}
+        <div class="page-account__address">
+          <a href='{% url "web_system:my_address_edit" addr.pk %}'>
+            <strong>{{addr.get_type_address_display}}</strong>
+            <p>{{addr.address}} - {{addr.ubigeo.full_ubigeo}}</p>
+          </a>
+          <a href="">
+            <i class='far fa-trash'></i>
+          </a>
         </div>
+        {% endfor %}
+        <a href='{% url "web_system:my_address_create" %}' class="btn btn--main pull-right">Agregar Dirección</a>
       </div>
     </div>
-  </div>
+
 </section>
 {% endblock content %}
 {% block js %}

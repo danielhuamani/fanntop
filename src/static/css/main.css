@@ -5908,6 +5908,14 @@ img {
   .btn--main {
     background-color: #512DE7;
     color: #fff; }
+    .btn--main:hover {
+      color: #fff; }
+  .btn--grey {
+    background-color: #808080;
+    color: #fff; }
+    .btn--grey:hover {
+      background: #000;
+      color: #fff; }
 
 .cf:before,
 .cf:after {
@@ -5988,6 +5996,11 @@ section.main {
     font-size: 1.5em; }
     .title-page h2 i {
       margin: 0 8px 0 0; }
+
+.title_page {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #000; }
 
 .item-influencer {
   margin: 2.5em auto;
@@ -6684,6 +6697,19 @@ body .mm-menu {
     color: #000;
     text-align: center; }
 
+.page_lr {
+  display: flex; }
+  .page_lr__title {
+    font-size: 20px;
+    margin-bottom: 20px; }
+  .page_lr__login {
+    width: 50%;
+    padding-right: 40px; }
+  .page_lr__register {
+    width: 50%;
+    padding-left: 40px;
+    border-left: 1px solid #808080; }
+
 .paginas {
   margin-bottom: 60px; }
   .paginas .paginas__block {
@@ -6714,6 +6740,55 @@ body .mm-menu {
         color: #000; }
       .paginas__menu__link:hover {
         color: #000; }
+
+.page-account__address {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .page-account__address a {
+    border-bottom: 1px solid transparent;
+    display: inline-block;
+    color: #000; }
+    .page-account__address a:hover {
+      border-bottom: 1px solid #000; }
+  .page-account__address p {
+    margin-bottom: 0; }
+.page-account__row {
+  margin-top: 30px; }
+.page-account__title {
+  font-size: 22px;
+  margin-bottom: 20px; }
+.page-account__avatar img {
+  margin: auto;
+  border-radius: 50%; }
+.page-account__ctn_edit_profile {
+  text-align: center;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px; }
+.page-account__btn_edit_profile {
+  display: inline-block; }
+.page-account__links {
+  padding: 20px 0;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #808080; }
+  .page-account__links ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0; }
+    .page-account__links ul li a {
+      margin: 0 15px;
+      color: #000;
+      border-bottom: 1px solid transparent; }
+      .page-account__links ul li a:hover {
+        border-bottom: 1px solid #000; }
+    .page-account__links ul li a.active {
+      border-bottom: 1px solid #000; }
 
 .wrap-gallery {
   overflow: hidden;
@@ -6961,6 +7036,16 @@ ul.list {
     text-align: center;
     padding: 1em 0; }
 
+.page_car__title {
+  font-size: 22px;
+  margin-bottom: 20px; }
+.page_car__continue_pay {
+  color: #000;
+  border-bottom: 1px solid transparent; }
+  .page_car__continue_pay:hover {
+    color: #000;
+    border-bottom: 1px solid #000; }
+
 .form-checkout label input {
   margin: 0 8px 0 0; }
 .form-checkout .w-lnk-btn {
@@ -7015,6 +7100,19 @@ ul.list {
         display: inline; }
       .shipping-method-box .content-box label span {
         float: right; }
+
+.checkout__sidebar {
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 15px; }
+.checkout__continue {
+  color: #000;
+  border-bottom: 1px solid transparent; }
+  .checkout__continue:hover {
+    color: #000;
+    border-bottom: 1px solid #000; }
+.checkout__block {
+  margin-bottom: 25px; }
 
 @media screen and (max-width: 991px) {
   .container {

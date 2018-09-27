@@ -10,9 +10,9 @@
       <div class="col-md-7">
         <div class="row">
           <div class="col-md-12">
-            <div class="boxw">
+            <div class="checkout__block">
               <div class="w-body">
-                <h3 class="w-body__title">Resumen Información de Contacto</h3>
+                <h3 class="title_page">RESUMEN INFORMACIÓN DE CONTACTO</h3>
                 <form class="form-horizontal form-checkout form-checkout-1" action="" method='POST'>
 
                   <div class="form-group">
@@ -52,9 +52,9 @@
             </div>
           </div>
           <div class="col-md-12">
-            <div class="boxw">
+            <div class="checkout__block">
               <div class="w-body">
-                <h3 class="w-body__title">Resumen Dirección de Envío</h3>
+                <h3 class="title_page">RESUMEN DIRECCIÓN DE ENVÍO</h3>
                 <form class="form-horizontal form-checkout form-checkout-1" action="" method='POST'>
                   <div class="form-group">
                     <div class="col-xs-6">
@@ -105,19 +105,19 @@
             </div>
           </div>
           <div class="col-md-12">
-            <div class="boxw">
+            <div class="checkout__block">
               <div class="w-body">
-                <h3 class="w-body__title">
-                  Metodo De Pago
+                <h3 class="title_page">
+                  METODO DE PAGO
                 </h3>
                 <form action="" method="POST" class=' form-horizontal form-checkout form-checkout-1' id="culqi-card-form">
-                    <div data-capture-name="true" class='card-js' id="my-card">
+                    <div data-capture-name="true" class='card-js' id="my-card" data-icon-colour="#512DE7">
                       <div class="form-group">
                           <div class="col-md-12">
                             <label>
                              <span>Correo Electrónico</span>
                             </label>
-                            <input type="text" size="50"id="card[email]" name="card-holders-name" placeholder="Correo Electrónico" class="name form-control" data-culqi="card[email]">
+                            <input type="text" size="50" id="card[email]" name="card-holders-name" placeholder="Correo Electrónico" class="name form-control" data-culqi="card[email]">
                           </div>
                       </div>
                       <div class="form-group">
@@ -152,8 +152,8 @@
 
                   <div class="form-group">
                     <div class="col-md-12">
-                        <div class="w-lnk-btn"><a href="{% url 'web_order:checkout_paso_1' %}" class="lnk"><i class="fa fa-angle-left"></i>Regresar</a>
-                        <button type="submit" id="pagar" disabled="disabled" class="btn btn-primary">Pagar</button>
+                        <div class="w-lnk-btn"><a href="{% url 'web_order:checkout_paso_1' %}" class="lnk checkout__continue"><i class="fa fa-angle-left"></i>Regresar</a>
+                        <button type="submit" id="pagar" disabled="disabled" class="btn btn--main">Pagar</button>
                       </div>
                     </div>
                   </div>
@@ -164,7 +164,7 @@
         </div>
       </div>
       <div class="col-md-5">
-        <div class="boxw">
+        <div class="checkout__sidebar">
           <div class="box-items">
 
           {% for detail in order_details %}
@@ -179,7 +179,7 @@
               </div>
               <div class="detail">
                 <h3>{{detail.productdetail.product_class.name}}</h3>
-                <div class="sizes">Medium</div>
+                <div class="sizes"></div>
               </div>
             </div>
           {% endfor %}

@@ -1,11 +1,9 @@
 <template>
-  <section class="main car" >
+  <section class="main car page_car" >
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <div class="title-page">
-            <h2><i class="fa fa-shopping-bag"> </i>MI COMPRA</h2>
-          </div>
+          <h2 class='page_car__title'>MI COMPRA</h2>
         </div>
       </div>
       <div class="row" v-if='getCart.extra_data.msj'>
@@ -17,7 +15,7 @@
       </div>
       <div class="row" v-if='getCart.cart_items.length >0'>
         <div class="col-md-12">
-          <div class="boxw box-car">
+          <div class=" box-car">
             <div class="inner">
               <div class="tbl-resp">
                 <table border="1" cellpadding="0" cellspacing="0" style="width: 100%;" class="tbl-car">
@@ -36,8 +34,8 @@
                         <div class="detail-car">
                           <div class="image"><a href="#"><img :src="item.image" /></a></div>
                           <div class="detail">
+                            <h3>{{item.influencer_name}}</h3>
                             <h3>{{item.product_name}}</h3>
-                            <div class="sku">SKU: {{item.product_sku}}</div>
                             <div class="cart-msj" v-if="item.extra_data.status">
                               {{item.extra_data.msj}}
                             </div>
@@ -71,7 +69,7 @@
                     </tr>
 
                     <tr>
-                      <td valign="center"><a href="/">Continue Comprando</a></td>
+                      <td valign="center"><a href="/" class='page_car__continue_pay'>< Continue Comprando</a></td>
                       <td valign="center" colspan="2"></td>
                       <td valign="center" colspan="2">
                         <div class="w-total"><span class="to">Total:   <strong>S/. {{getCart.total}}</strong></span></div>
@@ -87,7 +85,7 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <div class="w-btn w-btn-car"><a href="/checkout/paso-1/" class="btn btn-primary">Continuar</a></div>
+          <div class="w-btn w-btn-car"><a href="/checkout/paso-1/" class="btn btn--main">Continuar</a></div>
         </div>
       </div>
     </div>

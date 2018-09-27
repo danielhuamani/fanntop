@@ -9,3 +9,12 @@ TYPE_DOCUMENT_CHOICES = (
     ("DNI", "DNI"),
     ("CE", "Carnet de extranjería")
 )
+
+TYPE_ADDRESS_CHOICES = (
+    ("CASA", "Casa"),
+    ("OFICINA", "Oficina"),
+    ("DEPARTAMENTO", "Departamento"),
+    ("CASA_PLAYA", "Casa de playa"),
+    ("CASA_CAMPO", "Casa de campo"),
+    ("OTRO", "Otro")
+)

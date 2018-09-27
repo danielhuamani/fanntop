@@ -1,0 +1,69 @@
+.page-account{
+    &__address{
+        padding: 10px;
+        margin-bottom: 10px;
+        border:  1px solid $black;
+        border-radius: 4px;
+        display: flex;
+        justify-content:space-between;
+        align-items:center;
+        a{
+            border-bottom: 1px solid transparent;
+            display: inline-block;
+            color:$black;
+            &:hover{
+                border-bottom: 1px solid $black;
+            }
+        }
+        p{
+            margin-bottom: 0;
+        }
+    }
+    &__row{
+        margin-top: 30px;
+    }
+    &__title{
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    &__avatar{
+        img{
+            margin: auto;
+            border-radius: 50%;
+        }
+    }
+    &__ctn_edit_profile{
+        text-align: center;
+        margin: auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    &__btn_edit_profile{
+        display: inline-block;
+    }
+    &__links{
+        padding: 20px 0;
+        border-top: 1px solid $border;
+        border-bottom: 1px solid $border;
+        ul{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0;
+            li{
+                a{
+                    margin: 0 15px;
+                    color: $black;
+                    border-bottom: 1px solid transparent;
+                    &:hover{
+                        border-bottom: 1px solid $black;
+                    }
+
+                }
+                a.active{
+                    border-bottom: 1px solid $black;
+                }
+            }
+        }
+    }
+}

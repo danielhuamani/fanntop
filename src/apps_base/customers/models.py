@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from apps_base.custom_auth.models import User
-from .constants import GENDER_CHOICES, TYPE_DOCUMENT_CHOICES
+from .constants import GENDER_CHOICES, TYPE_DOCUMENT_CHOICES, TYPE_ADDRESS_CHOICES
 from .utils import generate_code_favorite
 import uuid
 
@@ -50,6 +50,7 @@ class CustomerShippingAddress(models.Model):
     reference = models.CharField("Referencia", max_length=255, blank=True)
     ubigeo = models.ForeignKey(
         "ubigeo.Ubigeo", related_name="zip_code_shipping_address")
+    type_address = models.CharField(_('Type address'), max_length=120, choices=TYPE_ADDRESS_CHOICES)
     # order = models.OneToOneField('order.OrderShippingAddress', blank=True, null=True,
     #     related_name='order_shipping_adress_customers', on_delete=models.SET_NULL)
     class Meta:

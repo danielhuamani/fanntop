@@ -5,26 +5,31 @@
 {% endblock css %}
 {% block content %}
 <section class="main page-account">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 boxw">
-        <div class="w-body">
-          <div class="sidebar sidebar_account">
-            <h3>Bienvenido</h3>
-            <ul class='sidebar_account__info'>
-              <li><a href="{% url 'web_system:account' %}">Información Personal
-                 </a></li>
-              <li><a href="{% url 'web_system:my_address' %}">Mis direcciones</a></li>
-              <li><a href="{% url 'web_system:my_order' %}">Mis Ordenes</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-9">
-        <div class="boxw">
-          <div class="title-page">
-            <h2>Mi Orden</h2>
-          </div>
+  <div class="content">
+    <div class="page-account__avatar">
+      {% if request.user.avatar %}
+        {% thumbnail request.user.avatar "150x150" crop="center" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+        {% endthumbnail %}
+      {% else %}
+        <img src="{% static 'img/avatar.png' %}" class='img-responsive' width='150' alt="">
+      {% endif %}
+    </div>
+    <div class="page-account__ctn_edit_profile">
+      <a href="{% url 'web_system:edit_profle' %}" class='btn btn--main page-account__btn_edit_profile'> EDITAR PERFIL</a>
+    </div>
+    <div class="page-account__links">
+      <ul class=''>
+        <li><a href="{% url 'web_system:my_order' %}">Mis Compras
+           </a></li>
+        <li><a class='active' href="{% url 'web_system:my_address' %}">Mis direcciones</a></li>
+
+      </ul>
+    </div>
+    <div class="row page-account__row">
+      <div class="col-md-12">
+        <div class="">
+          <h2 class='title_page'>MI ORDEN</h2>
           <div class="w-body">
             <div class="row ">
               <div class="col-md-12">
@@ -163,8 +168,9 @@
         </div>
       </div>
     </div>
-  </div>
+
 </section>
+
 {% endblock content %}
 {% block js %}
 
