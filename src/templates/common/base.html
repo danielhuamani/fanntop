@@ -18,8 +18,8 @@
 
     {% endblock css %}
 </head>
-<body class='home' {% if not request.user.is_authenticated %} style='background-image:url("{% static 'img/imgweb2.png' %}");background-size:cover;background-position:center center;' {% endif %}>
-  {% if request.user.is_authenticated %}
+<body class='home' {% if not request.user.is_authenticated and request.path == '/' %} style='background-image:url("{% static 'img/imgweb2.png' %}");background-size:cover;background-position:center center;' {% endif %}>
+  {% if request.user.is_authenticated or request.path == '/ingresar/' %}
 
 
   <div id="page" class="wrapper">
