@@ -18,7 +18,7 @@
 
     {% endblock css %}
 </head>
-<body class='home' {% if not request.user.is_authenticated %} style='background-image:url("{% static 'img/imgweb2.png' %}");background-size:cover;' {% endif %}>
+<body class='home' {% if not request.user.is_authenticated %} style='background-image:url("{% static 'img/imgweb2.png' %}");background-size:cover;background-position:center center;' {% endif %}>
   {% if request.user.is_authenticated %}
 
 
