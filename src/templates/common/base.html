@@ -18,7 +18,10 @@
 
     {% endblock css %}
 </head>
-<body class='home'>
+<body class='home' {% if not request.user.is_authenticated %} style='background-image:url("{% static 'img/imgweb2.png' %}");background-size:cover;' {% endif %}>
+  {% if request.user.is_authenticated %}
+
+
   <div id="page" class="wrapper">
 
     {% include "./header.html" %}
@@ -44,5 +47,6 @@
     {% endblock js %}
     <script src="{% static 'js/slick.min.js' %}"></script>
     <script src="{% static 'js/functions.js' %}?v=0.0.4"></script>
+    {% endif %}
 </body>
 </html>
