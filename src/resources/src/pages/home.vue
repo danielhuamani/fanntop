@@ -3,7 +3,7 @@
       <input type="text" class='home_influencer__search__input' v-on:keyup="getInfluencer($event)">
       <i class='far fa-search home_influencer__search__icon' ></i>
       <div class="home_influencer__search__api" v-if='influencerList.length > 0'>
-          <a class="home_influencer__search__api__influencer" v-for='inf in influencerList'>
+          <a class="home_influencer__search__api__influencer" v-for='inf in influencerList' :href='"/influenciador/" + inf.slug'>
                 <img :src="inf.image_crop" class='home_influencer__search__api__influencer__img' width="" height="">
                 <h3 class='home_influencer__search__api__influencer__name'>{{inf.name}}</h3>
           </a>

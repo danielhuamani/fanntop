@@ -27,17 +27,7 @@
   display: none;
 }
 .item-result .image {
-  padding: 15px;
   background: #fff;
-}
-.item-result .detail {
-  margin-top: 10px;
-}
-.item-result .detail h3.title {
-  font-size: 18px;
-}
-.item-result .fav:hover i {
-  color: #ff7e00;
 }
 .w-filter input[type=range]::-ms-track {
   width: 300px;
@@ -174,7 +164,7 @@
   opacity: 1;
 }
 nav ul li a {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Verdana', sans-serif;
 }
 nav ul li ul {
   margin-top: 15px;
@@ -184,7 +174,7 @@ nav ul li ul li {
   margin: 0px 0px 5px 0px;
 }
 nav ul li ul li a {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Verdana', sans-serif;
 }
 nav ul li .submenu {
   box-shadow: 0 5px 10px rgba(0,0,0,0.05);

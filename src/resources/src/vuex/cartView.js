@@ -31,9 +31,7 @@ const moduleCartView = {
       state.statusCartView = status
     },
     setCart (state, cart) {
-      if (cart.total) {
-        state.cart = cart
-      }
+      state.cart = cart
     },
     setIsMenu (state, status) {
       state.isMenu = status

@@ -150,12 +150,17 @@ class ProductClassAttrSerializer(QueryFieldsMixin, serializers.ModelSerializer):
 
     # product_variant = serializers.SerializerMethodField()
     influencer_name = serializers.CharField(source='get_influencer_name', read_only=True)
+    influencer_image = serializers.SerializerMethodField()
     product_class_products = ProductDetailAttributeSerializer(many=True)
+
     class Meta:
         model = ProductClass
-        fields = ['name', 'slug', 'id', 'product_class_products', 'description', 'influencer_name']
+        fields = ['name', 'slug', 'id', 'product_class_products', 'description', 'influencer_name',
+                    'influencer_image']
 
-
+    def get_influencer_image(self, obj):
+        crop = get_thumbnail(obj.influencer.image, '70x70', crop='center', quality=99)
+        return crop.url
     # def get_product_variant(self, obj):
     #     product_variant = obj.product_class_products.filter(is_active=True).order_by('is_featured')
     #     return ProductDetailSerializer(product_variant.first()).data

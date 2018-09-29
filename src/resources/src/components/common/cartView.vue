@@ -91,7 +91,7 @@
   .cart-view{
     $root: &;
     .item-car .detail h3{
-      font-size: 1em;
+      font-size: 13px;
     }
     &__error{
       position: fixed;

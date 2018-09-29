@@ -1,7 +1,10 @@
 <template>
-    <div class="row product_detail_vue">
-
-        <div class="col-md-6 col-sm-6 col-xs-8 col-xs-offset-2 col-sm-offset-0 col-mv product_detail_vue__content">
+    <div class="modal  modal product_detail_modal fade in"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="row product_detail_vue product_detail_modal-dialog modal-dialog">
+       <div class="product_detail_modal__close" @click='closeModal'>
+          <i class='fa fa-times'></i>
+      </div>
+       <div class="col-md-6 col-sm-6 col-xs-8 col-xs-offset-2 col-sm-offset-0 col-mv product_detail_vue__content">
           <div class="detail-product">
             <div class="marca">
               <img class="img-circle" :src="productClass.product_class.influencer_image" alt="">
@@ -73,16 +76,17 @@
           </div>
         </div>
       </div>
+  </div>
 </template>
 <script>
   export default {
-    name: 'productDetail',
+    name: 'productDetailModal',
+    props: ['productSlug'],
     data () {
       return {
         productClass: {
           product_class: {
-            influencer_name: '',
-            influencer_image: ''
+            influencer_name: ''
           }
         },
         productDetail: {
@@ -107,11 +111,14 @@
       this.getProductDetail()
     },
     methods: {
+      closeModal () {
+        this.$emit('closeModal')
+      },
       getProduct() {
         const self = this
         this.axios({
           method: 'get',
-          url: '/api/product/' + this.$route.params.slug + '/',
+          url: '/api/product/' + this.productSlug + '/',
           params: {
             'fields!': 'product_variant'
           }
@@ -214,7 +221,7 @@
         const self = this
         this.axios({
           method: 'get',
-          url: '/api/product-detail/' + this.$route.params.slug + '/',
+          url: '/api/product-detail/' + this.productSlug + '/',
           params: self.selectProduct
         }).then(response => {
           self.productDetail = response.data
@@ -247,6 +254,7 @@
           sku: this.productCart.sku,
           quantity: this.productCart.quantity
         })
+        this.$emit('closeModal')
       }
     }
   }
@@ -256,5 +264,21 @@
     a{
       cursor: pointer;
     }
+  }
+  .product_detail_modal{
+    display: block !important;
+    background: rgba(0,0,0, 0.7);
+  }
+  .product_detail_modal-dialog{
+    padding: 20px;
+    background: white;
+    overflow-y: scroll;
+  }
+  .product_detail_modal__close{
+    position: absolute;
+    top: 0px;
+    right: 8px;
+    font-size: 24px;
+    cursor: pointer;
   }
 </style>

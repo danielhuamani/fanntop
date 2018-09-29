@@ -214,6 +214,8 @@ class ProductClassInfluencerListAPI(ListAPIView):
         filter_prices = self.request.query_params.getlist('prices[]', [])
         orderBy = self.request.query_params.get('orderBy')
         attr_list = []
+        search = self.request.query_params.get('search')
+
         for attr in filter_attribute:
             str_attr = '{0}{1}'.format(attr, '[]')
             attr_slug = self.request.query_params.getlist(str_attr, None)
@@ -226,6 +228,16 @@ class ProductClassInfluencerListAPI(ListAPIView):
         if filter_prices:
             queryset = queryset.filter(price__lte=Decimal(filter_prices[1]),
                 price__gte=Decimal(filter_prices[0]))
+        if search:
+            product_ids = Product.objects.filter(product_class__is_published=True, is_active=True).filter(
+                Q(product_class__name__icontains=search) |
+                Q(product_class__category__name__icontains=search) |
+                Q(product_class__description__icontains=search) |
+                Q(product_class__influencer__name__icontains=search) |
+                Q(attribute_option__attr__icontains=search) |
+                Q(attribute_option__option__icontains=search)
+            ).distinct('product_class').values_list('product_class_id', flat=True)
+            queryset = queryset.filter(id__in=product_ids)
         if orderBy:
             if orderBy == 'name_asc':
                 queryset = queryset.order_by('name')
@@ -235,7 +247,6 @@ class ProductClassInfluencerListAPI(ListAPIView):
                 queryset = queryset.order_by('price')
             elif orderBy == 'price_desc':
                 queryset = queryset.order_by('-price')
-
         return queryset
 
     def get_serializer_context(self):
@@ -256,7 +267,7 @@ class InfluencerFilterAPI(APIView):
     def get(self, *args, **kwargs):
         slug = self.kwargs.get('slug')
         influencer = get_object_or_404(Influencer, slug=slug)
-        queryset = self.queryset
+        queryset = self.queryset.filter(influencer=influencer)
         product_class = ProductClass.objects.active().filter(is_published=True, influencer=influencer)
         product_class_ids = product_class.values_list('id', flat=True)
         product_class_influencer_ids = product_class.values_list('influencer_id', flat=True)

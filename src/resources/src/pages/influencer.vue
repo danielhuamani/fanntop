@@ -1,12 +1,15 @@
 <template>
-    <section class="main">
-      <div class="container">
-
-        <div class="row">
+    <section class="main page-product">
+      <div class="content">
+        <div class="page-product__row_list">
           <productFilter :query='query' @valueStart='valueStart' @valueEnd='valueEnd'
           @queryInfluencer='queryInfluencer' @queryAttribute='queryAttribute'
           :productsFilters='productsFilters' v-if='load_product_filter'></productFilter>
-          <div class="col-md-3" v-else>
+          <productList v-on:orderBy='orderBy' v-on:search='search' v-if="load_products" :products='products'></productList>
+        </div>
+<!--
+        <div class="row">
+          <div class="col-md-3">
             <div class="sidebar sidebar-filter box">
               <div class="w-filter">
                 <h3></h3>
@@ -87,8 +90,7 @@
 
             </div>
           </div>
-          <productList v-on:orderBy='orderBy' v-if="load_products" :products='products'></productList>
-          <!--<productList v-if="products.results.length > 0" :products='products'></productList>-->
+
           <div  v-else  class="col-md-9 product-list-mask">
             <div class="content">
               <div class="content-filter-top"></div>
@@ -126,10 +128,10 @@
                       <div class="image"> <img src=""/></div>
                       <div class="detail">
                         <h3 class="title"></h3>
-                        <!-- <h4 class="subtitle">subtitle</h4> -->
+                        <h4 class="subtitle">subtitle</h4>
                         <div class="price">
                           <span class="offer"></span>
-                          <!-- <span class="normal tachado">S/. 80.15 PEN</span> -->
+                          <span class="normal tachado">S/. 80.15 PEN</span>
                         </div>
                       </div>
                       <div class="fav"><span ><i class="fa fa-heart"></i></span></div>
@@ -140,7 +142,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </section>
 </template>
@@ -158,7 +160,8 @@
         },
         productsFilters: {},
         query: {
-          orderBy: 'name_asc'
+          orderBy: 'name_asc',
+          search: ''
         },
         productsMask: [1,2,3],
         load_products: false,
@@ -202,11 +205,16 @@
           }
         }
       }
-
+      this.query['orderBy'] = 'name_asc'
       this.getProducts(this.query)
       this.getProductsFilters(this.query)
     },
     methods: {
+      search (value) {
+        this.query['search'] = value
+        this.setRouter(this.query)
+        this.getProducts(this.query)
+      },
       orderBy (order) {
         this.query['orderBy'] = order
         this.setRouter(this.query)

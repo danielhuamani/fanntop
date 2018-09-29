@@ -7,7 +7,7 @@
       padding: 0 0 0.25em;
       font-size: 1.25em;
       text-transform: uppercase;
-      border-bottom: 1px solid #fbdbbd;
+      color: #666666;
       position: relative;
       &:after{
         width: 100%;
@@ -18,25 +18,28 @@
         bottom: -2px;
       }
     }
-   
+
   }
 }
 
 .w-filter{
   margin: 1.5em 0;
+  border-bottom: 1px solid $black;
+  padding-bottom: 15px;
   ul{
     li{
-      display: block;
-      margin: 0.25em 0;
+      display: inline-block;
+      margin: 0 12px 0 0;
       label{
         vertical-align: top;
         position: relative;
         padding: 0 0 0 24px;
         input[type=checkbox], input[type=radio]{
           display: none;
-          &:checked + .filtros-check{            
-            background: #ff7e00; 
-            border: 1px solid #ff7e00;             
+          &:checked + .filtros-check{
+            background: $black;
+            color: $white;
+            border: 1px solid $black;
           }
         }
         .filtros-check{
@@ -45,10 +48,13 @@
           text-align: center;
           left: 0;
           display: block;
-          width: 18px;
-          height: 18px;
-          border: 1px solid #e1e1e1;
-          border-radius: 2px;
+          width: 25px;
+          height: 25px;
+          border: 1px solid $black;
+          border-radius: 50%;
+          font-size: 12px;
+          font-weight: 400;
+          padding-top: 3px;
           i{
             font-size: 10px;
             position: absolute;
@@ -62,23 +68,24 @@
     &.colors{
       li{
         display: inline-block;
-        margin: 0 5px 0 0;
+        margin: 0 12px 0 0;
         &:last-child{
           margin: 0;
         }
         label{
           padding: 0;
           input[type=checkbox], input[type=radio]{
-            &:checked + .filtros-check{            
-              background: inherit; 
-              border: inherit;                 
+            &:checked + .filtros-check{
+              background: inherit;
+              border: inherit;
               &:after{
-                border: 1px solid #ff7e00;
-              }         
+                border: 1px solid $black;
+                border-radius: 50%;
+              }
             }
           }
         }
-        
+
         span{
           display: block;
           width: 20px;
@@ -86,11 +93,13 @@
           background: #ccc;
           position: relative;
           z-index: 2;
+          border-radius: 50%;
           &:after{
             content: "";
             position: absolute;
             width: 24px;
             height: 24px;
+            border-radius: 50%;
             border: 1px solid transparent;
             left: -2px;
             top: -2px;
@@ -123,11 +132,13 @@
         label{
           padding: 0;
           input[type=checkbox], input[type=radio]{
-            &:checked + .filtros-check{            
-              background: #fff; 
-              border: 1px solid #ff7e00;    
+            &:checked + .filtros-check{
+              background: $black;
+              color: $white;
+              border: 1px solid $black;
             }
           }
+
         }
         span{
           width: auto;
@@ -136,9 +147,12 @@
           padding: 0.25em;
           min-width: 25px;
           background: #fff;
-          border-radius: 0;
+          border-radius: 50%;
         }
       }
     }
   }
+}
+.w-filter:last-child{
+  border-bottom: none;
 }

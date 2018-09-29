@@ -34,7 +34,7 @@
 
       <div class="home_influencer__slick__item">
         {% for inf in influencer_chunks %}
-          <a href="" class='home_influencer__item'>
+          <a href="{% url 'web_product:influencer_products' inf.slug %}" class='home_influencer__item'>
             {% thumbnail inf.image "242x315" crop="center" as im %}
                 <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
             {% endthumbnail %}

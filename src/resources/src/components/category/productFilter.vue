@@ -1,6 +1,7 @@
 <template>
-  <div class="col-md-3" v-cloak>
-    <div class="sidebar sidebar-filter box">
+  <div class="page-product__row_list__filter" v-cloak>
+    <div class="sidebar sidebar-filter ">
+      <h3 class="page-product__row_list__filter__title">FILTROS</h3>
       <div class="w-filter" v-if="productsFilters.influencers">
         <h3>Influencer</h3>
         <ul>
@@ -34,8 +35,8 @@
             <label :for="options.id">
               <input type="checkbox" :value="options.slug" @change='changeAttribute' v-model='attribute_option[attribute.slug]' :id="options.id"/>
               <span class="filtros-check">
-                <i class="fa fa-check"> </i>
-              </span>{{options.option}}
+                {{options.option}}
+              </span>
             </label>
           </li>
         </ul>
@@ -69,16 +70,16 @@
           2
         ],
         processStyle: {
-          "backgroundColor": "#ff7e00"
+          "backgroundColor": "#666666"
         },
         tooltipStyle: [
           {
-            "backgroundColor": "#ff7e00",
-            "borderColor": "#ff7e00",
+            "backgroundColor": "#666666",
+            "borderColor": "#666666",
           },
           {
-            "backgroundColor": "#ff7e00",
-            "borderColor":"#ff7e00",
+            "backgroundColor": "#666666",
+            "borderColor":"#666666",
           }
         ],
         tooltipDir: [

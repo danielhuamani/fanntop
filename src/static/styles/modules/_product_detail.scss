@@ -1,12 +1,40 @@
-.wrap-gallery{  
+.wrap-gallery{
   overflow: hidden;
   display: block;
-  padding: 1em;
   .gallery-principal{
     position: relative;
     margin-bottom: 1em;
     .product-image{
       border: 1px solid #f1f1f1;
+    }
+    .product-image_pagers{
+        position: absolute;
+        z-index: 200;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: auto;
+      &__item{
+        margin-bottom: 8px;
+        cursor: pointer;
+        padding: 3px;
+        border: 1px solid transparent;
+        span{
+          width: 20px;
+          height: 20px;
+          background: #cecece;
+          border-radius: 50%;
+          display: block;
+        }
+        &--active{
+
+          border: 1px solid #cecece;
+          border-radius: 50%;
+        }
+      }
     }
   }
   .gallery-thumb{
@@ -26,18 +54,23 @@
 .detail-product{
 
   .marca{
-    text-transform: uppercase;
-    font-size: 13px;
-    letter-spacing: 1px;
+    font-size: 24px;
     font-weight: 500;
-    margin-bottom: 5px;
-    color: #5d5d5d;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    img{
+      margin-right: 10px;
+    }
   }
   h2 {
-    font-size: 30px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 1.2;
     margin: 0 0 .5em;
+  }
+  .detaller-description{
+    margin-top: 15px;
   }
   .detalle-precio{
     margin-bottom: 1em;
@@ -72,7 +105,7 @@
     span.text{
       display: inline-block;
       line-height: 36px;
-      width: 80px;
+      display: block;
     }
     ul{
       display: inline-block;
@@ -93,7 +126,7 @@
             border: 1px solid #ccc;
             text-align: center;
             font-size: 14px;
-          }          
+          }
         }
       }
     }
@@ -102,7 +135,7 @@
     span.text{
       display: inline-block;
       line-height: 36px;
-      width: 80px;
+      display: block;
     }
     ul{
       display: inline-block;
@@ -173,7 +206,7 @@
 
 }
 
-.wrap-desc-info{  
+.wrap-desc-info{
   overflow: hidden;
   padding: 1em;
   margin-top: 1.5em;
@@ -191,12 +224,12 @@
         position: relative;
         text-decoration: none;
       }
-      &.active{        
+      &.active{
         a {
-          color: $primary;
-          
+          color: $header;
+
           &:after{
-            border-bottom: solid 3px $primary;
+            border-bottom: solid 3px $header;
             bottom: 0;
             content: "";
             display: block;
