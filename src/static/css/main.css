@@ -6440,6 +6440,8 @@ section.main {
   .header__bot a {
     margin: auto;
     display: inline-block; }
+    .header__bot a img {
+      width: 180px; }
 
 #header {
   background: #512DE7; }
