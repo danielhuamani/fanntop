@@ -1,59 +1,29 @@
-<div id="nav" class="full-width">
-  <div class="container">
-    <nav>
-      <ul>
-        <li><a > Influenciadores</a>
-          {% if influencers_processors %}
-          <div class="submenu">
-            <div class="container">
-              <ul class='row'>
-                {% for influencer in influencers_processors %}
-                  <li class='col-md-3'><a href="{% url 'web_product:influencer_products' influencer.slug %}">{{influencer.name}}</a></li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-          {% endif %}
-        </li>
-        {% for category in categories_processors %}
-        <li><a {% if not category.category_categories.all %}href="{% url 'web_product:category_products' category.slug %}"{% endif %}> {{category.name}}</a>
-          {% if category.category_categories.all %}
-          <div class="submenu">
-            <div class="container">
-              <h3 class="title">{{category.name}}</h3>
-              <ul class='row'>
-                {% for category_child in category.category_categories.all %}
-                  <li class='col-md-3'><a href="{% url 'web_product:category_child_products' category.slug category_child.slug %}">{{category_child.name}}</a></li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-          {% endif %}
-        </li>
-        {% endfor %}
-
-
-      </ul>
-    </nav>
+{% load static thumbnail %}
+<div class="menu">
+  <div class="menu__close">
+    <i class="fas fa-angle-left"></i>
   </div>
-</div>
-<nav id="menu">
-  <ul>
-    <li><span>Influenciadores</span>
-      <ul>
-        {% for influencer in influencers_processors %}
-          <li><a href="{% url 'web_product:influencer_products' influencer.slug %}">{{influencer.name}}</a></li>
-        {% endfor %}
-      </ul>
-    </li>
-    {% for category in categories_processors %}
-    <li><span>{{category.name}}</span>
-      <ul>
-        {% for category_child in category.category_categories.all %}
-          <li><a href="{% url 'web_product:category_child_products' category.slug category_child.slug %}">{{category_child.name}}</a></li>
-        {% endfor %}
-      </ul>
-    </li>
+  <div class="menu__header">
+    <div class="menu__header__profile">
+      {% if request.user.avatar %}
+        {% thumbnail request.user.avatar "80x80" crop="center" as im %}
+            <img src="{{ im.url }}" class="img-circle" width="{{ im.width }}" height="{{ im.height }}">
+        {% endthumbnail %}
+      {% else %}
+        <img src="{% static 'img/avatar.png' %}" class='img-circle img-responsive' width='80' alt="">
+      {% endif %}
+      <div class="menu__header__profile__account">
+        <a href="">ingresar / registrarse</a>
+      </div>
+    </div>
+  </div>
+  <ul class="menu__links">
+    {% for page_pro in pages_processors %}
+      <li><a class=''  href='{% url "web_page:pages" page_pro.slug %}'>{{page_pro.name}}</a></li>
     {% endfor %}
+    <li><a href='{% url "web_page:question_response" %}'>Preguntas Frecuentes</a></li>
+    <li><a href='{% url "web_system:follow_orders" %}'>Sigue tu orden</a></li>
+    <li><a href="{% url 'web_page:contact' %}">Soporte al cliente</a></li>
+    <li><a href="{% url 'web_page:complaints_book' %}">Libro de reclamaciones</a></li>
   </ul>
-</nav>
+</div>

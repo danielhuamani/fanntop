@@ -13,7 +13,7 @@
 
 
 	$(document).ready(function(){
-		
+
 		$(".slider-slick").slick({
 			infinite: true,
 			slidesToShow: 1,
@@ -44,7 +44,7 @@
 					}
 				}
 			]
-	
+
 		});
 
 		$('.slider-ticker').slick({
@@ -76,11 +76,17 @@
 			$menu.toggleClass('active');
 		});
 
-		$('nav#menu').mmenu({
-			
+		$(".header__bot__menu").click(function(event) {
+			/* Act on the event */
+			event.preventDefault()
+			$(".menu").addClass('menu--active')
 		});
-	
-		
+		$(".menu__close").click(function(event) {
+			/* Act on the event */
+			$(".menu").removeClass('menu--active')
+		});
+
+
 	});
 }(window.jQuery || window.$));
 

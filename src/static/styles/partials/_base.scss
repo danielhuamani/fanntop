@@ -545,5 +545,6 @@ section.main{
 .content{
   max-width: 1170px;
   margin: auto;
-  width: 98%;
+  padding: 0px 10px;
+  box-sizing: border-box;
 }

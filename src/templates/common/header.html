@@ -13,14 +13,20 @@
             <a href="{% url 'web_system:login_register' %}" class="account">
               <i class="far fa-user"></i>
             </a>
+            <a href=""  @click.prevent='changeStatusCartView()' >
+              <i class="far fa-shopping-cart"></i>
+            </a>
           </div>
-          <a href="" class='header__top__bag' @click.prevent='changeStatusCartView()' >Bag</a>
       </div>
     </div>
-    <div class="header__bot">
-      <a href="/">
-        <img src="{% static 'img/fanntop_svg.svg' %}" alt="">
-      </a>
+    <div class="header__bot ">
+      <div class="content">
+        <a href="" class='header__bot__menu'><i class="fas fa-bars"></i></a>
+        <a href="/" class='header__bot__logo'>
+          <img src="{% static 'img/fanntop_svg.svg' %}" alt="">
+        </a>
+        <a href="" class='header__bot__menu' @click.prevent='changeStatusCartView()'><i class="far fa-shopping-cart"></i></a>
+      </div>
     </div>
   {% comment %}
     <div class="container cf">

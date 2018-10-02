@@ -6410,7 +6410,8 @@ section.main {
 .content {
   max-width: 1170px;
   margin: auto;
-  width: 98%; }
+  padding: 0px 10px;
+  box-sizing: border-box; }
 
 .header__top {
   padding: 10px 0;
@@ -6437,10 +6438,17 @@ section.main {
   background: #fff;
   padding: 20px 0;
   text-align: center; }
-  .header__bot a {
+  .header__bot .content {
+    display: flex;
+    justify-content: center; }
+  .header__bot__menu {
+    display: none;
+    color: #512DE7;
+    font-size: 28px; }
+  .header__bot__logo {
     margin: auto;
     display: inline-block; }
-    .header__bot a img {
+    .header__bot__logo img {
       width: 180px; }
 
 #header {
@@ -6586,6 +6594,18 @@ body .mm-menu {
   position: relative;
   background: url("") no-repeat center/cover; }
 
+@media (max-width: 480px) {
+  .header__bot {
+    padding: 10px 0; }
+    .header__bot .content {
+      justify-content: space-between;
+      align-items: center; }
+    .header__bot__menu {
+      display: block; }
+    .header__bot__logo img {
+      width: 120px; }
+  .header__sup {
+    display: none; } }
 #footer {
   background: #512DE7;
   padding: 1em 0; }
@@ -6928,6 +6948,55 @@ body .mm-menu {
     .page-account__links ul li a.active {
       border-bottom: 1px solid #000; }
 
+.menu {
+  width: 290px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  display: none;
+  padding: 15px 15px;
+  background: #f09433;
+  z-index: 100;
+  background: linear-gradient(-135deg, #512DE7, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+  right: 110%;
+  left: -110%;
+  transition: .3s ease all; }
+  .menu--active {
+    right: inherit;
+    left: 0; }
+  .menu__close {
+    cursor: pointer;
+    position: absolute;
+    right: -23px;
+    top: 10px;
+    color: #fff;
+    background: #512DE7;
+    font-size: 30px;
+    width: 42px;
+    padding-right: 10px;
+    text-align: right;
+    border-radius: 50%; }
+  .menu__header {
+    margin-top: 30px; }
+    .menu__header__profile {
+      display: flex;
+      align-items: center; }
+      .menu__header__profile__account {
+        margin-left: 12px; }
+        .menu__header__profile__account a {
+          color: #fff; }
+  .menu__links {
+    margin-top: 40px; }
+    .menu__links li a {
+      color: white;
+      padding: 4px 15px;
+      display: block;
+      margin-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3); }
+
+@media (max-width: 480px) {
+  .menu {
+    display: block; } }
 .influencer__logo {
   width: 220px;
   margin: auto;

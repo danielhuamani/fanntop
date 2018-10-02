@@ -1,4 +1,5 @@
 <template>
+  <div class="content">
     <div class="home_influencer__search" :class='{"home_influencer__search--active": influencerList.length > 0}'>
       <input type="text" class='home_influencer__search__input' v-on:keyup="getInfluencer($event)">
       <i class='far fa-search home_influencer__search__icon' ></i>
@@ -10,6 +11,7 @@
 
       </div>
     </div>
+  </div>
 </template>
 <script>
     export default {
