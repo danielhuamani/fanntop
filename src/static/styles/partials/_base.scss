@@ -548,3 +548,8 @@ section.main{
   padding: 0px 10px;
   box-sizing: border-box;
 }
+@media (max-width: 768px){
+  .mb-15{
+    margin-bottom: 15px;
+  }
+}

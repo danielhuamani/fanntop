@@ -1,6 +1,6 @@
 .paginas{
     margin-bottom: 60px;
-    .paginas__block{
+    &__block{
         border: 1px solid $border;
     }
     &__description{
@@ -9,6 +9,11 @@
     &__content{
         padding: 35px;
         width: calc(100% - 260px);
+        &__subtitle{
+            font-size: 22px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
     }
     &__title{
         margin: 0;
@@ -37,4 +42,29 @@
             }
         }
     }
+}
+@media (max-width: 768px){
+  .paginas{
+    &__title{
+        padding: 0px;
+        border: none;
+    }
+    &__block{
+        border: none;
+        margin-top: 30px;
+    }
+    &__menu{
+        border: none;
+        display: none;
+    }
+    &__content{
+        padding: 0px;
+        margin-top: 20px;
+        width: 100%;
+        &__subtitle{
+            font-size: 18px;
+        }
+    }
+  }
+
 }

@@ -35,6 +35,9 @@
             align-items:center;
             &__account{
                 margin-left: 12px;
+                &__name{
+                    color: $white;
+                }
                 a{
                     color: $white;
                 }
@@ -54,8 +57,33 @@
         }
     }
 }
+.menu_footer{
+    display: none;
+    background: $header;
+    position: fixed;
+    bottom:0;
+    width: 100%;
+    z-index: 300;
+    &__ul{
+        display: flex;
+        justify-content:space-between;
+        margin-bottom: 0;
+        li{
+            a{
+                color: $white;
+                display: block;
+                font-size: 18px;
+                padding: 5px 8px;
+            }
+        }
+
+    }
+}
 @media (max-width: 480px){
   .menu{
+    display: block;
+  }
+  .menu_footer{
     display: block;
   }
 }

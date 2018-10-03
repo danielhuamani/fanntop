@@ -102,6 +102,9 @@
   }
 }
 @media (max-width: 480px) {
+  .detail-product h2 {
+    font-size: 18px;
+  }
   .product-banner {
     height: 240px;
   }

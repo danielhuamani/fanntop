@@ -7,17 +7,19 @@ from apps_base.product.models import Product, ProductClass
 
 def influencer_products(request, slug):
     influencer = get_object_or_404(Influencer, slug=slug)
-
+    products = ProductClass.objects.filter(influencer=influencer).exists()
     ctx = {
-        'influencer': influencer
+        'influencer': influencer,
+        'products': products
     }
     return render(request, 'product/influencer_list_products.html', ctx)
 
 def influencer_products_new(request, slug):
     influencer = get_object_or_404(Influencer, slug=slug)
-
+    products = ProductClass.objects.filter(influencer=influencer).exists()
     ctx = {
-        'influencer': influencer
+        'influencer': influencer,
+        'products': products
     }
     return render(request, 'product/influencer_list_products_new.html', ctx)
 

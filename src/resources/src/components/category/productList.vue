@@ -1,6 +1,15 @@
 <template>
   <div class="page-product__row_list__products">
     <div class="content">
+      <div class="content-filter-switch">
+        <div class="is_filter content-switch content-switch--product">
+          <h4>Filtros</h4>
+          <label class="switch">
+            <input type="checkbox" checked="checked">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
       <div class="page-product__row_list__products__filter_top">
         <div class="page-product__row_list__products__search">
           <input type="text" class='form-control' @keyup='searchKey($event)' v-model='search'>

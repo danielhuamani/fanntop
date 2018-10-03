@@ -30,6 +30,7 @@
     <a href="" class='btn btn-block btn--main'>Seguir</a>
   </div>
 </section>
+{% if products %}
 <div v-cloak>
   <section class="main main-cloak">
     <div class="container">
@@ -238,6 +239,18 @@
   </section>
   <router-view ></router-view>
 </div>
+{% else %}
+<section class="main">
+    <div class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <h4>No se encontraron productos</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
  <!--name="fade" mode="out-in"  appear-->
 {% endblock content %}
 {% block js %}

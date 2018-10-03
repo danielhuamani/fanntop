@@ -8,8 +8,8 @@ from .api_views import (ProductClassListAPI, CategoryFilterAPI, ProductClassCate
 
 urlpatterns = [
     url(r"^influenciador/(?P<slug>[\w-]+)/$", influencer_products, name="influencer_products"),
-    url(r"^categoria/(?P<slug>[\w-]+)/$", category_products, name="category_products"),
-    url(r"^categoria/(?P<slug>[\w-]+)/(?P<slug_child>[\w-]+)/$", category_child_products, name="category_child_products"),
+    # url(r"^categoria/(?P<slug>[\w-]+)/$", category_products, name="category_products"),
+    # url(r"^categoria/(?P<slug>[\w-]+)/(?P<slug_child>[\w-]+)/$", category_child_products, name="category_child_products"),
     url(r"^producto/(?P<slug>[\w-]+)/$", product, name="product"),
     url(r"^search/$", product_search, name="product_search"),
     url(r"^mis-favoritos/$", product_favorites, name="product_favorites"),

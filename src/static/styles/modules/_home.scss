@@ -96,6 +96,11 @@
     &__item{
         display: block;
         margin-bottom: 80px;
+        margin-right: 10px;
+        margin-left: 10px;
+        img{
+            margin: auto;
+        }
         &__name{
             margin-top: 10px;
             font-size: 18px;
@@ -103,4 +108,24 @@
             text-align: center;
         }
     }
+}
+@media (max-width: 768px){
+  .home_influencer .slick-prev:before, .home_influencer .slick-next:before{
+    font-size: 50px !important;
+  }
+  .home_influencer .slick-prev{
+    left: 5px;
+  }
+  .home_influencer .slick-next{
+    right: 5px;
+  }
+
+}
+@media (max-width: 480px){
+  .home_influencer__search{
+    margin-bottom: 20px;
+  }
+  .home-slick{
+    display: none !important;
+  }
 }

@@ -1,7 +1,20 @@
 <template>
     <div class="row product_detail_vue">
-
-        <div class="col-md-6 col-sm-6 col-xs-8 col-xs-offset-2 col-sm-offset-0 col-mv product_detail_vue__content">
+        <div class="col-xs-8 col-xs-offset-2 col-md-6 col-sm-6 col-sm-offset-0  col-mv ">
+          <div class="wrap-gallery ">
+            <div class="gallery-principal">
+              <div class="product-image" v-if='productDetail.product_image'>
+                <img  :src="productDetail.product_image[indexPager].image_big" alt=""/>
+              </div>
+              <div class="product-image_pagers">
+                <div class="product-image_pagers__item" :class="{ 'product-image_pagers__item--active': index == indexPager }" v-for="(image, index) in productDetail.product_image" @click='indexPager = index'>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12 col-mv ">
           <div class="detail-product">
             <div class="marca">
               <img class="img-circle" :src="productClass.product_class.influencer_image" alt="">
@@ -58,20 +71,7 @@
               </div>
           </div>
         </div>
-        <div class="col-xs-8 col-xs-offset-2 col-md-6 col-sm-6 col-sm-offset-0  col-mv product_detail_vue__galery">
-          <div class="wrap-gallery ">
-            <div class="gallery-principal">
-              <div class="product-image" v-if='productDetail.product_image'>
-                <img  :src="productDetail.product_image[indexPager].image_big" alt=""/>
-              </div>
-              <div class="product-image_pagers">
-                <div class="product-image_pagers__item" :class="{ 'product-image_pagers__item--active': index == indexPager }" v-for="(image, index) in productDetail.product_image" @click='indexPager = index'>
-                  <span></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
 </template>
 <script>

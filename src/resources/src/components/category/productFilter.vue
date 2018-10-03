@@ -1,9 +1,9 @@
 <template>
   <div class="page-product__row_list__filter" v-cloak>
     <div class="sidebar sidebar-filter ">
-      <h3 class="page-product__row_list__filter__title">FILTROS</h3>
+      <h3 class="page-product__row_list__filter__title">FILTROS <i class="fas fa-list-ul"></i></h3>
       <div class="w-filter" v-if="productsFilters.influencers">
-        <h3>Influencer</h3>
+        <h3>Influencer </h3>
         <ul>
           <li>
             <label for="influencer_all">
