@@ -313,4 +313,12 @@
       height: 60px;
     }
   }
+  .content-filter-switch{
+    display:none;
+  }
+  @media screen and (max-width: 1000px) {
+    .content-filter-switch{
+      display:block;
+    }
+  }
 </style>
