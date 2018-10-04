@@ -263,6 +263,27 @@
   .product_detail_modal{
     display: block !important;
     background: rgba(0,0,0, 0.7);
+    ::-webkit-scrollbar {
+        width: 7px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        border-radius: 6px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: grey;
+        border-radius: 6px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #000000;
+    }
+
     &__filter_purchase{
       padding: 0 10px;
       display: flex;
@@ -294,6 +315,7 @@
     background: white;
     overflow-y: scroll;
     height: calc(100vh - 50px);
+
   }
   .product_detail_modal__close{
     position: absolute;
