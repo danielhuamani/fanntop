@@ -76,6 +76,10 @@
     margin-bottom: 1em;
     padding-bottom: 1em;
     border-bottom: 1px solid #ccc;
+    &--modal{
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
     .price-promo {
       font-weight: 500;
       color: #ff4338;

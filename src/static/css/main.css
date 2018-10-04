@@ -5768,7 +5768,7 @@ button.close {
 
 @media (min-width: 768px) {
   .modal-dialog {
-    width: 800px;
+    width: 500px;
     margin: 30px auto; }
 
   .modal-content {
@@ -7180,6 +7180,9 @@ body .mm-menu {
   margin-bottom: 1em;
   padding-bottom: 1em;
   border-bottom: 1px solid #ccc; }
+  .detail-product .detalle-precio--modal {
+    border-bottom: 0;
+    padding-bottom: 0; }
   .detail-product .detalle-precio .price-promo {
     font-weight: 500;
     color: #ff4338;
@@ -7332,7 +7335,8 @@ ul.list {
 .page-product {
   margin-top: 60px; }
   .page-product__row_list {
-    display: flex; }
+    display: flex;
+    position: relative; }
     .page-product__row_list__result {
       margin-top: 15px;
       margin-left: -15px;
@@ -7345,9 +7349,11 @@ ul.list {
         .page-product__row_list__result__item__name_price {
           margin: 8px 0;
           display: flex;
-          align-items: flex-start; }
+          align-items: flex-start;
+          justify-content: space-between; }
         .page-product__row_list__result__item i {
-          font-size: 18px; }
+          font-size: 18px;
+          margin-left: 10px; }
     .page-product__row_list__filter {
       margin-right: 20px;
       width: 250px; }
@@ -7386,7 +7392,8 @@ ul.list {
     max-width: 400px; }
 
   .page-product__row_list__products {
-    width: 100%; }
+    width: 100%;
+    min-height: 600px; }
 
   .page-product__row_list__filter {
     width: 0; }
@@ -7394,7 +7401,22 @@ ul.list {
   .page-product__row_list__filter {
     position: absolute;
     z-index: 100;
-    background: white; }
+    background: white;
+    transition: 0.4s ease all;
+    opacity: 1;
+    width: 270px;
+    left: -10px;
+    top: 0;
+    border-radius: 4px;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #000;
+    background: #fff; }
+    .page-product__row_list__filter--hidden {
+      left: -100%;
+      padding: 0;
+      transition: 0.4s ease all;
+      opacity: 0; }
     .page-product__row_list__filter .sidebar {
       padding-top: 10px;
       padding-bottom: 10px; }

@@ -5,7 +5,7 @@
         <div class="is_filter content-switch content-switch--product">
           <h4>Filtros</h4>
           <label class="switch">
-            <input type="checkbox" checked="checked">
+            <input type="checkbox" checked="checked" @change='filterChange' v-model='isFilter'>
             <span class="slider round"></span>
           </label>
         </div>
@@ -67,7 +67,7 @@
   import productItem from '@/components/category/productItem'
   export default {
     name: 'productList',
-    props: ['products'],
+    props: ['products', 'isFilter'],
     data () {
       return {
         orderBy: 'name_asc',
@@ -80,6 +80,9 @@
       productDetailModal
     },
     methods: {
+      filterChange () {
+        this.$emit('filter', this.isFilter)
+      },
       closeModal () {
         this.productSlug = ''
       },

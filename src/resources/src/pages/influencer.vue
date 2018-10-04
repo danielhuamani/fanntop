@@ -2,10 +2,10 @@
     <section class="main page-product">
       <div class="content">
         <div class="page-product__row_list">
-          <productFilter :query='query' @valueStart='valueStart' @valueEnd='valueEnd'
+          <productFilter :query='query' @valueStart='valueStart' @valueEnd='valueEnd' :isFilter='isFilter' @changeFilter='isFilter=false'
           @queryInfluencer='queryInfluencer' @queryAttribute='queryAttribute'
           :productsFilters='productsFilters' v-if='load_product_filter'></productFilter>
-          <productList v-on:orderBy='orderBy' v-on:search='search' v-if="load_products" :products='products'></productList>
+          <productList :isFilter='isFilter' v-on:orderBy='orderBy' v-on:search='search' v-if="load_products" @filter='filter' :products='products'></productList>
         </div>
 <!--
         <div class="row">
@@ -165,7 +165,8 @@
         },
         productsMask: [1,2,3],
         load_products: false,
-        load_product_filter: false
+        load_product_filter: false,
+        isFilter: false
       }
     },
     components: {
@@ -210,6 +211,9 @@
       this.getProductsFilters(this.query)
     },
     methods: {
+      filter (value) {
+        this.isFilter = value
+      },
       search (value) {
         this.query['search'] = value
         this.setRouter(this.query)

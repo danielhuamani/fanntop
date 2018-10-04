@@ -1,7 +1,7 @@
 <template>
-  <div class="page-product__row_list__filter" v-cloak>
+  <div class="page-product__row_list__filter" :class='{"page-product__row_list__filter--hidden": !isFilter}' v-cloak>
     <div class="sidebar sidebar-filter ">
-      <h3 class="page-product__row_list__filter__title">FILTROS <i class="fas fa-list-ul"></i></h3>
+      <h3 class="page-product__row_list__filter__title">FILTROS <i @click='changeFilter' class="fas fa-list-ul"></i></h3>
       <div class="w-filter" v-if="productsFilters.influencers">
         <h3>Influencer </h3>
         <ul>
@@ -56,7 +56,7 @@
   import vueSlider from 'vue-slider-component'
   export default {
     name: 'productFilter',
-    props: ['productsFilters', 'query'],
+    props: ['productsFilters', 'query', 'isFilter'],
     components: {
       vueSlider
     },
@@ -107,6 +107,9 @@
 
     },
     methods: {
+      changeFilter () {
+        this.$emit('changeFilter')
+      },
       changeInfluencer () {
         this.$emit('queryInfluencer', this.influencer)
       },

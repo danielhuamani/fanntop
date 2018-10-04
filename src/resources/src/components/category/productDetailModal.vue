@@ -1,79 +1,74 @@
 <template>
-    <div class="modal  modal product_detail_modal fade in"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="row product_detail_vue product_detail_modal-dialog modal-dialog">
+    <div class="modal  modal product_detail_modal fade in"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" @click='closeModal'>
+      <div class="row product_detail_vue product_detail_modal-dialog modal-dialog" @click.stop>
        <div class="product_detail_modal__close" @click='closeModal'>
-          <i class='fa fa-times'></i>
+          <i class='far fa-times'></i>
       </div>
-       <div class="col-md-6 col-sm-6 col-xs-8 col-xs-offset-2 col-sm-offset-0 col-mv product_detail_vue__content">
-          <div class="detail-product">
-            <div class="marca">
-              <img class="img-circle" :src="productClass.product_class.influencer_image" alt="">
-              {{productClass.product_class.influencer_name}}</div>
+       <div class="product_detail_vue__content">
+          <div class="detail-product text-center">
             <h2 class="title">{{productClass.product_class.name}}</h2>
-            <div class="detalle-precio">
+            <div class="detalle-precio detalle-precio--modal">
               <div class="price">
                 Precio: <span class="price">S/ {{productDetail.price}}</span>
               </div>
-
             </div>
-            <div class="w-filter">
-              <div  :class="[attr.type_name === 'SELECT_SINGLE' ?  'cnt-size' : 'cnt-color']" v-for='attr in productClass.attributes'>
-                <span class="text">{{attr.name_store}}:</span>
-                <ul v-if="attr.type_name === 'SELECT_SINGLE'" class='sizes'>
-                  <li v-for='option in attr.attribute_options_query'>
-                    <label :for="option.slug">
-                      <input type="radio" v-model='selectProduct[attr.slug]'  :value="option.slug" @change='changeSize' :id="option.slug" :name="attr.slug"/>
-                      <span class="filtros-check">{{option.option}}
-                      </span>
-                    </label>
-                  </li>
-                </ul>
-                <ul v-else class='colors'>
-                  <li v-for='option in attr.attribute_options_query'
-                   >
-                    <label :for="option.slug">
-                      <input type="radio" v-model='selectProduct[attr.slug]' :value="option.slug" @change='changeColor' :id="option.slug" :name="attr.slug"/>
-                        <span class="filtros-check" :style='{background: option.attr}' ></span>
-                    </label>
-
-                  </li>
-                </ul>
-              </div>
-
-            </div>
-            <div class="disponibilidad" v-if='!isExhausted'>
-              <div class="counter-prin">
-                <div class="cnt-quantity">
-                  <div class="quantity-control">
-                    <a class="menos" @click.prevent='quantityMenos'><i class="fa fa-minus"></i></a>
-                    <input class="select-number" :value='productCart.quantity'/><a class="menos" @click.prevent='quantityMas'><i class="fa fa-plus"></i></a>
+          </div>
+            <div class="wrap-gallery ">
+              <div class="gallery-principal">
+                <div class="product-image" v-if='productDetail.product_image'>
+                  <img  :src="productDetail.product_image[indexPager].image_big" alt=""/>
+                </div>
+                <div class="product-image_pagers">
+                  <div class="product-image_pagers__item" :class="{ 'product-image_pagers__item--active': index == indexPager }" v-for="(image, index) in productDetail.product_image" @click='indexPager = index'>
+                    <span></span>
                   </div>
                 </div>
-                <div class="cnt-btn"><a @click.prevent='purchase()' class="btn btn-primary btn-compra">Comprar</a></div>
               </div>
             </div>
-            <div v-else class="disponibilidad">
-              <button class="btn btn-dark">
-                Agotado
-              </button>
-            </div>
-            <div class="detaller-description" v-html="productClass.product_class.description">
+            <div class="product_detail_modal__filter_purchase">
+              <div class="w-filter product_detail_modal__w-filter">
+                <div  :class="[attr.type_name === 'SELECT_SINGLE' ?  'cnt-size' : 'cnt-color']" v-for='attr in productClass.attributes'>
+                  <span class="text">{{attr.name_store}}:</span>
+                  <ul v-if="attr.type_name === 'SELECT_SINGLE'" class='sizes'>
+                    <li v-for='option in attr.attribute_options_query'>
+                      <label :for="option.slug">
+                        <input type="radio" v-model='selectProduct[attr.slug]'  :value="option.slug" @change='changeSize' :id="option.slug" :name="attr.slug"/>
+                        <span class="filtros-check">{{option.option}}
+                        </span>
+                      </label>
+                    </li>
+                  </ul>
+                  <ul v-else class='colors'>
+                    <li v-for='option in attr.attribute_options_query'
+                     >
+                      <label :for="option.slug">
+                        <input type="radio" v-model='selectProduct[attr.slug]' :value="option.slug" @change='changeColor' :id="option.slug" :name="attr.slug"/>
+                          <span class="filtros-check" :style='{background: option.attr}' ></span>
+                      </label>
+
+                    </li>
+                  </ul>
+                </div>
+
               </div>
-          </div>
-        </div>
-        <div class="col-xs-8 col-xs-offset-2 col-md-6 col-sm-6 col-sm-offset-0  col-mv product_detail_vue__galery">
-          <div class="wrap-gallery ">
-            <div class="gallery-principal">
-              <div class="product-image" v-if='productDetail.product_image'>
-                <img  :src="productDetail.product_image[indexPager].image_big" alt=""/>
-              </div>
-              <div class="product-image_pagers">
-                <div class="product-image_pagers__item" :class="{ 'product-image_pagers__item--active': index == indexPager }" v-for="(image, index) in productDetail.product_image" @click='indexPager = index'>
-                  <span></span>
+              <div class="product_detail_modal__disponibilidad disponibilidad" v-if='!isExhausted'>
+                <div class="counter-prin">
+                  <div class="cnt-quantity">
+                    <div class="quantity-control">
+                      <a class="menos" @click.prevent='quantityMenos'><i class="fa fa-minus"></i></a>
+                      <input class="select-number" :value='productCart.quantity'/><a class="menos" @click.prevent='quantityMas'><i class="fa fa-plus"></i></a>
+                    </div>
+                  </div>
+                  <div class="cnt-btn"><a @click.prevent='purchase()' class="btn btn-primary btn-compra">Comprar</a></div>
                 </div>
               </div>
+              <div v-else class="disponibilidad product_detail_modal__disponibilidad">
+                <button class="btn btn-dark">
+                  Agotado
+                </button>
+              </div>
             </div>
-          </div>
+
         </div>
       </div>
   </div>
@@ -268,17 +263,64 @@
   .product_detail_modal{
     display: block !important;
     background: rgba(0,0,0, 0.7);
+    &__filter_purchase{
+      padding: 0 10px;
+      display: flex;
+    }
+    .btn-compra{
+      margin: 0;
+      padding: 0 20px;
+      height: 52px;
+      line-height: 52px;
+      font-size: 14px;
+    }
+    &__w-filter{
+      margin: 0;
+      padding: 0;
+      border-bottom: none;
+      width: calc(100% - 230px);
+    }
+    &__disponibilidad{
+      width: 230px;
+      .counter-prin{
+        display: flex;
+        align-items: center;
+      }
+    }
   }
   .product_detail_modal-dialog{
-    padding: 20px;
+    padding: 20px 0;
+    border-radius: 8px;
     background: white;
     overflow-y: scroll;
+    height: calc(100vh - 50px);
   }
   .product_detail_modal__close{
     position: absolute;
-    top: 0px;
-    right: 8px;
+    top: -2px;
+    right: 5px;
     font-size: 24px;
     cursor: pointer;
+  }
+  @media (max-width: 480px){
+    .product_detail_modal-dialog{
+      height: calc(100vh - 100px);
+    }
+    .product_detail_modal{
+      .btn-compra{
+        height: 38px;
+        line-height: 40px;
+      }
+      &__filter_purchase{
+        flex-direction: column;
+        margin-bottom: 10px;
+      }
+      &__disponibilidad{
+        width: 100%;
+      }
+      &__w-filter{
+        width: 100%;
+      }
+    }
   }
 </style>
