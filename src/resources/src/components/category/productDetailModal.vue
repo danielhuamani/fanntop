@@ -16,7 +16,7 @@
             <div class="wrap-gallery ">
               <div class="gallery-principal">
                 <div class="product-image" v-if='productDetail.product_image'>
-                  <img  :src="productDetail.product_image[indexPager].image_big" alt=""/>
+                  <img  :src="productDetail.product_image[indexPager].image_small" alt=""/>
                 </div>
                 <div class="product-image_pagers">
                   <div class="product-image_pagers__item" :class="{ 'product-image_pagers__item--active': index == indexPager }" v-for="(image, index) in productDetail.product_image" @click='indexPager = index'>

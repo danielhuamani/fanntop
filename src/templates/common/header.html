@@ -10,12 +10,24 @@
             <a href="{% url 'web_product:product_favorites' %}" class="fav">
               <i class="far fa-heart"></i>
             </a>
-            <a href="{% url 'web_system:login_register' %}" class="account">
-              <i class="far fa-user"></i>
-            </a>
+            {% if request.user.is_authenticated %}
+              <a href="{% url 'web_system:account' %}" class="account">
+                <i class="far fa-user"></i>
+              </a>
+            {% else %}
+              <a href="{% url 'web_system:login_register' %}" class="account">
+                <i class="far fa-user"></i>
+              </a>
+            {% endif %}
+
             <a href=""  @click.prevent='changeStatusCartView()' >
               <i class="far fa-shopping-cart"></i>
             </a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'web_system:logout_view' %}"   >
+              <i class="fas fa-sign-out-alt"></i>
+            </a>
+            {% endif %}
           </div>
       </div>
     </div>

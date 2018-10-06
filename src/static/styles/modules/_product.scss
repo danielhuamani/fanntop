@@ -13,6 +13,9 @@
                 // min-width: 260px;
                 width: 33.3333%;
                 padding: 15px;
+                &--4{
+                    width: 25%;
+                }
                 &__name_price{
                     margin: 8px 0;
                     display: flex;
@@ -32,6 +35,9 @@
             &__title{
                 border-bottom: 1px solid $black;
                 font-weight: bold;
+                i{
+                    display: none;
+                }
             }
         }
         &__products{
@@ -77,6 +83,9 @@
     width: 400px;
     max-width: 400px;
   }
+  .page-product__row_list__filter__title i{
+    display: block;
+  }
   .page-product__row_list__products{
     width: 100%;
     min-height: 600px;
@@ -113,6 +122,11 @@
         justify-content: space-between;
     }
    }
+}
+@media (max-width: 960px){
+    .page-product__row_list__result__item--4{
+        width: 33.333333%;
+    }
 }
 @media (max-width: 650px){
     .page-product__row_list__result__item{

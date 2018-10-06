@@ -1,0 +1,114 @@
+.order{
+    max-width: 800px;
+    margin: auto;
+    margin-top: 20px;
+    &__header{
+        display: flex;
+        border-top: 1px solid $border;
+        border-bottom: 1px solid $border;
+        padding: 10px;
+        justify-content: space-between;
+        h3{
+            margin: 0 15px;
+            font-size: 18px;
+            text-align: center;
+            width: 25%;
+        }
+        &__status{
+
+        }
+    }
+    &__leyend{
+        display: flex;
+        margin-top: 30px;
+        justify-content: flex-end;
+        &__item{
+            margin: 0 5px;
+            display: flex;
+            align-items: center;
+        }
+        &__status{
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            border-radius: 50%;
+            display: block;
+            &--red{
+                background: red;
+            }
+            &--yellow{
+                background: yellow;
+            }
+            &--green{
+                background: #14b914;
+            }
+        }
+    }
+    &__content{
+        &__body{
+            padding:  10px;
+            border-bottom: 1px solid $border;
+            &__item{
+                &__product{
+                    margin: 8px 0;
+                    text-align: left;
+                    font-size: 12px;
+                }
+                &__header{
+                    display: flex;
+                }
+                &--none{
+                    display: none;
+                }
+            }
+            &__link{
+                color: $black;
+                width: 25%;
+                text-align: left;
+                &:hover{
+                    color: $black;
+                    text-decoration: underline;
+                }
+            }
+            &__status{
+                width: 25%;
+                text-align: center;
+                &__radius{
+                    width: 25px;
+                    height: 25px;
+                    margin: auto;
+                    border-radius: 50%;
+                    display: block;
+                    &--red{
+                        background: red;
+                    }
+                    &--yellow{
+                        background: yellow;
+                    }
+                    &--green{
+                        background: #14b914;
+                    }
+                }
+            }
+        }
+    }
+}
+@media (max-width: 480px){
+    .order{
+        &__header{
+            display: none;
+        }
+        &__content__body__status{
+            display: none;
+            &--block{
+                display: block;
+            }
+        }
+        &__content__body__item__header{
+            justify-content: space-between;
+        }
+        &__content__body__link{
+            width: 75%;
+        }
+    }
+}

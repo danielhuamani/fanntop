@@ -104,14 +104,19 @@ class ProductClassSerializer(QueryFieldsMixin, serializers.ModelSerializer):
 class ProductImageDetailSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
     image_big = serializers.SerializerMethodField()
+    image_small = serializers.SerializerMethodField()
 
     class Meta:
         model = ProductImage
-        fields = ['id', 'image', 'image_big']
+        fields = ['id', 'image', 'image_big', 'image_small']
 
 
     def get_image(self, obj):
         crop = get_thumbnail(obj.product_image.image, '80x80', crop='center', quality=99)
+        return crop.url
+
+    def get_image_small(self, obj):
+        crop = get_thumbnail(obj.product_image.image, '500x300', crop='center', quality=99)
         return crop.url
 
     def get_image_big(self, obj):

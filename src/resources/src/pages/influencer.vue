@@ -2,7 +2,7 @@
     <section class="main page-product">
       <div class="content">
         <div class="page-product__row_list">
-          <productFilter :query='query' @valueStart='valueStart' @valueEnd='valueEnd' :isFilter='isFilter' @changeFilter='isFilter=false'
+          <productFilter :query='query' @valueStart='valueStart' @valueEnd='valueEnd' :isFilter='isFilter' @changeFilter='changeSetFilter()'
           @queryInfluencer='queryInfluencer' @queryAttribute='queryAttribute'
           :productsFilters='productsFilters' v-if='load_product_filter'></productFilter>
           <productList :isFilter='isFilter' v-on:orderBy='orderBy' v-on:search='search' v-if="load_products" @filter='filter' :products='products'></productList>
@@ -213,6 +213,9 @@
     methods: {
       filter (value) {
         this.isFilter = value
+      },
+      changeSetFilter () {
+        this.isFilter = false
       },
       search (value) {
         this.query['search'] = value

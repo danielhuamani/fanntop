@@ -19,6 +19,11 @@ export default new Router({
       component: home
     },
     {
+      path: '/mi-cuenta/',
+      name: 'account',
+      component: productFavorites
+    },
+    {
       path: '/categoria/:slug_parent_category/:slug_category/',
       name: 'category_list',
       component: categoryList

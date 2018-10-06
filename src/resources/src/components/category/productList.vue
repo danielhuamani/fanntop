@@ -5,7 +5,7 @@
         <div class="is_filter content-switch content-switch--product">
           <h4>Filtros</h4>
           <label class="switch">
-            <input type="checkbox" checked="checked" @change='filterChange' v-model='isFilter'>
+            <input type="checkbox"  :checked='isFilter' @change='filterChange'>
             <span class="slider round"></span>
           </label>
         </div>
@@ -72,7 +72,8 @@
       return {
         orderBy: 'name_asc',
         search: '',
-        productSlug: ''
+        productSlug: '',
+        isSetFilter: false
       }
     },
     components: {
@@ -80,8 +81,11 @@
       productDetailModal
     },
     methods: {
+      isChecked () {
+        return this.isFilter
+      },
       filterChange () {
-        this.$emit('filter', this.isFilter)
+        this.$emit('filter', true)
       },
       closeModal () {
         this.productSlug = ''
